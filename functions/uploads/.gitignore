@@ -1,0 +1,6 @@
+# Αυτό το αρχείο υπάρχει ώστε το git να αγνοεί τα περιεχόμενα του φακέλου, αλλά να συμπεριλαμβάνει αυτόν τον φάκελο (άδειο). 
+
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
