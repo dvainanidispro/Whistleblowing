@@ -10,12 +10,20 @@
     select {
       cursor: pointer;
     }
+    datepicker {
+      cursor: pointer;
+    }  
   </style>
 </head>
 <body>
     <form action="/whistleblowing-app/europe-west3/whistle" method="post" enctype="multipart/form-data">
         <div class="container mt-3">
           <h1>Whistle</h1>
+
+          
+          <input type="hidden" value="NCWt4jXdnzQ5z19vaX9q" id="company" name="company">
+          
+          
 
           <!-- <div class="mb-3 mt-3">
             <br>
@@ -85,7 +93,7 @@
           <div class="mb-3 mt-3">
             
             <label for="type">Τύπος παραβίασης</label>
-            <select class="form-select" id="type" name="type" aria-label="Default select example" style="cursor: pointer;">
+            <select class="form-select" id="type" name="type" aria-label="Default select example" style="cursor: pointer;" required>
               <option disabled selected value>Παρακαλώ επιλέξτε ...</option>
               <option value="Οικονομική Παρατυπία">Οικονομική Παρατυπία</option>
               <option value="Παραβίαση Ασφαλείας Εργασίας">Παραβίαση Ασφαλείας Εργασίας</option>
@@ -98,9 +106,12 @@
             </select>
           </div>
       
-          <div class="form-floating mb-3 mt-3">
-            <input type="date" class="form-control" id="date" name="date"  placeholder="Ημ/νία Παραβίασης (Προαιρετικά)">
-            <label for="date">Ημ/νία Παραβίασης (Προαιρετικά)</label>
+          <div>
+              <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
+              <div class="form-floating mb-3 mt-3">
+                  <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης (Προαιρετικά)" onclick="actualDate.showPicker()">
+                  <label for="dateFacade">Ημ/νία Παραβίασης (Προαιρετικά)</label>
+                </div>
           </div>
 
           
@@ -135,10 +146,11 @@
 
 
       <script>
-        document.getElementById('date').addEventListener('click',e=>{
-            //show datepicker
-            e.target.showPicker();
-        });
+        let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
+        // document.getElementById('dateFacade').addEventListener('click',e=>{
+        //     //show datepicker
+        //     e.target.showPicker();
+        // });
       </script>
       
       
