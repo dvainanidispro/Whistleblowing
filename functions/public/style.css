@@ -1,0 +1,396 @@
+
+:root{
+    --sm: 576px;
+    --md: 768px;
+    --lg: 992px;
+    --xl: 1200px;
+    --primarycolor: #c9262c;
+    --backgroundcolor: hsl(358, 68%, 12%);
+    --bodybackgroundcolor: #FFE5DD;
+    --headertextcolor: lavender;
+    --unitcolor: hsl(250, 16%, 92%);
+    --display-if-user: none;
+    --display-if-guest: block;
+    --unknown-answer: silver;
+    --partiescolorstest: rgba(201, 38, 44, 0.8);
+    /* --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); */
+}
+
+
+
+/* BASIC BOILERPLATE CORRECTIONS */
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Remove default margin and padding */
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+ol, ul, li{
+    margin-block: 0;
+}
+
+
+
+/* Make images easier to work with */
+img,
+svg, 
+picture,
+figure,
+.center {               /* center is here */
+  max-width: 100%;
+  display: block;
+  margin-inline: auto;		
+  text-align: center;	/*text inside figure*/
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Links */
+a{
+    text-decoration: none;
+    box-shadow: none;
+    transition: all 0.3s; 
+    font-weight: bold;
+    color: darkblue;
+}
+a:hover{color: hwb(180 10% 81%)}
+/* a:focus{outline: black solid 3px} */
+
+
+body{
+    background-color: var(--backgroundcolor);
+
+    /* background-image: url('background.png'); */
+    background-repeat: no-repeat; 
+    /*background no-scrolling:"*/  
+    background-attachment: fixed;   
+    /*stretch proportionally to fit the smallest window dimension:*/
+    /* background-size: cover;    */
+}
+
+
+.center-contents{
+	display: grid;
+	place-items: center;
+}
+.inline-contents{  
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+}
+
+
+/*********************  HEADER FOOTER   *********************/
+
+
+header, header > a:first-of-type, header nav>ul {    /*header, left logo, right navs*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;  /*vertical align, when big logo*/
+    list-style-type: none; 
+    padding-inline-start: 0;    /*fixes ul*/
+    gap: 2rem 1.5rem;
+}
+
+header{
+    background-color:var(--primarycolor);
+    color: var(--headertextcolor);
+    padding: 0.5rem min(3rem,10%);
+    border-bottom: 1px solid #e5e5e5;
+    height: min(30vw,8rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+}
+
+header a{
+    color: var(--headertextcolor);
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+header a:hover{
+    color:  hsl(231, 48%, 72%);
+}
+
+footer{padding: 1rem 3rem;}
+footer p{font-size: small}
+
+/* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+.logo{
+    max-height: 6rem;
+    width: auto;
+}
+
+.app-title{
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+
+.body-container{
+    background-color: var(--bodybackgroundcolor);
+    min-height: 400px;
+    max-width: min(100% - 2rem, var(--lg));
+    margin-inline: auto; /*centers */
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-bottom: 2rem;
+}
+
+
+.always-hidden{
+    display: none !important;
+}
+
+.toggle-menu, .toggle-menu:focus{
+    border-color: var(--headertextcolor);
+}
+.toggle-menu:active{
+    border-color: red !important;
+}
+
+.menu-button{
+    font-weight: bold;
+    color: var(--headertextcolor);
+    background-color: var(--backgroundcolor);
+}
+.btn.menu-button:hover, .btn.menu-button:focus, .btn.menu-button:active, .btn.menu-button:focus-within{
+    background-color: var(--bs-black);
+    border-color: var(--bs-black);
+}
+
+/* this is because we use our custom .js for opening the dropdown istead of bootstrap's js */
+.dropdown-menu{
+    inset: auto auto auto -50px;
+}
+
+
+@media ( width < 768px ){
+
+    .toggle-menu-div, .index-link{
+        /*magic number για να πιάνουν πιο πολύ χώρο και να μην εμφανίζονται και αυτά και το μενού στην ίδια γραμμή*/
+        flex-basis: 40%;        
+        text-align: right;
+    }
+
+    .app-title{
+        display: none;
+    }
+
+    header nav>ul{
+        flex-flow: column wrap;  /*όταν γίνει responsive*/
+        gap: 1rem 0rem;
+    }
+
+    .hide-md{       /* Opposite of .d-md-none, similar to .d-none.d-md-block */
+        display: none;
+    }
+}
+
+/* @media ( width < 576px  ){ .toggle-menu-div{flex-basis: 50%} } */
+/* @media ( width < 300px  ){ .toggle-menu-div{flex-basis: auto} } */
+
+
+
+
+
+
+/*********************  MAIN   *********************/
+
+h1{
+    font-size: 2rem;
+}
+
+h2{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.sm{
+    max-width: var(--sm);
+}
+.md{
+    max-width: var(--md);
+}
+
+main{
+    padding: 2rem min(3rem,5%);
+}
+
+.btn-primary {
+    background-color: var(--primarycolor);
+    border-color: var(--primarycolor);
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:focus-within {
+    background-color: var(--backgroundcolor);
+    border-color: var(--backgroundcolor);
+}
+
+.btn-primary:disabled{
+    background-color: pink;
+    border-color: pink;
+}
+
+.body-container, .small-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+header .app-title, .text-shadow{
+    text-shadow: 1px 1px 2px #000000;
+}
+
+
+.show-if-user{
+    display: var(--display-if-user) !important;
+}
+.show-if-guest{
+    display: var(--display-if-guest) !important;
+}
+
+
+
+hr{
+    margin-block: 1.8rem;
+}
+
+/* Χρειάζεται για διαδοχικά στοιχεία element/group */
+.input-element, .input-group{
+    margin-block: 1rem;
+}
+
+.bootstrap-input-style{
+    margin-block: 1rem;
+    background-color: var(--bs-white);
+    border: 1px solid lightgray;
+    border-radius: 0.4rem;
+    padding: 0.75rem;
+}
+
+/*TOFIX: */
+.input-group:not(.has-validation)>.form-floating:not(:last-child) input.rounded-corners{
+    border-radius: 0.375rem !important;
+}
+
+input[type="number"]+label, input[type="text"]+label, textarea+label {
+    color: var(--bs-secondary);
+}
+
+/* Τα πλαίσια με τις μονάδες μέτρησης - θα μπορούσε να ήταν .unit (unit of measurement)*/
+.input-group > .input-group-text{
+    min-width: 5rem;
+    justify-content: center; /*center text (it is a flex-box)*/
+    background-color: var(--unitcolor);
+}
+
+/* .was-validated is a Bootstrap class that the developer adds (manually) to the form element during validation
+    Bootstrap uses it in its default validation format
+    The following css declarations are copy-paste from Bootstrap
+    */
+.was-validated .bootstrap-input-style:has(input:invalid){   /*copy from Bootstrap's rule: .was-validated .form-control:invalid */
+    border-color: #dc3545;
+    padding-right: calc(1.5em + .75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+.was-validated .bootstrap-input-style:has(input:valid){     /*copy from Bootstrap's rule: .was-validated .form-control:valid */
+    border-color: #198754;
+    padding-right: calc(1.5em + .75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+/*Ενυσχύω τις κλάσσεις του bootstrap να παραμένει έντονο το λάθος */
+.form-control.is-invalid, .was-validated input:invalid {      
+    border-color: #dc3545;
+    box-shadow: 0 0 0 .25rem rgba(220,53,69,.25);
+  }
+.bg-highlight{
+    /* background-color: WhiteSmoke; */
+    background-color: hsl(240, 67%, 97%);
+    border: 1px solid hsl(0, 0%, 78%);
+}
+
+.unknown-choice{
+    color: var(--unknown-answer);
+}
+.unknown-choice input[type="radio"]:checked{
+    background-color: var(--unknown-answer);
+    border: var(--unknown-answer);
+} 
+
+#testPatient:checked {
+    background-color: red;
+}
+
+textarea.form-control{
+    min-height: 6rem;
+}
+
+
+.case table{
+    font-family: var(--bs-font-monospace); 
+    font-size: min(1rem,4vw);
+    table-layout: fixed; /* widths are divided equally (or set by first row) */
+    max-width: min(var(--sm),100%);
+    border: 1px solid grey; 
+}
+
+.case table td, .case table th{
+    border: 1px solid grey; 
+    /* word-wrap: break-word; */     /* this is to split words */
+    overflow: hidden;
+    white-space: nowrap;    /* do not change line */
+    text-overflow: ellipsis;    /* βάλε "..". όταν δεν χωράει*/
+}
+
+.case table th{
+    font-size: 1.1rem;
+}
+
+/*
+.case thead th:nth-child(1){
+    width:40%;
+}
+.case thead th:last-child(1){
+    width:60%;
+}
+*/
+
+
+.btn-case{
+    text-align: start;
+    border-color: silver;
+}
+
+input[readonly], .input[readonly]:focus, .input[readonly]:active{
+    background-color: lightgray !important;
+}
+
