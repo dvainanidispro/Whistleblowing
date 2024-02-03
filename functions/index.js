@@ -55,9 +55,13 @@ server.get('/', (req, res) => {
 
 // Just for development purposes
 server.get('/form', (req, res) => {
+    console.log(req.get('host'));
     let companyID = req.query.companyid || server.locals.devCompanyID;
+    let formPostUrl = (req.get('host')=="127.0.0.1") 
+        ? "http://127.0.0.1/whistleblowing-app/europe-west3/whistle/" 
+        : "https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/"; 
     // res.sendFile(path.resolve('./public/whistleblowing.html'));     //resolve = relative to absolute path
-    res.render('whistleform', {companyID});
+    res.render('whistleform', {companyID,formPostUrl});
 });
 
 
