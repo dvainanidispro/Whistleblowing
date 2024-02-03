@@ -1,94 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Whistleblowing</title>
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-  <style>
-    select {
-      cursor: pointer;
-    }
-    datepicker {
-      cursor: pointer;
-    }  
-  </style>
-</head>
-<body>
     <form action="http://127.0.0.1/whistleblowing-app/europe-west3/whistle/" method="post" enctype="multipart/form-data">
         <div class="container mt-3">
-          <h1>Whistle</h1>
+          <h1>Δημιουργία αναφοράς</h1>
 
           
           <input type="hidden" value="{{companyID}}" id="company" name="company">
           
-          
-
-          <!-- <div class="mb-3 mt-3">
-            <br>
-            <label><strong>Ποιο από τα παρακάτω περιγράφει καλύτερα το αντικείμενο της αναφοράς σας</strong></label>
-            <br>
-            <label>Μπορείτε να επιλέξετε περισσότερες από μία επιλογές</label>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="1" value="Δημόσιες συμβάσεις">
-              <label for="1" class="form-check-label">Δημόσιες συμβάσεις</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="2" value="Χρηματοπιστωτικές υπηρεσίες, προϊόντα και αγορές">
-              <label for="2" class="form-check-label">Χρηματοπιστωτικές υπηρεσίες, προϊόντα και αγορές</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="3" value="Νομιμοποίηση εσόδων από παράνομες δραστηριότητες">
-              <label for="3" class="form-check-label">Νομιμοποίηση εσόδων από παράνομες δραστηριότητες</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="4" value="Χρηματοδότηση της τρομοκρατίας">
-              <label for="4" class="form-check-label">Χρηματοδότηση της τρομοκρατίας</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="5" value="Ασφάλεια και συμμόρφωση των προϊόντων">
-              <label for="5" class="form-check-label">Ασφάλεια και συμμόρφωση των προϊόντων</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="6" value="Ασφάλεια των μεταφορών">
-              <label for="6" class="form-check-label">Ασφάλεια των μεταφορών</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="7" value="Προστασία του περιβάλλοντος">
-              <label for="7" class="form-check-label">Προστασία του περιβάλλοντος</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="8" value="Προστασία από την ακτινοβολία και πυρηνική ασφάλεια">
-              <label for="8" class="form-check-label">Προστασία από την ακτινοβολία και πυρηνική ασφάλεια</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="9" value="Ασφάλεια των τροφίμων και των ζωοτροφών / υγεία και καλή μεταχείριση των ζώων">
-              <label for="9" class="form-check-label">Ασφάλεια των τροφίμων και των ζωοτροφών / υγεία και καλή μεταχείριση των ζώων</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="10" value="Δημόσια υγεία">
-              <label for="10" class="form-check-label">Δημόσια υγεία</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="11" value="Προστασία των καταναλωτών">
-            <label for="11" class="form-check-label">Προστασία των καταναλωτών</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="12" value="Προστασία της ιδιωτικής ζωής και των δεδομένων προσωπικού χαρακτήρα / ασφάλεια των συστημάτων δικτύου και πληροφοριών">
-            <label for="12" class="form-check-label">Προστασία της ιδιωτικής ζωής και των δεδομένων προσωπικού χαρακτήρα / ασφάλεια των συστημάτων δικτύου και πληροφοριών</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="13" value="Οικονομικά συμφέροντα της Ένωσης / Εσωτερική Αγορά / κρατικές ενισχύσεις / φορολογία εταιριών">
-            <label for="13" class="form-check-label">Οικονομικά συμφέροντα της Ένωσης / Εσωτερική Αγορά / κρατικές ενισχύσεις / φορολογία εταιριών</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="14" value="Δεν είμαι βέβαιος">
-            <label for="14" class="form-check-label">Δεν είμαι βέβαιος</label>
-          </div>
-
-          </div> -->
+        
           <br>
           <div class="mb-3 mt-3">
             
@@ -128,13 +46,26 @@
       
           <div class="form-floating mb-3 mt-3">
            
+          <div class="form-floating mb-3 mt-3">
             <input type="file" class="form-control" id="evidence" name="evidence" multiple>
-            <label for="evidence">Αποδεικτικά Στοιχεία (Προαιρετικά):</label>
+            <label for="evidence">Αποδεικτικά στοιχεία (προαιρετικά):</label>
           </div>
+          
+          <p><small>Τα παρακάτω στοιχεία επικοινωνίας είναι προαιρετικά, στην περίπτωση που θέλετε να ενημερώνεστε για την πορεία της αναφοράς σας ή αν χρειαστεί να επικοινωνήσουμε μαζί σας.
+            Σε περίπτωση που δεν συμπληρώσετε τα παρακάτω, θα μπορείτε να παρακολουθείτε την πορεία της αναφοράς σας σε διεύθυνση (URL) που θα σας δωθεί μετά την υποβολή.
+          </small></p>
+          
+          <div class="form-floating mb-3 mt-3">
+            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail (Προαιρετικά)">
+            <label for="email">e-mail (προαιρετικά)</label>
+          </div>
+
+          
+      
       
           <div class="form-floating mb-3 mt-3">
-            <input type="text" class="form-control" id="contact" name="contact" placeholder="Στοιχεία Επικοινωνίας (Προαιρετικά)">
-            <label for="contact">Στοιχεία Επικοινωνίας (Προαιρετικά)</label>
+            <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας (προαιρετικά)">
+            <label for="contact">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
           </div>
       
           <button type="submit" class="btn btn-primary btn-lg">Υποβολή</button>
@@ -154,6 +85,3 @@
       </script>
       
       
-
-</body>
-</html>

@@ -37,11 +37,9 @@ server.engine('hbs', HandlebarsCreator(handlebarsConfig).engine);       // if vi
 server.set('view engine', "hbs");   // use handlebars as the default engine when extension is not specified in res.render
 
 //////////////////    CONTROLLERS    ///////////////////
-import {SendEmail} from './controllers/mail.js';
-import {whistleConstructor} from './controllers/whistle.js';
-
-
-
+import { SendEmail } from './controllers/mail.js';
+import { whistleConstructor, whistleToHTMLTable } from './controllers/whistle.js';
+import Firebase from './controllers/firebase.js';
 
 
 
@@ -52,25 +50,63 @@ import {whistleConstructor} from './controllers/whistle.js';
 
 server.get('/', (req, res) => {
   // logger.info("Hello logs!", {structuredData: true});
-  res.send("Please, whistle here!");
+  res.send("Καλωσήρθατε στην υπηρεσία ανώνυμης αναφοράς παραβίασης του Κώδικα Δεοντολογίας της εταιρείας σας.");
 });
 
 // Just for development purposes
-server.get('/form/:companyID?', (req, res) => {
-    let companyID = req.params.companyID || server.locals.devCompanyID;
+server.get('/form', (req, res) => {
+    let companyID = req.query.companyid || server.locals.devCompanyID;
     // res.sendFile(path.resolve('./public/whistleblowing.html'));     //resolve = relative to absolute path
-    res.render('whistleform', {companyID: companyID});
+    res.render('whistleform', {companyID});
 });
 
 
 server.post('/', fileParser(), whistleConstructor, async (req, res) => {
     let whistle = res.whistle;
-    // console.log(req.body);
     console.log(whistle);
+    if (whistle.company==null) {
+        res.status(404).send("Η αναφορά δεν καταχωρίστηκε διότι δεν βρέθηκε ο οργανισμός. Παρακαλώ, επικοινωνήστε με τον διαχειριστή σας.");
+        return;
+    }
 
-    SendEmail(whistle, server.locals.uploadFolder);
+    // ACTIONS AFTER WHISTLE CONSTRUCTION
+    // SendEmail(whistle, server.locals.uploadFolder);      //do not await
+    await Firebase.storeCase(whistle);
     res.send(`Η αναφορά καταχωρίστηκε με αριθμό αναφοράς: ${whistle.id} και PIN: ${whistle.pin}.`);
 });
+
+
+
+
+
+server.get('/case', async (req, res) => {
+    res.render('searchcase', {caseId: req.query.id});
+});
+
+server.post('/case', async (req, res) => {
+    console.log(req.body);
+
+    let whistle = await Firebase.getCase(req.body.id, req.body.pin);
+    // console.log(whistle);
+    if (whistle==null) {
+        res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
+        return;
+    }
+    res.render('viewcase', {whistle: whistleToHTMLTable(whistle)});
+});
+
+
+
+
+server.get("*", (req, res) => {
+    console.log(req.url);
+    res.status(404).send("Η σελίδα δεν βρέθηκε.");
+});
+server.post("*", (req, res) => {
+    console.log(req.url);
+    res.status(404).send("Η σελίδα δεν βρέθηκε.");
+});
+
 
 
 const whistle = onRequest({ region: 'europe-west3' }, server);

@@ -17,6 +17,9 @@ var transporter = nodemailer.createTransport({
  * @param {string} attachmentsFolder The folder (relative path) where the attachments are stored tempoparily
  */
 let SendEmail = async (whistle, attachmentsFolder) => {
+
+    //TODO: add error handling
+    
     // prepair mail with defined transport object
     let message = {
         from: process.env.MAILFROM, // sender address
@@ -42,11 +45,13 @@ let SendEmail = async (whistle, attachmentsFolder) => {
 
     // send email
     await transporter.sendMail(message);
+    console.log("Email sent");
     
     //delete attachments
     whistle.fileNames.forEach(fileName => {
         fs.unlinkSync(attachmentsFolder + fileName);
     });
+    // console.log("Attachments deleted");
 }
 
 export { SendEmail };

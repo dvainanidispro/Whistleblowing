@@ -1,5 +1,5 @@
 import fs from 'fs';
-import firebase from './firebase.js';
+import Firebase from './firebase.js';
 
 //////////////    UNIQUE     ///////////////
 import ShortUniqueId from 'short-unique-id';
@@ -27,10 +27,13 @@ let whistleConstructor = async (req, res, next) => {
         date: req.body.date,
         place: req.body.place,
         description: req.body.description,
-        contact: req.body.contact,
+        submitter: {
+            email: req.body.email,
+            contact: req.body.contact,
+        },
         companyID: req.body.company,
         isTest: (req.body.company==req.app.locals.devCompanyID) ,
-        company: (req.body.company==req.app.locals.devCompanyID) ? {recipient: process.env.MAILTO} : await firebase.getCompany(req.body.company),
+        company: (req.body.company==req.app.locals.devCompanyID) ? {recipient: process.env.MAILTO} : await Firebase.getCompany(req.body.company),
         origin: req.get('origin'),
         fileNames: []
     };
@@ -48,4 +51,22 @@ let whistleConstructor = async (req, res, next) => {
 };
 
 
-export { whistleConstructor };
+
+let whistleToHTMLTable = (whistle) => {
+    let table = '<table class="table"><tr><th>Key</th><th>Value</th></tr>';
+    for (let key in whistle) {
+      if (whistle.hasOwnProperty(key)) {
+        let value = whistle[key];
+        // Check if the value is an array or an object
+        if (typeof value === 'object') {
+          value = JSON.stringify(value);
+        }
+        table += `<tr><td>${key}</td><td>${value}</td></tr>`;
+      }
+    }
+    table += '</table>';
+    return table;
+  };
+
+
+export { whistleConstructor, whistleToHTMLTable};
