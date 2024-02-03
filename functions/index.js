@@ -70,7 +70,7 @@ server.post('/', fileParser(), whistleConstructor, async (req, res) => {
     }
 
     // ACTIONS AFTER WHISTLE CONSTRUCTION
-    // SendEmail(whistle, server.locals.uploadFolder);      //do not await
+    SendEmail(whistle, server.locals.uploadFolder);      //do not await
     await Firebase.storeCase(whistle);
     res.send(`Η αναφορά καταχωρίστηκε με αριθμό αναφοράς: ${whistle.id} και PIN: ${whistle.pin}.`);
 });

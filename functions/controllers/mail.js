@@ -31,7 +31,8 @@ let SendEmail = async (whistle, attachmentsFolder) => {
                 <p>Τύπος περιστατικού: ${whistle.type}</p>
                 <p>Ημερομηνία περιστατικού: ${whistle.date || " - "}</p>
                 <p>Τοποθεσία περιστατικού: ${whistle.place || " - "}</p>
-                <p>Στοιχεία επικοινωνίας αναφέροντος: ${whistle.contact || " - "}</p>
+                <p>E-mail αναφέροντος: ${whistle.submitter.email || " - "}</p>
+                <p>Στοιχεία επικοινωνίας αναφέροντος: ${whistle.submitter.contact || " - "}</p>
                 <h2>Αναλυτική Περιγραφή</h2>
                 <p>${whistle.description}</p>
         `, // html body
