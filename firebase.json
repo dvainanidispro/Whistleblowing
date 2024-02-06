@@ -19,10 +19,56 @@
     "functions": {
       "port": 80
     },
+    "hosting": {
+      "port": 80
+    },
+    "firestore": {
+      "port": 4000
+    },
     "ui": {
       "enabled": true,
       "port": 5000
     },
     "singleProjectMode": true
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [],
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "deny"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-XSS-Protection",
+            "value": "1; mode=block"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          },
+          {
+            "key": "Permissions-Policy",
+            "value": "camera=()"
+          }
+        ]
+      }
+    ]
   }
 }

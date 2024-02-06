@@ -4,11 +4,12 @@ import fs from 'fs';
 
 ////////////////////    FIREBASE    ////////////////////
 import {onRequest} from "firebase-functions/v2/https";
-// import logger from "firebase-functions/logger";
+import logger from "firebase-functions/logger";
+import { beforeUserCreated, beforeUserSignedIn, HttpsError } from "firebase-functions/v2/identity";
 // import {initializeApp} from "firebase-admin/app";
-// import {getFirestore} from "firebase-admin/firestore";
+import {getFirestore} from "firebase-admin/firestore";
 // initializeApp();
-// const db = getFirestore();
+const db = getFirestore();
 
 ////////////////////    EXPRESS    ////////////////////
 import express from 'express';
@@ -114,4 +115,38 @@ server.post("*", (req, res) => {
 
 
 const whistle = onRequest({ region: 'europe-west3' }, server);
-export { whistle };
+
+
+
+
+
+
+/////////////  BLOCKING FUNCTION BEFORE USER CREATED //////////////
+
+const beforeCreated = beforeUserCreated(async (event) => {
+
+    /** Tells firebase to reject the new user */
+    let failValidation = function(){
+        throw new HttpsError('permission-denied', 'Μη έγκυρος χρήστης');
+    };
+
+    // check for email existence
+    const user = event.data;
+    const userEmail = user?.email ?? null;
+    if ( !userEmail ) {failValidation()}
+    logger.log(`Έλεγχος ${userEmail} για δημιουργία λογαριασμού...`);
+
+    // check Firestore if userEmail belongs to users collection
+    let authorizedUser = await db.collection('users').doc(userEmail).get();
+    if ( !authorizedUser.exists ) {failValidation()}
+    logger.log("Ο χρήστης " + userEmail + " δημιούργησε λογαριασμό μόλις τώρα.");
+
+    return      // must always return
+
+});
+
+
+
+
+
+export { whistle, beforeCreated };
