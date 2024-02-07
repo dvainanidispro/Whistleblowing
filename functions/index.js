@@ -123,7 +123,7 @@ const whistle = onRequest({ region: 'europe-west3' }, server);
 
 /////////////  BLOCKING FUNCTION BEFORE USER CREATED //////////////
 
-const beforeCreated = beforeUserCreated(async (event) => {
+const beforeCreated = beforeUserCreated({ region: 'europe-west3' }, async (event) => {
 
     /** Tells firebase to reject the new user */
     let failValidation = function(){
