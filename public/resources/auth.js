@@ -1,17 +1,20 @@
 
-///////////////////////   VARIABLES   ///////////////////////
+////////////////////////////////     VARIABLES     ////////////////////////////////
 
+window.App ??= {};
+
+let App = window.App;
 // let dynamicLinkDomain = window.location.hostname;
-// let thisDomain = window.location.hostname;
-let path = window.location.pathname;
-let urlPort = window.location.port ? `:${window.location.port}` : "";
-let verificationUrl = `${window.location.protocol}//${window.location.hostname}${urlPort}/pages/verify.html`;
+App.domain ??= window.location.hostname;
+App.path ??= window.location.pathname;
+App.port ??= window.location.port ? `:${window.location.port}` : "";
+App.verificationUrl ??= `${window.location.protocol}//${window.location.hostname}${App.port}/pages/verify.html`;
 
 
 
 ////////////////////////////////   INITIALIZATION   ////////////////////////////////
 
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);      // Δεν το χρειαζόμαστε αν το hosting είναι στο Firebase! Εκτελείται στο /__/firebase/init.js 
 // const appCheck = firebase.appCheck();
 // appCheck.activate('thetokenhere',true);
 
@@ -25,17 +28,17 @@ firebase.auth().onAuthStateChanged(function(user) {
         console.debug("User is signed in");
         console.debug({user});
         // sessionStorage.setItem('UserEmail',user.email);
-        setCssVariable('--display-if-guest','none');
-        setCssVariable('--display-if-user','block');
+        App.setCssVariable('--display-if-guest','none');
+        App.setCssVariable('--display-if-user','block');
         Q("~email").set(user.email);
         // Q("~displayName").set(user.displayName);
     } else {
-        if (path != "/") {
+        if (App.path != "/") {
             console.debug("User has not signed in. Redirecting...");
             window.location.href = "/"
         } else {
-            setCssVariable('--display-if-guest','block');
-            setCssVariable('--display-if-user','none');
+            App.setCssVariable('--display-if-guest','block');
+            App.setCssVariable('--display-if-user','none');
         };
     }
 });
@@ -58,22 +61,36 @@ firebase.auth().onAuthStateChanged(function(user) {
 // });
 
 
+/** Returns the user, whenever becomes available (or null if logged off) */
+App.user ??= () => {
+    return new Promise((resolve, reject) => {
+       const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          unsubscribe();
+          resolve(user);
+       }, reject);
+    });
+};
 
-////////////////////////////////   CREATE AUTHENTICATION LINK   ////////////////////////////////
 
-var actionCodeSettings = {
+
+
+
+
+
+////////////////////////////////   AUTH BUTTONS   ////////////////////////////////
+
+/** Authentication Link Settings */
+const actionCodeSettings = {
     // URL you want to redirect back to.
     // URL must be in the authorized domains list in the Firebase Console.
-    url: verificationUrl,
+    url: App.verificationUrl,
     // This must be true.
     handleCodeInApp: true,
     // dynamicLinkDomain: dynamicLinkDomain
   };
   
 
-
-
-////////////////////////////////   AUTH BUTTONS   ////////////////////////////////
+// Send Authentication Link
  Q(".sendAuthLink").on('click',function(e){
 
         Q("#sendAuthLink").setAttribute("disabled","");
@@ -104,6 +121,7 @@ var actionCodeSettings = {
 
 });
 
+// Sign Out
 Q(".signOutBtn").on('click',function(e){
     firebase.auth().signOut().then(() => {
         window.location.href = "/";

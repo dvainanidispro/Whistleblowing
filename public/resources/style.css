@@ -223,11 +223,12 @@ footer p{font-size: small}
 /*********************  MAIN   *********************/
 
 h1{
+    margin: 2rem 0;
     font-size: 2rem;
 }
 
 h2{
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     font-size: 1.5rem;
 }
 
@@ -261,6 +262,12 @@ main{
 }
 header .app-title, .text-shadow{
     text-shadow: 1px 1px 2px #000000;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: lavender;
+    background-color: darkred;
+    border-color: var(--bs-nav-tabs-link-active-border-color);
 }
 
 
@@ -389,7 +396,7 @@ textarea.form-control{
     border-color: silver;
 }
 
-input[readonly], .input[readonly]:focus, .input[readonly]:active{
-    background-color: lightgray !important;
+input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled], textarea[disabled], textarea[readonly], select[disabled], select[readonly]{
+    background-color: hsl(0, 0%, 93%) !important;
 }
 

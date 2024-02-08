@@ -1,5 +1,7 @@
  ///////////////////    DIM USEFUL FUNCTIONS    //////////////////
- 
+
+ /** App Global Settings */
+window.App = {};
  
 /** 
  * Returns the selected DOM elements, by ID, class, e.t.c.  
@@ -7,6 +9,7 @@
 window.Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
           let element = document.querySelector(selector);    
+          if (element == null) {return null};
           element.on ??= function(event,callback){element.addEventListener(event,callback);return element};
           element.set ??= function(content){element.textContent=content};
           element.show ??= function(condition=true){if (condition) {element.classList.remove('d-none')} else {element.classList.add('d-none')} };
@@ -33,7 +36,12 @@ window.Q = (selector) => {
  * Change the value of a css variable 
  * @type {(variable: string, value: string) => string}  
  */
-var setCssVariable = (variable,value) => {document.documentElement.style.setProperty(variable, value); return value};
+App.setCssVariable = (variable,value) => {document.documentElement.style.setProperty(variable, value); return value};
+
+/**
+ * Stores the URL Get Parameters in an object
+*/
+App.getParams = Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
 
 /** 
@@ -79,13 +87,14 @@ window.unique = (arr) => [...new Set(arr)];
 
 class BootstrapSpinner extends HTMLElement {
         constructor(){
-            super();     
+            super();
+            this.message = this.getAttribute('data-message');
             this.innerHTML = /*html*/`
             <div class="d-flex flex-column align-items-center m-4">
-                <div class="spinner-border text-primary m-2" role="status">
-                    <span class="visually-hidden">Παρακαλώ περιμένετε...</span>
+                <div class="spinner-border text-success m-2" role="status">
+                    <span class="visually-hidden">${this.message??'Παρακαλώ περιμένετε...'}</span>
                 </div>
-                <div>Παρακαλώ περιμένετε...</div>
+                <div>${this.message??'Παρακαλώ περιμένετε...'}</div>
             </div>
             `;
         }

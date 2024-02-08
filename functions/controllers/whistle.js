@@ -35,6 +35,7 @@ let whistleConstructor = async (req, res, next) => {
         isTest: (req.body.company==req.app.locals.devCompanyID) ,
         company: (req.body.company==req.app.locals.devCompanyID) ? {recipient: process.env.MAILTO} : await Firebase.getCompany(req.body.company),
         origin: req.get('origin'),
+        messages: [],
         fileNames: []
     };
 
@@ -66,7 +67,7 @@ let whistleToHTMLTable = (whistle) => {
     }
     table += '</table>';
     return table;
-  };
+};
 
 
 export { whistleConstructor, whistleToHTMLTable};
