@@ -88,15 +88,37 @@ window.unique = (arr) => [...new Set(arr)];
 class BootstrapSpinner extends HTMLElement {
         constructor(){
             super();
-            this.message = this.getAttribute('data-message');
+            this.message = this.getAttribute('data-message')??'Παρακαλώ περιμένετε...';
             this.innerHTML = /*html*/`
-            <div class="d-flex flex-column align-items-center m-4">
-                <div class="spinner-border text-success m-2" role="status">
-                    <span class="visually-hidden">${this.message??'Παρακαλώ περιμένετε...'}</span>
+                <div class="d-flex flex-column align-items-center m-4">
+                    <div class="spinner-border text-success m-2" role="status">
+                        <span class="visually-hidden">${this.message}</span>
+                    </div>
+                    <div>${this.message}</div>
                 </div>
-                <div>${this.message??'Παρακαλώ περιμένετε...'}</div>
-            </div>
             `;
         }
     }
 window.customElements.define('bootstrap-spinner',BootstrapSpinner);
+
+
+class BootstrapToast extends HTMLElement {
+    constructor(){
+        super();
+        this.dataid = this.getAttribute('data-id')??'toast';
+        this.message = this.getAttribute('data-message')??"OK...";
+        this.backClass = this.getAttribute('data-back-class')??"bg-success";
+        this.innerHTML = /*html*/`
+            <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3 my-5 ">
+            <div id="${this.dataid}" class="toast ${this.backClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header center-contents bg-success text-white rounded">
+                    <div><strong >${this.message??'OK...'}</strong></div>
+                </div>
+            </div>
+        </div>
+
+        `;
+    }
+}
+window.customElements.define('bootstrap-toast',BootstrapToast);
+

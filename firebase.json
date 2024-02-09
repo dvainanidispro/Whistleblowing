@@ -17,7 +17,7 @@
   ],
   "emulators": {
     "functions": {
-      "port": 8000
+      "port": 80
     },
     "hosting": {
       "port": 80

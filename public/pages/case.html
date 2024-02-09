@@ -185,15 +185,33 @@
             
             
                         <h2>Μηνύματα</h2>
+
+                        <div>
+                            <!-- <template x-if="caseDoc.messages.length"><h2>Ιστορικό μηνυμάτων</h2></template> -->
+                            <template x-for="message in caseDoc.messages" :key="message.order">
+                                <div class="row">
+                                    <div class="col-md-2"><p>
+                                        <span class="text-muted" x-text="message.role"></span><br>
+                                        <span class="text-muted" x-text="message.date.toDate().toLocaleDateString()"></span>
+                                    </p></div>
+                                    <div class="col-md-10 my-2">
+                                        <textarea x-model="message.text" class="form-control" readonly></textarea>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
             
             
                         <div class="my-3">
                             <label for="newMessage">Νέο μήνυμα ή σημείωση</label>
                             <textarea x-model="caseDoc.newMessage" class="form-control" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
+                            <div class="form-text">
+                                Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
+                            </div>
                         </div>
             
                         
-                        <button type="button" class="btn btn-success my-2">Δημοσίευση μηνύματος και ενημέρωση καταγγέλοντα	</button>
+                        <button type="button" class="btn btn-success my-2" x-on:click="DB.pushMessage(caseDoc,caseDoc.newMessage)">Δημοσίευση μηνύματος και ενημέρωση καταγγέλοντα </button>
             
                         <hr>
                     </div>
@@ -219,12 +237,14 @@
 
     </div>
 
+    <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
+    <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
+
     </main>
 
 
 
     <footer>
-
     </footer>
 
 
