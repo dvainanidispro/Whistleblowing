@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase-admin/app";
 initializeApp();
-import {getFirestore, Timestamp, Filter} from "firebase-admin/firestore";
+import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firestore";
 const db = getFirestore();
 
 
@@ -22,7 +22,7 @@ let getCompany = async (companyID) => {
  */
 let storeCase = async (whistle) => {
     // if (whistle.isTest) {return null}
-    whistle.submittedAt = Timestamp.fromDate(new Date());
+    whistle.submittedAt = FieldValue.serverTimestamp(); // firestore's timestamp
     whistle.status = "initial";
 
     let whistleRef = db.collection('cases').doc(whistle.id);
@@ -47,5 +47,20 @@ let getCase = async (id, pin) => {
     }
 };
 
+let pushMessage = (whistleID, messageText) => {
+    let whistleRef = db.collection('cases').doc(whistleID);
+    let messageObject = {
+        // order: '-',
+        text: messageText,
+        // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
+        date: Timestamp.now(),      
+        role: 'Καταγγέλων',
+        // user: 'Ανώνυμος'
+    };
+    return whistleRef.update({messages: FieldValue.arrayUnion(messageObject)});
+    // if there is no whistle with this id, it will throw an error
+};
 
-export default { getCompany, storeCase, getCase };
+
+
+export default { getCompany, storeCase, getCase, pushMessage };

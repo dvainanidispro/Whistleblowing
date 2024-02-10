@@ -1,1 +1,33 @@
-{{{whistle}}}
+
+
+{{#each whistle.messages}}
+    <div class="row">
+        <div class="col-md-2"><p>
+            <span class="text-muted">{{role}}</span><br>
+            <span class="text-muted">{{date}}</span>
+        </p></div>
+        <div class="col-md-10 my-2">
+            <textarea class="form-control" readonly disabled>{{text}}</textarea>
+        </div>
+    </div>
+{{/each}}
+
+<form method="POST" action="./pushmessage">
+    <div class="my-3">
+        <label for="newMessage">Νέο μήνυμα ή σημείωση προς τον υπεύθυνο</label>
+        <textarea class="form-control" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
+        <div class="form-text">
+            Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
+        </div>
+    </div>
+    <input type="hidden" name="caseId" value="{{whistle.id}}">
+
+    <button type="submit" class="btn btn-success my-2" id="submitBtn">Δημοσίευση μηνύματος</button>
+</form>
+
+
+
+
+<hr>
+
+{{{whistleTable}}}

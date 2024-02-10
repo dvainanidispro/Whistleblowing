@@ -39,7 +39,7 @@ server.set('view engine', "hbs");   // use handlebars as the default engine when
 
 //////////////////    CONTROLLERS    ///////////////////
 import { SendEmail } from './controllers/mail.js';
-import { whistleConstructor, whistleToHTMLTable } from './controllers/whistle.js';
+import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
 
 
@@ -55,7 +55,7 @@ server.get('/', (req, res) => {
 });
 
 // Just for development purposes
-server.get('/form', (req, res) => {
+server.get(['/form','/new'], (req, res) => {
     console.log(req.get('host'));
     let companyID = req.query.companyid || server.locals.devCompanyID;
     let formPostUrl = (req.get('host')=="127.0.0.1") 
@@ -66,9 +66,9 @@ server.get('/form', (req, res) => {
 });
 
 
-server.post('/', fileParser(), whistleConstructor, async (req, res) => {
+server.post('/', fileParser(), Whistle.constructor, async (req, res) => {
     let whistle = res.whistle;
-    console.log(whistle);
+    // console.log(whistle);
     if (whistle.company==null) {
         res.status(404).send("Η αναφορά δεν καταχωρίστηκε διότι δεν βρέθηκε ο οργανισμός. Παρακαλώ, επικοινωνήστε με τον διαχειριστή σας.");
         return;
@@ -89,15 +89,25 @@ server.get('/case', async (req, res) => {
 });
 
 server.post('/case', async (req, res) => {
-    console.log(req.body);
-
     let whistle = await Firebase.getCase(req.body.id, req.body.pin);
-    // console.log(whistle);
     if (whistle==null) {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
         return;
     }
-    res.render('viewcase', {whistle: whistleToHTMLTable(whistle)});
+    res.render('viewcase', {whistle, whistleTable: Whistle.toHTMLTable(whistle)});
+});
+
+server.post('/pushmessage', async (req, res) => {
+    let whistleID = req.body.caseId;
+    let messageText = req.body.newMessage;
+    //! if whistleID does not exist, then it will throw an error
+    // try{
+        await Firebase.pushMessage(whistleID, messageText);
+    // } catch (e) {
+        // res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
+        // return;
+    // }
+    res.send('Το μήνυμα στάλθηκε.');
 });
 
 
