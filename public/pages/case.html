@@ -188,11 +188,11 @@
 
                         <div>
                             <!-- <template x-if="caseDoc.messages.length"><h2>Ιστορικό μηνυμάτων</h2></template> -->
-                            <template x-for="message in caseDoc.messages" :key="message.order">
+                            <template x-for="message in caseDoc.messages">
                                 <div class="row">
                                     <div class="col-md-2"><p>
                                         <span class="text-muted" x-text="message.role"></span><br>
-                                        <span class="text-muted" x-text="message.date.toDate().toLocaleDateString()"></span>
+                                        <span class="text-muted" x-text="message?.date?.toDate()?.toLocaleDateString()"></span>
                                     </p></div>
                                     <div class="col-md-10 my-2">
                                         <textarea x-model="message.text" class="form-control" readonly></textarea>

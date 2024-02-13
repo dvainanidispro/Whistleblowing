@@ -15,8 +15,8 @@ App.verificationUrl ??= `${window.location.protocol}//${window.location.hostname
 ////////////////////////////////   INITIALIZATION   ////////////////////////////////
 
 // firebase.initializeApp(firebaseConfig);      // Δεν το χρειαζόμαστε αν το hosting είναι στο Firebase! Εκτελείται στο /__/firebase/init.js 
-// const appCheck = firebase.appCheck();
-// appCheck.activate('thetokenhere',true);
+const appCheck = firebase.appCheck();
+appCheck.activate('6LcLAnEpAAAAAEHXuFLhEojhtCCFPsAsDKTS51xO',true);
 
 ////////////////////////////////   EVENTS ON SIGN IN AND SIGN OUT   ////////////////////////////////
 
