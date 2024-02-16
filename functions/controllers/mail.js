@@ -12,7 +12,7 @@ var transporter = nodemailer.createTransport({
   });
 
 /**
- * Sends the email with the whistle data and attachments to the recipient
+ * Sends the email with the whistle data and attachments to the recipients
  * @param {object} whistle The Whistle object
  * @param {string} attachmentsFolder The folder (relative path) where the attachments are stored tempoparily
  */
@@ -23,7 +23,7 @@ let SendEmail = async (whistle, attachmentsFolder) => {
     // prepair mail with defined transport object
     let message = {
         from: process.env.MAILFROM, // sender address
-        to: whistle.company.recipient, // list of receivers
+        to: whistle.company.recipients, // list of recipients
         subject: `Περιστατικό ${whistle.id}`, // Subject line
         //   text: whistle.description, // plain text body
         html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>

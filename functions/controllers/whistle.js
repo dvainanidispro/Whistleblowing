@@ -41,7 +41,7 @@ let Whistle = {
             },
             companyID: req.body.company,
             isTest: (req.body.company==req.app.locals.devCompanyID) ,
-            company: (req.body.company==req.app.locals.devCompanyID) ? {recipient: process.env.MAILTO} : await Firebase.getCompany(req.body.company),
+            company: (req.body.company==req.app.locals.devCompanyID) ? {recipients: process.env.MAILTO} : await Firebase.getCompany(req.body.company),
             origin: req.get('origin'),
             messages: [],
             fileNames: []

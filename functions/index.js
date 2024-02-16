@@ -74,8 +74,8 @@ server.post('/', fileParser(), Whistle.constructor, async (req, res) => {
         return;
     }
 
-    // ACTIONS AFTER WHISTLE CONSTRUCTION
-    SendEmail(whistle, server.locals.uploadFolder);      //do not await
+    //# ACTIONS AFTER WHISTLE CONSTRUCTION
+    SendEmail(whistle, server.locals.uploadFolder);      //do not await the email delivery
     await Firebase.storeCase(whistle);
     res.send(`Η αναφορά καταχωρίστηκε με αριθμό αναφοράς: ${whistle.id} και PIN: ${whistle.pin}.`);
 });
@@ -100,13 +100,13 @@ server.post('/case', async (req, res) => {
 server.post('/pushmessage', async (req, res) => {
     let whistleID = req.body.caseId;
     let messageText = req.body.newMessage;
-    //! if whistleID does not exist, then it will throw an error
-    // try{
+    try{
+        // if whistleID does not exist, then it will throw an error
         await Firebase.pushMessage(whistleID, messageText);
-    // } catch (e) {
-        // res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
-        // return;
-    // }
+    } catch (e) {
+        res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
+        return;
+    }
     res.send('Το μήνυμα στάλθηκε.');
 });
 
