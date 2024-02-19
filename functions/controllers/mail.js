@@ -62,7 +62,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
 
 /**
  * Sends email to the company notifying about the new Message from the user
- * @param {string} whistleID The Whistle ID
+ * @param {object} whistle The Whistle object
  */
 let aboutNewUserMessage = async (whistle) => {
     let message = {
@@ -82,8 +82,8 @@ let aboutNewUserMessage = async (whistle) => {
 
 
 /**
- * Sends email to the company notifying about the new Message from the user
- * @param {string} whistleID The Whistle ID
+ * Sends email to the user notifying about the new update from the company
+ * @param {object} whistle The Whistle object
  */
 let aboutCaseUpdate = async (whistle) => {
 

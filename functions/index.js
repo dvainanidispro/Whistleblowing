@@ -115,19 +115,20 @@ server.post('/pushmessage', async (req, res) => {
 
 server.post('/notifyuser', async (req, res) => {
     try{
-        let user = await Firebase.verifyToken(req.body.userToken);
+        let body = JSON.parse(req.body);    // no-cors sends text/plain (not json)
+        let user = await Firebase.verifyToken(body.userToken);
         if (!user) {
             res.status(401).json("Unauthorized");
             return;
         }
         // if caseId is invalid, then it will throw an error
-        let whistle = await Firebase.getCase(req.body.caseId);
+        let whistle = await Firebase.getCase(body.caseId);
         if (user.companyID!=whistle.companyID) {
             res.status(403).json("Unauthorized");
             return;
         }
 
-        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(req.body.caseId));
+        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(body.caseId));
         res.json(emailSent);
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
