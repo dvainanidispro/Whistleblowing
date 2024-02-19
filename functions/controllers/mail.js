@@ -50,7 +50,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
 
     // send email
     await transporter.sendMail(message);
-    console.log("Email sent");
+    console.log("Στάλθηκε email σε εταιρία");
     
     //delete attachments
     whistle.fileNames.forEach(fileName => {
@@ -76,8 +76,7 @@ let aboutNewUserMessage = async (whistle) => {
 
     // send email
     await transporter.sendMail(message);
-    console.log("Email sent");
-    
+    console.log("Στάληθκε email σε εταιρία"); 
 };
 
 
@@ -87,6 +86,25 @@ let aboutNewUserMessage = async (whistle) => {
  * @param {string} whistleID The Whistle ID
  */
 let aboutNewCompanyMessage = async (whistle) => {
+
+    if (whistle.submitter?.email==null) {
+        console.log("Δεν υπάρχει email αναφέροντος προς ειδοποίηση");
+        return false;
+    }
+
+    let message = {
+        from: process.env.MAILFROM, // sender address
+        to: whistle.submitter.email, // list of recipients
+        subject: `Ενημέρωση για το περιστατικό ${whistle.id}`, // Subject line
+        html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
+                <p>Υπάρχει νέα ενημέρωση για το περιστατικό ${whistle.id} </p>
+                <p>Παρακαλώ, εισέλθετε στη σελίδα με τον αριθμό του περιστατικού και το PIN που γνωρίζετε, για να δείτε τη νέα κατάσταση.</p>
+        `, // html body
+    }
+
+    // send email
+    await transporter.sendMail(message);
+    console.log("Στάληθκε email σε καταγγέλλοντα");
     return true
 };
 

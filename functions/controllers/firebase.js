@@ -5,6 +5,7 @@ const db = getFirestore();
 
 
 
+
 /**
  * Get company details from the Firestore database
  * @param {string} companyID 
@@ -27,7 +28,7 @@ let storeCase = async (whistle) => {
 
     let whistleRef = db.collection('cases').doc(whistle.id);
     await whistleRef.set(whistle);
-    console.log("Case stored in Firestore");
+    console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
     return whistleRef.id;
 }
 
@@ -55,20 +56,18 @@ let getCase = async (id, pin=null) => {
  * @param {string} userEmail the user's email
  * @returns {Promise<Object>} user object
  */
-let getUser = async (userEmail) => {
+let getUser = (userEmail) => {
     return db.collection('users').doc(userEmail).get();
 };
-
-
 
 
 /**
  * Push a message to the case in the Firestore database, in the collection 'cases'
  * @param {string} whistleID 
  * @param {string} messageText 
- * @returns {Promise<void>} nothing
+ * @returns {Promise<Object>} the case
  */
-let pushMessage = (whistleID, messageText) => {
+let pushMessage = async (whistleID, messageText) => {
     let whistleRef = db.collection('cases').doc(whistleID);
     let messageObject = {
         // order: '-',
@@ -78,9 +77,14 @@ let pushMessage = (whistleID, messageText) => {
         role: 'Καταγγέλων',
         // user: 'Ανώνυμος'
     };
-    return whistleRef.update({messages: FieldValue.arrayUnion(messageObject)});
     // if there is no whistle with this id, it will throw an error
+    await whistleRef.update({messages: FieldValue.arrayUnion(messageObject)});   // this returns nothing (void)
+    console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
+    return (await whistleRef.get()).data();
 };
+
+
+
 
 
 

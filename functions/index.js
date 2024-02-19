@@ -51,7 +51,6 @@ server.get('/', (req, res) => {
 
 // Just for development purposes
 server.get(['/form','/new'], (req, res) => {
-    console.log(req.get('host'));
     let companyID = req.query.companyid || server.locals.devCompanyID;
     let formPostUrl = (req.get('host')=="127.0.0.1") 
         ? "http://127.0.0.1/whistleblowing-app/europe-west3/whistle/" 
@@ -62,7 +61,6 @@ server.get(['/form','/new'], (req, res) => {
 
 server.post(['/','/new'], fileParser(), Whistle.constructor, async (req, res) => {
     let whistle = res.whistle;
-    // console.log(whistle);
     if (whistle.company==null) {
         res.status(404).send("Η αναφορά δεν καταχωρίστηκε διότι δεν βρέθηκε ο οργανισμός. Παρακαλώ, επικοινωνήστε με τον διαχειριστή σας.");
         return;
@@ -104,10 +102,9 @@ server.post('/pushmessage', async (req, res) => {
     let whistle;
     try{
         // if whistleID does not exist, then it will throw an error
-        await Firebase.pushMessage(whistleID, messageText);
-        whistle = await Firebase.getCase(whistleID);
+        whistle = await Firebase.pushMessage(whistleID, messageText);
         SendEmail.aboutNewUserMessage(whistle);   // do not await the email delivery
-        res.send('Το μήνυμα στάλθηκε.');
+        res.send('Το νέο μήνυμα στάλθηκε στον υπεύθυνο.');
     } catch (e) {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
         return;
@@ -156,8 +153,8 @@ const beforeCreated = beforeUserCreated({ region: 'europe-west3' }, async (event
     logger.log("Ο χρήστης " + userEmail + " δημιούργησε λογαριασμό μόλις τώρα.");
 
     return  {   // must always return something
-        displayName: authorizedUser.data.displayName,
-        customClaims: { companyID: authorizedUser.data.companyID } 
+        displayName: authorizedUser.data().displayName,
+        customClaims: { companyID: authorizedUser.data().companyID } 
     };   
 
 });
