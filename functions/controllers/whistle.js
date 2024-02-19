@@ -1,5 +1,4 @@
 import fs from 'fs';
-import Firebase from './firebase.js';
 
 //////////////    UNIQUE     ///////////////
 import ShortUniqueId from 'short-unique-id';
@@ -41,7 +40,6 @@ let Whistle = {
             },
             companyID: req.body.company,
             isTest: (req.body.company==req.app.locals.devCompanyID) ,
-            company: (req.body.company==req.app.locals.devCompanyID) ? {recipients: process.env.MAILTO} : await Firebase.getCompany(req.body.company),
             origin: req.get('origin'),
             messages: [],
             fileNames: []

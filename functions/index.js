@@ -52,8 +52,9 @@ server.get('/', (req, res) => {
 // Just for development purposes
 server.get(['/form','/new'], (req, res) => {
     let companyID = req.query.companyid || server.locals.devCompanyID;
-    let formPostUrl = (req.get('host')=="127.0.0.1") 
-        ? "http://127.0.0.1/whistleblowing-app/europe-west3/whistle/" 
+    let host = req.get('host');
+    let formPostUrl = (host.includes("127.0.0.1")) 
+        ? `http://${host}/whistleblowing-app/europe-west3/whistle/` 
         : "https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/"; 
     res.render('whistleform', {companyID,formPostUrl});
 });
@@ -61,10 +62,8 @@ server.get(['/form','/new'], (req, res) => {
 
 server.post(['/','/new'], fileParser(), Whistle.constructor, async (req, res) => {
     let whistle = res.whistle;
-    if (whistle.company==null) {
-        res.status(404).send("Η αναφορά δεν καταχωρίστηκε διότι δεν βρέθηκε ο οργανισμός. Παρακαλώ, επικοινωνήστε με τον διαχειριστή σας.");
-        return;
-    }
+
+    //TODO: add handling for wrong company ID
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);

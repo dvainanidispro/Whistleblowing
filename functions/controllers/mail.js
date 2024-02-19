@@ -11,6 +11,7 @@ var transporter = nodemailer.createTransport({
     }
   });
 
+//////////////////    FIREBASE CONFIG    ////////////////
 import Firebase from './firebase.js';
 
 
@@ -23,11 +24,13 @@ import Firebase from './firebase.js';
 let aboutNewWhistle = async (whistle, attachmentsFolder) => {
 
     //TODO: add error handling
+
+    let company = await Firebase.getCompany(whistle.companyID);
     
     // prepair mail with defined transport object
     let message = {
         from: process.env.MAILFROM, // sender address
-        to: whistle.company.recipients, // list of recipients
+        to: company.recipients, // list of recipients
         subject: `Περιστατικό ${whistle.id}`, // Subject line
         //   text: whistle.description, // plain text body
         html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
@@ -65,9 +68,11 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
  * @param {object} whistle The Whistle object
  */
 let aboutNewUserMessage = async (whistle) => {
+
+    let company = await Firebase.getCompany(whistle.companyID);
     let message = {
         from: process.env.MAILFROM, // sender address
-        to: whistle.company.recipients, // list of recipients
+        to: company.recipients, // list of recipients
         subject: `Νέο μήνυμα για το περιστατικό ${whistle.id}`, // Subject line
         html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
                 <p>Παρακαλώ κάντε είσοδο στην κονσόλα διαχείρισης για να διαβάσετε το νέο μήνυμα που λάβατε.</p>
@@ -76,7 +81,7 @@ let aboutNewUserMessage = async (whistle) => {
 
     // send email
     await transporter.sendMail(message);
-    console.log("Στάληθκε email σε εταιρία"); 
+    console.log("Στάλθηκε email σε εταιρία"); 
 };
 
 
@@ -104,7 +109,7 @@ let aboutCaseUpdate = async (whistle) => {
 
     // send email
     await transporter.sendMail(message);
-    console.log("Στάληθκε email σε καταγγέλλοντα");
+    console.log("Στάλθηκε email σε καταγγέλλοντα");
     return true
 };
 
