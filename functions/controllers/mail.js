@@ -11,12 +11,16 @@ var transporter = nodemailer.createTransport({
     }
   });
 
+import Firebase from './firebase.js';
+
+
+
 /**
  * Sends the email with the whistle data and attachments to the recipients
  * @param {object} whistle The Whistle object
  * @param {string} attachmentsFolder The folder (relative path) where the attachments are stored tempoparily
  */
-let SendEmail = async (whistle, attachmentsFolder) => {
+let aboutNewWhistle = async (whistle, attachmentsFolder) => {
 
     //TODO: add error handling
     
@@ -55,4 +59,36 @@ let SendEmail = async (whistle, attachmentsFolder) => {
     // console.log("Attachments deleted");
 }
 
-export { SendEmail };
+
+/**
+ * Sends email to the company notifying about the new Message from the user
+ * @param {string} whistleID The Whistle ID
+ */
+let aboutNewUserMessage = async (whistle) => {
+    let message = {
+        from: process.env.MAILFROM, // sender address
+        to: whistle.company.recipients, // list of recipients
+        subject: `Νέο μήνυμα για το περιστατικό ${whistle.id}`, // Subject line
+        html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
+                <p>Παρακαλώ κάντε είσοδο στην κονσόλα διαχείρισης για να διαβάσετε το νέο μήνυμα που λάβατε.</p>
+        `, // html body
+    }
+
+    // send email
+    await transporter.sendMail(message);
+    console.log("Email sent");
+    
+};
+
+
+
+/**
+ * Sends email to the company notifying about the new Message from the user
+ * @param {string} whistleID The Whistle ID
+ */
+let aboutNewCompanyMessage = async (whistle) => {
+    return true
+};
+
+
+export default { aboutNewWhistle , aboutNewUserMessage , aboutNewCompanyMessage };

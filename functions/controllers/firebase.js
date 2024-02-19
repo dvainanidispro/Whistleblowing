@@ -1,10 +1,10 @@
 import {initializeApp} from "firebase-admin/app";
-initializeApp();
+initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
 import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firestore";
 const db = getFirestore();
 
 
-////////////////  GET COMPANY DETAILS FROM FIRESTORE DATABASE  ////////////////
+
 /**
  * Get company details from the Firestore database
  * @param {string} companyID 
@@ -32,14 +32,17 @@ let storeCase = async (whistle) => {
 }
 
 /**
- * Get the case from the Firestore database, in the collection 'cases'
- * @param {string} id 
+ * Get the case from the Firestore database, from the collection 'cases'
+ * @param {string} id the Whistle ID
+ * @param {string} pin If set, then the function validates it before returns
  * @returns {Promise<Object>} the case
  */
-let getCase = async (id, pin) => {
+let getCase = async (id, pin=null) => {
     id = id.trim();
     let whistle = await db.collection('cases').doc(id).get();
-    console.log(whistle.data());
+    if (pin==null) {    // return case without validation           TODO: test this!
+        return whistle.data();          
+    }
     if (whistle.data()?.pin==pin) {
         return whistle.data();
     } else {
@@ -47,6 +50,24 @@ let getCase = async (id, pin) => {
     }
 };
 
+/**
+ * Get user details from the Firestore database, from the collection users
+ * @param {string} userEmail the user's email
+ * @returns {Promise<Object>} user object
+ */
+let getUser = async (userEmail) => {
+    return db.collection('users').doc(userEmail).get();
+};
+
+
+
+
+/**
+ * Push a message to the case in the Firestore database, in the collection 'cases'
+ * @param {string} whistleID 
+ * @param {string} messageText 
+ * @returns {Promise<void>} nothing
+ */
 let pushMessage = (whistleID, messageText) => {
     let whistleRef = db.collection('cases').doc(whistleID);
     let messageObject = {
@@ -63,4 +84,4 @@ let pushMessage = (whistleID, messageText) => {
 
 
 
-export default { getCompany, storeCase, getCase, pushMessage };
+export default { getCompany, getCase, getUser, storeCase, pushMessage };
