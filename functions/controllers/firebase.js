@@ -1,5 +1,5 @@
-import {initializeApp} from "firebase-admin/app";
-initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
+import firebase from "firebase-admin";
+firebase.initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
 import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firestore";
 const db = getFirestore();
 
@@ -16,6 +16,7 @@ let getCompany = async (companyID) => {
     return company.data()??null;
 };
 
+
 /**
  * Store the case in the Firestore database, in the collection 'cases'
  * @param {*} whistle 
@@ -31,6 +32,7 @@ let storeCase = async (whistle) => {
     console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
     return whistleRef.id;
 }
+
 
 /**
  * Get the case from the Firestore database, from the collection 'cases'
@@ -50,6 +52,7 @@ let getCase = async (id, pin=null) => {
         return null;
     }
 };
+
 
 /**
  * Get user details from the Firestore database, from the collection users
@@ -84,8 +87,17 @@ let pushMessage = async (whistleID, messageText) => {
 };
 
 
+let verifyToken = async (idToken) => {
+    //If it fails, it will throw an error
+    try{
+        let decodedToken = await firebase.auth().verifyIdToken(idToken);
+        return decodedToken;
+    } catch (e) {
+        return null;    
+    }
+};
 
 
 
 
-export default { getCompany, getCase, getUser, storeCase, pushMessage };
+export default { getCompany, getCase, getUser, storeCase, pushMessage, verifyToken };

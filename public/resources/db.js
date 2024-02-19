@@ -57,6 +57,27 @@ DB.pushMessage = async function(caseDoc,message){
 };
 
 
+// Notify User
+DB.notifyUser ??= async (whistle) => {
+    if (whistle.submitter?.email==null || whistle.submitter?.email=="") {return false}
+    console.log('sending email to user...')
+
+    let response = await fetch(App.notifyUserUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userToken: await firebase.auth().currentUser.getIdToken(),
+            caseId: whistle.id,
+        }),
+    });
+    return response.json();
+};
+
+
+
+
 // firebase.auth().onAuthStateChanged(async function(user) {
 
 //     if (Q("#openCases")){

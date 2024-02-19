@@ -85,16 +85,16 @@ let aboutNewUserMessage = async (whistle) => {
  * Sends email to the company notifying about the new Message from the user
  * @param {string} whistleID The Whistle ID
  */
-let aboutNewCompanyMessage = async (whistle) => {
+let aboutCaseUpdate = async (whistle) => {
 
-    if (whistle.submitter?.email==null) {
+    if (whistle.submitter?.email==null || whistle.submitter?.email=="") {   // usually =="" if not set
         console.log("Δεν υπάρχει email αναφέροντος προς ειδοποίηση");
         return false;
     }
 
     let message = {
         from: process.env.MAILFROM, // sender address
-        to: whistle.submitter.email, // list of recipients
+        to: whistle.submitter.email, // one recipient
         subject: `Ενημέρωση για το περιστατικό ${whistle.id}`, // Subject line
         html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
                 <p>Υπάρχει νέα ενημέρωση για το περιστατικό ${whistle.id} </p>
@@ -109,4 +109,4 @@ let aboutNewCompanyMessage = async (whistle) => {
 };
 
 
-export default { aboutNewWhistle , aboutNewUserMessage , aboutNewCompanyMessage };
+export default { aboutNewWhistle , aboutNewUserMessage , aboutCaseUpdate };

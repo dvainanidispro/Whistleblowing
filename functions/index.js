@@ -101,7 +101,7 @@ server.post('/pushmessage', async (req, res) => {
     let messageText = req.body.newMessage;
     let whistle;
     try{
-        // if whistleID does not exist, then it will throw an error
+        // if whistleID is invalid, then it will throw an error
         whistle = await Firebase.pushMessage(whistleID, messageText);
         SendEmail.aboutNewUserMessage(whistle);   // do not await the email delivery
         res.send('Το νέο μήνυμα στάλθηκε στον υπεύθυνο.');
@@ -109,6 +109,27 @@ server.post('/pushmessage', async (req, res) => {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
         return;
     }
+});
+
+
+
+server.post('/notifyuser', async (req, res) => {
+    try{
+        let user = await Firebase.verifyToken(req.body.userToken);
+        if (!user) {
+            res.status(401).json("Unauthorized");
+            return;
+        }
+        // if caseId is invalid, then it will throw an error
+        let whistle = await Firebase.getCase(req.body.caseId);
+        if (user.companyID!=whistle.companyID) {
+            res.status(403).json("Unauthorized");
+            return;
+        }
+
+        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(req.body.caseId));
+        res.json(emailSent);
+    } catch (e) { res.status(404).json("Σφάλμα");}
 });
 
 
