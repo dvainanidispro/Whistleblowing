@@ -1,7 +1,7 @@
 
-    <form action="{{formPostUrl}}" method="post" enctype="multipart/form-data">
+    <form action="{{formPostUrl}}" method="post" enctype="multipart/form-data" id="whistleblowing-form">
         <div class="container mt-3">
-          <h1>Δημιουργία αναφοράς</h1>
+          <h1>Υποβολή νέας αναφοράς</h1>
 
           
           <input type="hidden" value="{{companyID}}" id="company" name="company">
@@ -10,9 +10,9 @@
           <br>
           <div class="mb-3 mt-3">
             
-            <label for="type">Τύπος παραβίασης</label>
+            <label for="type">Τύπος παραβίασης *</label>
             <select class="form-select" id="type" name="type" aria-label="Default select example" style="cursor: pointer;" required>
-              <option disabled selected value>Παρακαλώ επιλέξτε ...</option>
+              <option disabled selected value>Παρακαλώ επιλέξτε...</option>
               <option value="Οικονομική Παρατυπία">Οικονομική Παρατυπία</option>
               <option value="Παραβίαση Ασφαλείας Εργασίας">Παραβίαση Ασφαλείας Εργασίας</option>
               <option value="Περιβαλλοντική Ζημιά">Περιβαλλοντική Ζημιά</option>
@@ -26,47 +26,47 @@
       
           <div>
               <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
-              <div class="form-floating mb-3 mt-3">
-                  <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης (Προαιρετικά)" onclick="actualDate.showPicker()">
-                  <label for="dateFacade">Ημ/νία Παραβίασης (Προαιρετικά)</label>
+              <div class="mb-3 mt-3">
+                  <label for="dateFacade" class="form-label">Ημερομηνία παραβίασης (προαιρετικά)</label>
+                  <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης" onclick="actualDate.showPicker()">
                 </div>
           </div>
 
           
       
-          <div class="form-floating mb-3 mt-3">
-            <input type="text" class="form-control" id="place" name="place" placeholder="Τοποθεσία Παραβίασης (Προαιρετικά)">
-            <label for="place">Τοποθεσία Παραβίασης (Προαιρετικά)</label>
+          <div class="mb-3 mt-3">
+            <label for="place" class="form-label">Τοποθεσία παραβίασης (προαιρετικά)</label>
+            <input type="text" class="form-control" id="place" name="place" placeholder="Τοποθεσία Παραβίασης">
           </div>
       
-          <div class="form-floating mb-3 mt-3">
+          <div class="mb-3 mt-3">
+            <label for="description" class="form-label">Αναλυτική περιγραφή *</label>
             <textarea class="form-control" id="description" name="description" placeholder="Αναλυτική Περιγραφή" style="height: 200px"></textarea>
-            <label for="description">Αναλυτική Περιγραφή</label>
           </div>
            
-          <div class="form-floating mb-3 mt-3">
+          <div class="mb-3 mt-3">
+            <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά):</label>
             <input type="file" class="form-control" id="evidence" name="evidence" multiple>
-            <label for="evidence">Αποδεικτικά στοιχεία (προαιρετικά):</label>
           </div>
           
           <p><small>Τα παρακάτω στοιχεία επικοινωνίας είναι προαιρετικά, στην περίπτωση που θέλετε να ενημερώνεστε για την πορεία της αναφοράς σας ή αν χρειαστεί να επικοινωνήσουμε μαζί σας.
             Σε περίπτωση που δεν συμπληρώσετε τα παρακάτω, θα μπορείτε να παρακολουθείτε την πορεία της αναφοράς σας σε διεύθυνση (URL) που θα σας δωθεί μετά την υποβολή.
           </small></p>
           
-          <div class="form-floating mb-3 mt-3">
-            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail (Προαιρετικά)">
-            <label for="email">e-mail (προαιρετικά)</label>
+          <div class="fting mb-3 mt-3">
+            <label for="email" class="form-label">E-mail (προαιρετικά)</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail">
           </div>
 
           
       
       
-          <div class="form-floating mb-3 mt-3">
-            <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας (προαιρετικά)">
-            <label for="contact">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
+          <div class="mb-3 mt-3">
+            <label for="contact" class="form-label">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
+            <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας">
           </div>
       
-          <button type="submit" class="btn btn-primary btn-lg">Υποβολή</button>
+          <button type="submit" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
             
               
          

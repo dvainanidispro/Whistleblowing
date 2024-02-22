@@ -4,9 +4,9 @@
     --md: 768px;
     --lg: 992px;
     --xl: 1200px;
-    --primarycolor: #60b11e;
-    --backgroundcolor: hsl(122, 85%, 8%);
-    --bodybackgroundcolor: #e0facb;
+    --primarycolor: hsl(249, 52%, 29%);
+    --backgroundcolor: hsl(248, 52%, 8%);
+    --bodybackgroundcolor: lavender;
     --headertextcolor: lavender;
     --unitcolor: hsl(250, 16%, 92%);
     --display-if-user: none;
@@ -79,13 +79,13 @@ a{
     font-weight: bold;
     color: darkblue;
 }
-a:hover{color: hwb(180 10% 81%)}
+a:hover{color: hsl(248, 30%, 15%)}
 /* a:focus{outline: black solid 3px} */
 
 
 body{
+    /* font-family: "Noto Sans Armenian","Noto Sans Arabic","Noto Sans Bengali","Noto Sans Hebrew","Noto Sans HK","Noto Sans JP","Noto Sans Georgian","Noto Sans Khmer","Noto Sans KR","Noto Sans Myanmar","Noto Sans Sc","Noto Sans Tamil","Noto Sans Thaana","Noto Sans Thai","Noto Serif Tibetan",sans-serif; */
     background-color: var(--backgroundcolor);
-
     /* background-image: url('background.png'); */
     background-repeat: no-repeat; 
     /*background no-scrolling:"*/  
@@ -95,7 +95,7 @@ body{
 }
 
 
-.center-contents{
+.center-contents, .center-content{
 	display: grid;
 	place-items: center;
 }
@@ -242,6 +242,15 @@ main{
     padding: 2rem min(3rem,5%);
 }
 
+label{
+    font-weight: bold;
+}
+
+.btn{
+    padding-inline: 2rem;
+    border-radius: 2rem;
+}
+
 .btn-primary {
     background-color: var(--primarycolor);
     border-color: var(--primarycolor);
@@ -290,7 +299,6 @@ hr{
     padding: 0.75rem;
 }
 
-/*TOFIX: */
 .input-group:not(.has-validation)>.form-floating:not(:last-child) input.rounded-corners{
     border-radius: 0.375rem !important;
 }
@@ -299,7 +307,7 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     color: var(--bs-secondary);
 }
 
-/* Τα πλαίσια με τις μονάδες μέτρησης - θα μπορούσε να ήταν .unit (unit of measurement)*/
+
 .input-group > .input-group-text{
     min-width: 5rem;
     justify-content: center; /*center text (it is a flex-box)*/
@@ -355,42 +363,11 @@ textarea.form-control{
 }
 
 
-.case table{
-    font-family: var(--bs-font-monospace); 
-    font-size: min(1rem,4vw);
-    table-layout: fixed; /* widths are divided equally (or set by first row) */
-    max-width: min(var(--sm),100%);
-    border: 1px solid grey; 
-}
-
-.case table td, .case table th{
-    border: 1px solid grey; 
-    /* word-wrap: break-word; */     /* this is to split words */
-    overflow: hidden;
-    white-space: nowrap;    /* do not change line */
-    text-overflow: ellipsis;    /* βάλε "..". όταν δεν χωράει*/
-}
-
-.case table th{
-    font-size: 1.1rem;
-}
-
-/*
-.case thead th:nth-child(1){
-    width:40%;
-}
-.case thead th:last-child(1){
-    width:60%;
-}
-*/
-
-
-.btn-case{
-    text-align: start;
-    border-color: silver;
-}
-
 input[readonly], .input[readonly]:focus, .input[readonly]:active{
     background-color: lightgray !important;
 }
 
+
+.bold{
+    font-weight: bold;
+}

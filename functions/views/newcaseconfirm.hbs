@@ -1,0 +1,32 @@
+<p>Η αναφορά καταχωρίστηκε με τα παρακάτω στοιχεία:</p>
+
+
+<table class="table table-striped table-primary table-hover">
+    <tr>
+        <td>Aριθμός αναφοράς</td>
+        <td>{{whistle.id}}</td>
+    </tr>
+    <tr>
+        <td>PIN</td>
+        <td>{{whistle.pin}}</td>
+    </tr>
+</table>
+
+
+<div class="alert alert-danger" role="alert">
+    <div><span class="bold">ΠΡΟΣΟΧH!</span> Παρακαλώ, αποθηκεύστε αυτά τα στοιχεία για να μπορείτε να παρακολουθείτε την εξέλιξη της υπόθεσης. 
+    Σε περίπτωση που τα χάσετε, δεν θα μπορέσετε να τα ανακτήσετε ξανά.</div>
+    <button id="showInstuctions" class="btn btn-danger">Επιβεβαιώνω ότι τα αποθήκευσα</button>
+</div>
+
+<div id="instructions" class="d-none alert alert-success" role="alert">Ευχαριστούμε! Μπορείτε να παρακολουθείτε την εξέλιξη της υπόθεσης σε <a href="https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/case">αυτή τη σελίδα</a>
+χρησιμοποιώντας τα παραπάνω στοιχεία.</div>
+
+
+<script>
+    document.getElementById('showInstuctions').addEventListener('click', function() {
+        document.getElementById('instructions').classList.remove('d-none');
+        document.getElementById('showInstuctions').classList.add('d-none');
+    });
+</script>
+

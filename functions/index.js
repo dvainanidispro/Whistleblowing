@@ -134,6 +134,18 @@ server.post('/notifyuser', async (req, res) => {
 
 
 
+server.get("/test-new", (req, res) => {
+    let whistle = {id: 1234567890123456, pin: 1234}
+    res.render('newcaseconfirm',{whistle});
+});
+
+server.get("/test-case", (req, res) => {
+    let whistle = JSON.parse('{"messages":[{"date":{"seconds":1707469862,"nanoseconds":470000000},"order":1,"role":"Υπεύθυνος","text":"Αυτό είναι το πρώτο μήνυμα","user":"vainanidis@computerstudio.gr"},{"user":"vainanidis@computerstudio.gr","date":{"seconds":1707470658,"nanoseconds":323000000},"role":"Υπεύθυνος","order":2,"text":"Αυτό είναι το δεύτερο μήνυμα"},{"role":"Καταγγέλων","text":"Τρίτο μήνυμα από τον καταγγέλοντα"},{"role":"Καταγγέλων","date":{"seconds":1707595514,"nanoseconds":695000000},"text":"τέταρτο"},{"date":{"seconds":1708347710,"nanoseconds":727000000},"user":"vainanidis@computerstudio.gr","order":5,"text":"Πέμπτο μήνυμα","role":"Υπεύθυνος"},{"text":"έκτο","role":"Υπεύθυνος","date":{"seconds":1708353674,"nanoseconds":71000000},"order":6,"user":"vainanidis@computerstudio.gr"},{"date":{"seconds":1708357891,"nanoseconds":154000000},"role":"Υπεύθυνος","user":"vainanidis@computerstudio.gr","order":7,"text":"κι άλλο!"},{"date":{"seconds":1708359274,"nanoseconds":263000000},"text":"Καινούργιο μήνυμα από καταγγέλλοντα","role":"Καταγγέλων"},{"role":"Καταγγέλων","date":{"seconds":1708371778,"nanoseconds":531000000},"text":"Δώσε"}],"fileNames":[],"type":"Παραβίαση Ασφαλείας Εργασίας","description":"Μαζί τα φάγαμε!","submitter":{"contact":"694","email":"dvainanidis@gmail.com"},"isTest":true,"title":"Κοίτα να δεις 12","company":{"recipient":"dimitris@computerstudio.gr"},"origin":"http://127.0.0.1","id":"0254538630584255","companyID":"bkueHt76TQiUW7G8p1BK","submittedAt":{"seconds":1706926727,"nanoseconds":275000000},"status":"under investigation","date":"2024-02-02","pin":"1339","place":"Εδώ"}');
+    res.render('viewcase', {whistle, whistleTable: Whistle.toHTMLTable(whistle)});
+});
+
+
+
 
 server.get("*", (req, res) => {
     console.log(req.url);
