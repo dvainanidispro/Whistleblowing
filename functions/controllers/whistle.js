@@ -1,6 +1,8 @@
 import fs from 'fs';
 
-//////////////    UNIQUE     ///////////////
+
+
+//////////////          UNIQUE         ///////////////
 import ShortUniqueId from 'short-unique-id';
 const uid = new ShortUniqueId({
     dictionary: 'number',
@@ -11,6 +13,12 @@ const pin = new ShortUniqueId({
     length: 4
 });
 
+//////////////    FIRESTORE DATES     ///////////////
+import {Timestamp} from "firebase-admin/firestore";
+/** Converts a Firestore timestamp to a JavaScript date */
+const timestampToDate = (timestamp) => {
+    return (new Timestamp(timestamp.seconds, timestamp.nanoseconds)).toDate();
+};
 
 
 
@@ -39,7 +47,7 @@ let Whistle = {
                 contact: req.body.contact,
             },
             companyID: req.body.company,
-            isTest: (req.body.company==req.app.locals.devCompanyID) ,
+            isTest: (req.body.company==req.app.locals.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
             fileNames: []
@@ -73,10 +81,27 @@ let Whistle = {
         return table;
     },
 
-    viewFormat: (whistle) => {
-
-
+    whistleMap: function (status){
+        let mapping = {
+            "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
+            "pending": "Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης",
+            "under investigation": "Υπο διερεύνηση - Ερευνάται η εγκυρότητα της καταγγελίας",
+            "under resolution": "Υπο επίλυση - Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης",
+            "completed": "Ολοκληρώθηκε",
+            "rejected": "Απορρίφθηκε",
+            "cancelled": "Ακυρώθηκε",
+        };
+        return mapping[status];
     },
+
+    toHumanFormat: function (whistle) {
+        let clientWhistle = whistle;
+        clientWhistle.status = this.whistleMap(whistle.status);
+        clientWhistle.messages.forEach(message=>{
+            message.date = timestampToDate(message.date).toLocaleDateString();
+        });
+        return clientWhistle;
+    }
 
 
 

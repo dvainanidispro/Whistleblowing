@@ -242,7 +242,7 @@ main{
     padding: 2rem min(3rem,5%);
 }
 
-label{
+label:not(.form-check-label) {
     font-weight: bold;
 }
 
@@ -283,7 +283,7 @@ header .app-title, .text-shadow{
 
 
 hr{
-    margin-block: 1.8rem;
+    margin-block: 1.5rem;
 }
 
 /* Χρειάζεται για διαδοχικά στοιχεία element/group */
@@ -354,17 +354,12 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     border: var(--unknown-answer);
 } 
 
-#testPatient:checked {
-    background-color: red;
-}
-
 textarea.form-control{
     min-height: 6rem;
 }
 
-
 input[readonly], .input[readonly]:focus, .input[readonly]:active{
-    background-color: lightgray !important;
+    background-color: hsl(249, 50%, 95%) !important;
 }
 
 

@@ -243,6 +243,10 @@ main{
     padding: 2rem min(3rem,5%);
 }
 
+label:not(.form-check-label) {
+    font-weight: bold;
+}
+
 .btn-primary {
     background-color: var(--primarycolor);
     border-color: var(--primarycolor);
@@ -352,34 +356,10 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     border: var(--unknown-answer);
 } 
 
-#testPatient:checked {
-    background-color: red;
-}
-
 textarea.form-control{
     min-height: 6rem;
 }
 
-
-.case table{
-    font-family: var(--bs-font-monospace); 
-    font-size: min(1rem,4vw);
-    table-layout: fixed; /* widths are divided equally (or set by first row) */
-    max-width: min(var(--sm),100%);
-    border: 1px solid grey; 
-}
-
-.case table td, .case table th{
-    border: 1px solid grey; 
-    /* word-wrap: break-word; */     /* this is to split words */
-    overflow: hidden;
-    white-space: nowrap;    /* do not change line */
-    text-overflow: ellipsis;    /* βάλε "..". όταν δεν χωράει*/
-}
-
-.case table th{
-    font-size: 1.1rem;
-}
 
 /*
 .case thead th:nth-child(1){
@@ -400,3 +380,35 @@ input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled
     background-color: hsl(249, 50%, 95%) !important;
 }
 
+.case-item{
+    min-height: 5rem;
+    margin: 0.4rem;
+    padding: 0.8rem;
+    
+    background: rgba(7, 90, 174, 0.05);
+    border-radius: 10px;
+    box-shadow: 2px 2px 7px 0px rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(7, 90, 174, 0.17);
+
+    display: block;
+ 
+ /*
+ border-style: solid;
+   border-width: thin;
+ border-color: var(--primary-color);
+ */
+ 
+ /* display: flex;
+ justify-content: space-between;
+ align-items: center; */
+}
+
+.case-item:hover, .case-item:hover {
+ background: rgba(7, 90, 174, 0.15);
+}
+
+.red{
+    color: darkred;
+}

@@ -4,11 +4,19 @@
           <h1>Υποβολή νέας αναφοράς</h1>
 
           
-          <input type="hidden" value="{{companyID}}" id="company" name="company">
+          <input type="hidden" readonly value="{{company.id}}" id="company" name="company">
           
         
           <br>
-          <div class="mb-3 mt-3">
+
+            <div class="mb-3 mt-3">
+                <label for="companyName">Οργανισμός</label>
+                <input type="text" class="form-control" id="companyName" name="companyName" value="{{company.name}}" disabled>
+            </div>
+            <p><small>Πριν συνεχίσετε, παρακαλώ, βεβαιωθείτε ότι οδηγηθήκατε σε αυτή τη σελίδα από το επίσημο website του οργανισμού σας 
+                κι όχι από άλλη προέλευση (όπως μέσω link σε e-mail), γιατί η αναφορά ενδέχεται να αποσταλεί σε μη έμπιστο προορισμό 
+                κι όχι στον υπεύθυνο του οργανισμού σας.</small></p>
+            <hr>
             
             <label for="type">Τύπος παραβίασης *</label>
             <select class="form-select" id="type" name="type" aria-label="Default select example" style="cursor: pointer;" required>
@@ -22,7 +30,6 @@
               <option value="Παράβαση Δεδομένων Ιδιωτικότητας">Παράβαση Δεδομένων Ιδιωτικότητας</option>
               <option value="Υγειονομικές Παραβάσεις">Υγειονομικές Παραβάσεις</option>
             </select>
-          </div>
       
           <div>
               <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
@@ -40,7 +47,7 @@
           </div>
       
           <div class="mb-3 mt-3">
-            <label for="description" class="form-label">Αναλυτική περιγραφή *</label>
+            <label for="description" class="form-label">Αναλυτική περιγραφή περιστατικού *</label>
             <textarea class="form-control" id="description" name="description" placeholder="Αναλυτική Περιγραφή" style="height: 200px"></textarea>
           </div>
            
@@ -48,22 +55,34 @@
             <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά):</label>
             <input type="file" class="form-control" id="evidence" name="evidence" multiple>
           </div>
-          
-          <p><small>Τα παρακάτω στοιχεία επικοινωνίας είναι προαιρετικά, στην περίπτωση που θέλετε να ενημερώνεστε για την πορεία της αναφοράς σας ή αν χρειαστεί να επικοινωνήσουμε μαζί σας.
-            Σε περίπτωση που δεν συμπληρώσετε τα παρακάτω, θα μπορείτε να παρακολουθείτε την πορεία της αναφοράς σας σε διεύθυνση (URL) που θα σας δωθεί μετά την υποβολή.
-          </small></p>
-          
-          <div class="fting mb-3 mt-3">
-            <label for="email" class="form-label">E-mail (προαιρετικά)</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="e-mail">
-          </div>
 
+          <hr>
+        
+
+
+          <p><small>Τα στοιχεία επικοινωνίας σας είναι προαιρετικά και θα παραμείνουν πάντα εμπιστευτικά. Μπορείτε να τα συμπληρώσετε στην περίπτωση που θέλετε να ενημερώνεστε για την πορεία της αναφοράς σας ή στην περίπτωση που θα χρειαστεί να επικοινωνήσουμε μαζί σας για διευκρινίσεις.
+            Αν δεν τα συμπληρώσετε, θα μπορείτε να παρακολουθείτε την πορεία της αναφοράς σας σε διεύθυνση (URL) που θα σας δωθεί μετά την υποβολή.
+          </small></p>
+
+          <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="agree" id="gdpr">
+                <label class="form-check-label" for="gdpr">
+                    Έχω διαβάσει και κατανοήσει την Πολιτική Προστασίας Προσωπικών Δεδομένων και επιθυμώ να δώσω στοιχεία επικοινωνίας.
+                </label>
+           </div>
+
+           <div class="d-none" id="contactDiv">
           
-      
-      
-          <div class="mb-3 mt-3">
-            <label for="contact" class="form-label">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
-            <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας">
+                <div class="fting mb-3 mt-3">
+                    <label for="email" class="form-label">E-mail (προαιρετικά)</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="e-mail">
+                </div>
+
+                <div class="mb-3 mt-3">
+                    <label for="contact" class="form-label">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
+                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας" >
+                </div>
+
           </div>
       
           <button type="submit" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
@@ -75,7 +94,17 @@
 
 
       <script>
+        console.log('Company ID:' + document.getElementById('company').value);
         let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
+        document.getElementById('gdpr').addEventListener('change',{
+            handleEvent(e){
+                if(e.target.checked){
+                    document.getElementById('contactDiv').classList.remove('d-none');
+                }else{
+                    document.getElementById('contactDiv').classList.add('d-none');
+                }
+            }
+        })
         // document.getElementById('dateFacade').addEventListener('click',e=>{
         //     //show datepicker
         //     e.target.showPicker();

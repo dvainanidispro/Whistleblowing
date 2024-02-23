@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Υπηρεσία Αναφορών Whistleblowing">
     <meta name="author" content="Computer Studio">
-    <meta name="theme-color" content="#60b11e">
+    <meta name="theme-color" content="#2f2370">
     <link href="/resources/favicon.ico" rel="shortcut icon">
     <title>Υπηρεσία Αναφορών Whistleblowing</title>
 
@@ -65,18 +65,16 @@
 
         <div class="cases-frame" id="casesFrame">
 
-            <ul x-data="{cases: []}" x-init="cases = await DB.fetchOpenCases()" class="open-cases" id="openCases" >
+            <div x-data="{cases: []}" x-init="cases = await DB.fetchOpenCases()" class="open-cases" id="openCases" >
                 <template x-for="item in cases" :key="item.id">
-                    <li>
-                        <a :href="'/pages/case.html?caseid=' + item.id">
-                            <span x-text="item.id"></span> 
+                        <a :href="'/pages/case.html?caseid=' + item.id" class="case-item">
+                            <div x-text="item.id"></div> 
                             <!-- <span x-text="item.submittedAt.toDate().toLocaleDateString()"></span> -  -->
-                            <span x-show="item.title">- </span>
-                            <span x-text="item.title"></span>
+                            <div x-text="item.title"></div>
+                            <div class="red" x-show="item.status=='initial'">Νέα υπόθεση!</div>
                         </a>
-                    </li>
                 </template>
-            </ul>
+            </div>
 
         </div>
 

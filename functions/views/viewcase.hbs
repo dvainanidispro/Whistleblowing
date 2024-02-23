@@ -1,4 +1,29 @@
 
+<h1>Αναφορά {{whistle.id}}</h1>
+
+<h2>Στοιχεία υπόθεσης</h2>
+
+<label>Τύπος παραβίασης</label>
+<p>{{whistle.type}}</p>
+
+<label>Ημερομηνία παραβίασης</label>
+<p>{{whistle.date}}</p>
+
+<label>Τοποθεσία παραβίασης</label>
+<p>{{whistle.place}}</p>
+
+<label>Αναλυτική περιγραφή περιστατικού</label>
+<p>{{whistle.description}}</p>
+
+<label>Κατάσταση υπόθεσης</label>
+<p>{{whistle.status}}</p>
+
+<hr>
+
+<h2>Μηνύματα υπόθεσης</h2>
+
+
+
 
 {{#each whistle.messages}}
     <div class="row">
@@ -14,7 +39,7 @@
 
 <form method="POST" action="./pushmessage">
     <div class="my-3">
-        <label for="newMessage">Νέο μήνυμα ή σημείωση προς τον υπεύθυνο</label>
+        <label for="newMessage">Νέο μήνυμα προς τον υπεύθυνο</label>
         <textarea class="form-control" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
         <div class="form-text">
             Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
@@ -22,7 +47,7 @@
     </div>
     <input type="hidden" name="caseId" value="{{whistle.id}}">
 
-    <button type="submit" class="btn btn-success my-2" id="submitBtn">Δημοσίευση μηνύματος</button>
+    <button type="submit" class="btn btn-success my-2" id="submitBtn">Καταχώριση μηνύματος</button>
 </form>
 
 
@@ -30,4 +55,4 @@
 
 <hr>
 
-{{{whistleTable}}}
+{{!-- {{{whistleTable}}} --}}

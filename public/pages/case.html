@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Υπηρεσία Αναφορών Whistleblowing">
     <meta name="author" content="Computer Studio">
-    <meta name="theme-color" content="#60b11e">
+    <meta name="theme-color" content="#2f2370">
     <link href="/resources/favicon.ico" rel="shortcut icon">
     <title>Υπηρεσία Αναφορών Whistleblowing</title>
 
@@ -83,9 +83,12 @@
                     <!-- General Tab -->
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="general-tab-pane" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
-                            <h2>Στοιχεία υπόθεσης</h2>
 
-                            <label class="mt-3" for="status">Κατάσταση υπόθεσης</label>
+                            <hr>
+                            <h2 >Στοιχεία υπόθεσης</h2>
+
+                            <div class="my-3">
+                            <label for="status">Κατάσταση υπόθεσης</label>
                             <select x-model="caseDoc.status" class="form-select" id="status" name="status" aria-label="Default select example" required>
                                 <option x-show="!caseDoc.status" disabled selected value></option>
                                 <option value="initial">Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας</option>
@@ -97,7 +100,7 @@
                                 <option value="cancelled">Ακυρώθηκε</option>
                             </select>
                             <p x-show="caseDoc.status=='initial'" class="alert alert-danger my-1 py-2">Παρακαλώ, αλλάξτε την κατάσταση της υπόθεσης.</p>
-                
+                            </div>
                             
                             <div class="my-3">
                                 <label for="title">Τίτλος υπόθεσης</label>
@@ -106,6 +109,16 @@
                                 <div class="form-text">
                                     Σύντομος τίτλος ο οποίος θα εμφανίζεται στην αρχική οθόνη των καταγγελιών.
                                 </div>
+                            </div>
+
+                            <div class="my-3">
+                                <label>Αριθμός υπόθεσης</label>
+                                <div x-text="caseDoc.id"></div>
+                            </div>
+
+                            <div class="my-3">
+                                <label>Ημερομηνία καταγγελίας</label>
+                                <div x-text="caseDoc.submittedAt.toDate().toLocaleDateString()"></div>
                             </div>
                 
                             <hr>
@@ -130,23 +143,29 @@
                 
                             <div class="my-3">
                                 <label for="date">Ημερομηνία παραβίασης (έτος-μήνας-ημέρα)</label>
-                                <input x-model="caseDoc.date" readonly type="text" class="form-control" id="date" placeholder="-" >
+                                <!-- <input x-model="caseDoc.date" readonly type="text" class="form-control" id="date" placeholder="-" > -->
+                                <div x-text="caseDoc.date"></div>
                             </div>
                 
                             <div class="my-3">
                                 <label for="place">Τοποθεσία παραβίασης</label>
-                                <input x-model="caseDoc.place" readonly type="text" class="form-control" id="place" placeholder="-">
+                                <!-- <input x-model="caseDoc.place" readonly type="text" class="form-control" id="place" placeholder="-"> -->
+                                <div x-text="caseDoc.place"></div>
                             </div>
                 
                 
                             <div class="my-3">
                                 <label for="description">Αρχική περιγραφή</label>
-                                <textarea x-model="caseDoc.description" readonly class="form-control" id="description" placeholder="Αναλυτική Περιγραφή" rows="5"></textarea>
+                                <!-- <textarea x-model="caseDoc.description" readonly class="form-control" id="description" placeholder="Αναλυτική Περιγραφή" rows="5"></textarea> -->
+                                <div x-text="caseDoc.description"></div>
                             </div>
                 
-                            <div class="my-3">
+                            <div class="my-3" x-show="caseDoc.fileNames.length">
                                 <label for="fileNames">Αρχεία</label>
-                                <input x-model="caseDoc.fileNames" type="text" class="form-control" id="fileNames" placeholder="-" readonly>
+                                <!-- <input x-model="caseDoc.fileNames" type="text" class="form-control" id="fileNames" placeholder="-" readonly> -->
+                                <template x-for="file in caseDoc.fileNames">
+                                    <div x-text="file"></div>
+                                </template>
                             </div>
 
                             <hr>
@@ -167,18 +186,16 @@
 
                     <!-- Comminication Tab -->
                     <div class="tab-pane fade" id="communication-tab-pane" role="tabpanel" aria-labelledby="communication-tab" tabindex="0">
+
+                        <hr>
                         <h2>Στοιχεία καταγγελίας</h2>
                         <div class="my-3">
-                            <label for="submittedAt">Ημ/νία καταγγελίας</label>
-                            <input x-model="caseDoc.submittedAt.toDate().toLocaleDateString()" type="text" class="form-control" id="submittedAt" placeholder="Ημ/νία καταγγελίας" readonly>
-                        </div>
-                        <div class="my-3">
                             <label for="email">E-mail καταγγέλοντα</label>
-                            <input x-model="caseDoc.submitter.email" readonly type="text" class="form-control" id="email" placeholder="-">
+                            <div x-text="caseDoc.submitter.email"></div>
                         </div>
                         <div class="my-3">
                             <label for="contact">Λοιπά στοιχεία επικοινωνίας</label>
-                            <input x-model="caseDoc.submitter.contact" readonly type="text" class="form-control" id="contact" placeholder="-">
+                            <div x-text="caseDoc.submitter.contact"></div>
                         </div>
             
                         <hr>
@@ -222,23 +239,18 @@
 
 
 
+            </div></template>
+
+        </div>
 
 
+        <hr>
+        <div class="my-4 center-contents">
+            <a class="btn btn-secondary" href="/pages/home.html">Επιστροφή στις υποθέσεις</a>
+        </div>
 
-
-
-            <!-- <div x-html="App.whistleToHTMLTable(caseDoc)"></div> -->
-
-
-
-
-
-        </div></template>
-
-    </div>
-
-    <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
-    <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
+        <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
+        <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
 
     </main>
 

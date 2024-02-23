@@ -10,7 +10,7 @@ let showToast = (toastID) => {
 DB.fetchOpenCases = async function(){
     let user = await App.user();
     let companyID = await db.collection("users").doc(user.email).get().then(me => {return me.data().companyID});
-    let cases = await db.collection("cases").where('companyID','==',companyID).get();
+    let cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
     let openCases = [];
     cases.forEach((caseDoc) =>{
         let doc = caseDoc.data();

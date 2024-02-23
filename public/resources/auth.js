@@ -72,6 +72,14 @@ App.user ??= () => {
        }, reject);
     });
 };
+App.user.token ??= async () => {
+    let user = await App.user();
+    return await user.getIdToken();
+};
+App.user.claims ??= async () => {
+    let user = await App.user();
+    return (await user.getIdTokenResult()).claims;
+};
 
 
 
