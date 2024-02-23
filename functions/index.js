@@ -44,9 +44,13 @@ import Firebase from './controllers/firebase.js';
 
 
 server.get('/', (req, res) => {
-  // logger.info("Hello logs!", {structuredData: true});
-  res.send("Καλωσήρθατε στην υπηρεσία ανώνυμης αναφοράς παραβίασης του Κώδικα Δεοντολογίας της εταιρείας σας.");
+    res.json("Καλώς ήρθατε στην υπηρεσία καταγγελιών του οργανισμού σας. H υπηρεσία διατίθεται από την Computer Studio Α.Ε.");
 });
+
+server.get('/home', (req, res) => {
+    res.render("homepage");
+});
+
 
 
 // Just for development purposes
@@ -71,7 +75,7 @@ server.post(['/','/new'], fileParser(), Whistle.constructor, async (req, res) =>
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);
     SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);      //do not await the email delivery
-    res.send(`Η αναφορά καταχωρίστηκε με αριθμό αναφοράς: ${whistle.id} και PIN: ${whistle.pin}.`);
+    res.render('newcaseconfirm',{whistle});
 });
 
 
@@ -93,7 +97,7 @@ server.post('/case', async (req, res) => {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
         return;
     }
-    res.render('viewcase', {whistle, whistleTable: Whistle.toHTMLTable(whistle)});
+    res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
 
@@ -106,12 +110,13 @@ server.post('/pushmessage', async (req, res) => {
         // if whistleID is invalid, then it will throw an error
         whistle = await Firebase.pushMessage(whistleID, messageText);
         SendEmail.aboutNewUserMessage(whistle);   // do not await the email delivery
-        res.send('Το νέο μήνυμα στάλθηκε στον υπεύθυνο.');
+        res.render('messageok');
     } catch (e) {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
         return;
     }
 });
+
 
 
 
@@ -137,6 +142,7 @@ server.post('/notifyuser', async (req, res) => {
 
 
 
+//////////////////   TEST PAGES   //////////////////
 server.get("/test-new", (req, res) => {
     let whistle = {id: 1234567890123456, pin: 1234}
     res.render('newcaseconfirm',{whistle});
@@ -147,9 +153,12 @@ server.get("/test-case", (req, res) => {
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
+server.get('/test-pushmessage', (req, res) => {
+    res.render('messageok');
+});
 
 
-
+//////////////////       404       //////////////////
 server.get("*", (req, res) => {
     console.log(req.url);
     res.status(404).send("Η σελίδα δεν βρέθηκε.");
