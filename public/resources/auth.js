@@ -20,48 +20,9 @@ App.notifyUserUrl ??= 'https://europe-west3-whistleblowing-app.cloudfunctions.ne
 const appCheck = firebase.appCheck();
 appCheck.activate('6LcLAnEpAAAAAEHXuFLhEojhtCCFPsAsDKTS51xO',true);
 
+
+
 ////////////////////////////////   EVENTS ON SIGN IN AND SIGN OUT   ////////////////////////////////
-
-/** Document Event that gets triggered when firebase.auth().currentUser is ready */ 
-
-// sign-in & sign-out
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        console.debug("User is signed in");
-        console.debug({user});
-        // sessionStorage.setItem('UserEmail',user.email);
-        App.setCssVariable('--display-if-guest','none');
-        App.setCssVariable('--display-if-user','block');
-        Q("~email").set(user.email);
-        // Q("~displayName").set(user.displayName);
-    } else {
-        if (App.path != "/") {
-            console.debug("User has not signed in. Redirecting...");
-            window.location.href = "/"
-        } else {
-            App.setCssVariable('--display-if-guest','block');
-            App.setCssVariable('--display-if-user','none');
-        };
-    }
-});
-
-
-// sign-in, sign-out, and token refresh events
-// firebase.auth().onIdTokenChanged(async function(user) {  
-    // try{
-        // if (!user) {return}  
-        // Είναι περίεργο που καλείς το getIdToken μέσα στο onIdTokenChanged 
-		// διότι το getIdToken ανανεώνει το Token αν έχει λήξει. 
-        // Δεν δημιουργείται infinite loop επειδή το getIdToken δεν αλλάζει πάντα το token, παρά μόνο όταν έχει λήξει.
-        // Άρα, μόνο με αλλαγή του token, θα εκτελεστεί 2 φορές το onIdTokenChanged (παρόλο που το token θα αλλάξει την πρώτη φορά).
-        // Όμως, θα πρέπει να μπει εδώ (κι όχι στο onAuthStateChanged) ο παρακάτω κώδικας 
-        // ώστε να ενημερώνεται πάντα το αντίστοιχο cookie. 
-        // let accessToken = await user.getIdToken().then((accessToken) => {return accessToken});
-        // window.cookies.set("__session", accessToken, cookieDuration);
-        // console.debug("User is signed in or token was refreshed.");
-    // } catch(e){}
-// });
-
 
 /** Returns the user, whenever becomes available (or null if logged off) */
 App.user ??= () => {
@@ -76,10 +37,33 @@ App.user.token ??= async () => {
     let user = await App.user();
     return await user.getIdToken();
 };
-App.user.claims ??= async () => {
+App.user.claims ??= async (claim=null) => {
     let user = await App.user();
-    return (await user.getIdTokenResult()).claims;
+    return claim ? (await user.getIdTokenResult()).claims[claim] : (await user.getIdTokenResult()).claims;
 };
+
+
+// sign-in & sign-out
+firebase.auth().onAuthStateChanged(async function(user) {
+    if (user) {
+        console.debug("User is signed in");
+        console.debug({user});
+        localStorage.getItem('companyID') || localStorage.setItem('companyID', await App.user.claims('companyID'));
+        App.setCssVariable('--display-if-guest','none');
+        App.setCssVariable('--display-if-user','block');
+        Q("~email").set(user.email);
+        // Q("~displayName").set(user.displayName);
+    } else {
+        if (App.path != "/") {
+            console.warn("User has not signed in. Redirecting...");
+            window.location.href = "/"
+        } else {
+            App.setCssVariable('--display-if-guest','block');
+            App.setCssVariable('--display-if-user','none');
+        };
+    }
+});
+
 
 
 

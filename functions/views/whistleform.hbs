@@ -85,7 +85,14 @@
 
           </div>
       
-          <button type="submit" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
+            <div class="d-flex">
+                <button type="submit" id="submit-btn" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
+                <div id="post-spinner" class="m-3 spinner-border text-primary d-none" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+
             
               
          
@@ -94,7 +101,7 @@
 
 
       <script>
-        console.log('Company ID:' + document.getElementById('company').value);
+        console.debug('Company ID: ' + document.getElementById('company').value);
         let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
         document.getElementById('gdpr').addEventListener('change',{
             handleEvent(e){
@@ -104,11 +111,12 @@
                     document.getElementById('contactDiv').classList.add('d-none');
                 }
             }
-        })
-        // document.getElementById('dateFacade').addEventListener('click',e=>{
-        //     //show datepicker
-        //     e.target.showPicker();
-        // });
+        });
+        document.getElementById('submit-btn').addEventListener('click',()=>{
+            if ( document.getElementById('whistleblowing-form').reportValidity() ) {     // if form is valid
+                document.getElementById('post-spinner').classList.remove('d-none');     // show spinner
+            }
+        });
       </script>
       
       

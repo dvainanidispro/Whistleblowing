@@ -8,8 +8,7 @@ let showToast = (toastID) => {
 };
 
 DB.fetchOpenCases = async function(){
-    let user = await App.user();
-    let companyID = await db.collection("users").doc(user.email).get().then(me => {return me.data().companyID});
+    let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
     let cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
     let openCases = [];
     cases.forEach((caseDoc) =>{
@@ -17,7 +16,6 @@ DB.fetchOpenCases = async function(){
         openCases.push(doc);
     });
     return openCases;
-    // return cases.map((doc) => doc.data());
 };
 
 DB.fetchCase = async function(caseID){
@@ -60,9 +58,9 @@ DB.pushMessage = async function(caseDoc,message){
 // Notify User (not belongs exactly in the DB object...)
 DB.notifyUser ??= async (whistle) => {
     if (whistle.submitter?.email==null || whistle.submitter?.email=="") {return false}
-    console.log('sending email to user...')
+    console.log('Sending email to user...');
 
-    /*let response = await */fetch(App.notifyUserUrl, {
+    fetch(App.notifyUserUrl, {
         method: 'POST',
         mode: 'no-cors', // we do not need an answer
         headers: {
@@ -73,29 +71,5 @@ DB.notifyUser ??= async (whistle) => {
             caseId: whistle.id,
         }),
     });
-    // return response;
 };
 
-
-
-
-// firebase.auth().onAuthStateChanged(async function(user) {
-
-//     if (Q("#openCases")){
- 
-
-//         let companyID = await db.collection("users").doc(user.email).get().then(me => {return me.data().companyID});
-//         let cases = await db.collection("cases").where('companyID','==',companyID).get();
-        
-//         console.log({cases});
-        
-//         cases.forEach((caseDoc) =>{
-//             let doc = caseDoc.data();
-//             Q("#openCases").insertAdjacentHTML('beforeend',`<li>${doc.id} - ${doc.description} - ${doc.date}</li>`);
-//         });
-        
-
-//     } // if Q("#openCases")
-
-
-// });
