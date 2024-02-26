@@ -102,14 +102,12 @@ server.post('/case', async (req, res) => {
 
 
 
-server.post('/pushmessage', async (req, res) => {
-    let whistleID = req.body.caseId;
-    let messageText = req.body.newMessage;
-    let whistle;
+server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
+    let message = res.message;
     try{
         // if whistleID is invalid, then it will throw an error
-        whistle = await Firebase.pushMessage(whistleID, messageText);
-        SendEmail.aboutNewUserMessage(whistle);   // do not await the email delivery
+        let whistle = await Firebase.pushMessage(message);
+        SendEmail.aboutNewUserMessage(whistle, server.locals.uploadFolder);   // do not await the email delivery
         res.render('messageok');
     } catch (e) {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
@@ -153,17 +151,9 @@ server.get("/test-case", (req, res) => {
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
-server.post('/test-pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
-    let message = res.message;
-    console.log(message);
-    try{
-        whistle = await Firebase.pushMessage(message);
-        SendEmail.aboutNewUserMessage(message, server.locals.uploadFolder);   // do not await the email delivery
-        res.render('messageok');
-    } catch (e) {
-        res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
-        return;
-    }
+server.get('/test-pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
+    let message = {caseId: "1234567890123456", text: "Αυτό είναι ένα μήνυμα από τον καταγγέλων", fileNames: []};
+    res.render('messageok');
 });
 
 

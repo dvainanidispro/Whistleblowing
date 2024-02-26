@@ -28,7 +28,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
     let company = await Firebase.getCompany(whistle.companyID);
     
     // prepair mail with defined transport object
-    let message = {
+    let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
         subject: `Περιστατικό ${whistle.id}`, // Subject line
@@ -52,7 +52,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
     };
 
     // send email
-    await transporter.sendMail(message);
+    await transporter.sendMail(mail);
     console.log("Στάλθηκε email σε εταιρία");
     
     //delete attachments
@@ -71,7 +71,8 @@ let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
 
     // prepair mail
     let company = await Firebase.getCompany(whistle.companyID);
-    let message = {
+    let message = whistle.messages[whistle.messages.length-1];   // the last message
+    let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
         subject: `Νέο μήνυμα για το περιστατικό ${whistle.id}`, // Subject line
@@ -88,11 +89,11 @@ let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
     }
 
     // send email
-    await transporter.sendMail(message);
+    await transporter.sendMail(mail);
     console.log("Στάλθηκε email σε εταιρία");
 
     //delete attachments
-    whistle.fileNames.forEach(fileName => {
+    message.fileNames.forEach(fileName => {
         fs.unlinkSync(attachmentsFolder + fileName);
     });
 };

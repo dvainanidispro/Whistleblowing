@@ -78,6 +78,7 @@ let pushMessage = async (message) => {
         // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
         role: 'Καταγγέλων',
+        fileNames: message.fileNames,
         // user: 'Ανώνυμος'
     };
     // if there is no whistle with this id, it will throw an error
