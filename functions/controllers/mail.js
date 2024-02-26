@@ -43,10 +43,10 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
                 <h2>Αναλυτική Περιγραφή</h2>
                 <p>${whistle.description}</p>
         `, // html body
-        attachments: whistle.fileNames.map(fileName => {
+        attachments: whistle.filenames.map(filename => {
             return {
-                filename: fileName,
-                path: path.resolve(attachmentsFolder + fileName),   // resolve = relative to absolute path
+                filename: filename,
+                path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
             }
         }),
     };
@@ -56,8 +56,8 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
     console.log("Στάλθηκε email σε εταιρία");
     
     //delete attachments
-    whistle.fileNames.forEach(fileName => {
-        fs.unlinkSync(attachmentsFolder + fileName);
+    whistle.filenames.forEach(filename => {
+        fs.unlinkSync(attachmentsFolder + filename);
     });
     // console.log("Attachments deleted");
 }
@@ -80,10 +80,10 @@ let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
                 <h2>Νέο μήνυμα από χρήστη</h2>
                 <p>${message.text}</p>
         `, // html body
-        attachments: message.fileNames.map(fileName => {
+        attachments: message.filenames.map(filename => {
             return {
-                filename: fileName,
-                path: path.resolve(attachmentsFolder + fileName),   // resolve = relative to absolute path
+                filename: filename,
+                path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
             }
         }),
     }
@@ -93,8 +93,8 @@ let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
     console.log("Στάλθηκε email σε εταιρία");
 
     //delete attachments
-    message.fileNames.forEach(fileName => {
-        fs.unlinkSync(attachmentsFolder + fileName);
+    message.filenames.forEach(filename => {
+        fs.unlinkSync(attachmentsFolder + filename);
     });
 };
 

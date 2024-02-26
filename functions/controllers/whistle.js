@@ -50,7 +50,7 @@ let Whistle = {
             isTest: (req.body.company==req.app.locals.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
-            fileNames: [],
+            filenames: [],
         };
     
         req.files.forEach(file => {
@@ -58,7 +58,7 @@ let Whistle = {
             fs.writeFileSync(req.app.locals.uploadFolder + file.originalname, file.buffer, (err) => {
                 if (err) throw err;
             }); 
-            whistle.fileNames.push(file.originalname);
+            whistle.filenames.push(file.originalname);
         });
     
         res.whistle = whistle;
@@ -107,14 +107,14 @@ let Whistle = {
         let message = {
             text: req.body.newmessage,
             caseId: req.body.caseId,
-            fileNames: [],
+            filenames: [],
         };
         req.files.forEach(file => {
             if (file.originalname == "") {return}   // if file exists (req.files always has something)
             fs.writeFileSync(req.app.locals.uploadFolder + file.originalname, file.buffer, (err) => {
                 if (err) throw err;
             }); 
-            message.fileNames.push(file.originalname);
+            message.filenames.push(file.originalname);
         });
         res.message = message;
         next();

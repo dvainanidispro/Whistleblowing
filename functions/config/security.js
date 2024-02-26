@@ -1,5 +1,5 @@
 'use strict';
-const helmet = require('helmet');
+import helmet from "helmet";
 
 
 // Security headers

@@ -78,13 +78,13 @@ let pushMessage = async (message) => {
         // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
         role: 'Καταγγέλων',
-        fileNames: message.fileNames,
+        filenames: message.filenames,
         // user: 'Ανώνυμος'
     };
     // if there is no whistle with this id, it will throw an error
     await whistleRef.update({
         messages: FieldValue.arrayUnion(messageObject),
-        fileNames: FieldValue.arrayUnion(...message.fileNames)
+        filenames: FieldValue.arrayUnion(...message.filenames)
     });   // this returns nothing (void)
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
     return (await whistleRef.get()).data();

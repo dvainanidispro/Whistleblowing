@@ -160,10 +160,10 @@
                                 <div x-text="caseDoc.description"></div>
                             </div>
                 
-                            <div class="my-3" x-show="caseDoc.fileNames.length">
-                                <label for="fileNames">Αρχεία</label>
-                                <!-- <input x-model="caseDoc.fileNames" type="text" class="form-control" id="fileNames" placeholder="-" readonly> -->
-                                <template x-for="file in caseDoc.fileNames">
+                            <div class="my-3" x-show="caseDoc.filenames.length">
+                                <label for="filenames">Αρχεία</label>
+                                <!-- <input x-model="caseDoc.filenames" type="text" class="form-control" id="filenames" placeholder="-" readonly> -->
+                                <template x-for="file in caseDoc.filenames">
                                     <div x-text="file"></div>
                                 </template>
                             </div>
