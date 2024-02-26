@@ -50,7 +50,7 @@ let Whistle = {
             isTest: (req.body.company==req.app.locals.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
-            fileNames: []
+            fileNames: [],
         };
     
         req.files.forEach(file => {
@@ -101,7 +101,24 @@ let Whistle = {
             message.date = timestampToDate(message.date).toLocaleDateString();
         });
         return clientWhistle;
-    }
+    },
+
+    messageConstructor: function (req, res, next) {
+        let message = {
+            text: req.body.newmessage,
+            caseId: req.body.caseId,
+            fileNames: [],
+        };
+        req.files.forEach(file => {
+            if (file.originalname == "") {return}   // if file exists (req.files always has something)
+            fs.writeFileSync(req.app.locals.uploadFolder + file.originalname, file.buffer, (err) => {
+                if (err) throw err;
+            }); 
+            message.fileNames.push(file.originalname);
+        });
+        res.message = message;
+        next();
+    },
 
 
 

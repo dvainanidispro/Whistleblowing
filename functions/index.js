@@ -112,7 +112,7 @@ server.post('/pushmessage', async (req, res) => {
         SendEmail.aboutNewUserMessage(whistle);   // do not await the email delivery
         res.render('messageok');
     } catch (e) {
-        res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID.");
+        res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
         return;
     }
 });
@@ -153,8 +153,17 @@ server.get("/test-case", (req, res) => {
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
-server.get('/test-pushmessage', (req, res) => {
-    res.render('messageok');
+server.post('/test-pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
+    let message = res.message;
+    console.log(message);
+    try{
+        whistle = await Firebase.pushMessage(message);
+        SendEmail.aboutNewUserMessage(message, server.locals.uploadFolder);   // do not await the email delivery
+        res.render('messageok');
+    } catch (e) {
+        res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
+        return;
+    }
 });
 
 

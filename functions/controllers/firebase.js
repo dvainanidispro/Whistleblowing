@@ -70,18 +70,21 @@ let getUser = (userEmail) => {
  * @param {string} messageText 
  * @returns {Promise<Object>} the case
  */
-let pushMessage = async (whistleID, messageText) => {
-    let whistleRef = db.collection('cases').doc(whistleID);
+let pushMessage = async (message) => {
+    let whistleRef = db.collection('cases').doc(message.caseId);
     let messageObject = {
         // order: '-',
-        text: messageText,
+        text: message.text,
         // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
         role: 'Καταγγέλων',
         // user: 'Ανώνυμος'
     };
     // if there is no whistle with this id, it will throw an error
-    await whistleRef.update({messages: FieldValue.arrayUnion(messageObject)});   // this returns nothing (void)
+    await whistleRef.update({
+        messages: FieldValue.arrayUnion(messageObject),
+        fileNames: FieldValue.arrayUnion(...message.fileNames)
+    });   // this returns nothing (void)
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
     return (await whistleRef.get()).data();
 };

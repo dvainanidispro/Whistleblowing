@@ -37,17 +37,26 @@
     </div>
 {{/each}}
 
-<form method="POST" action="./pushmessage">
+
+<hr>
+
+{{!-- TODO: change action --}}
+<form method="POST" action="./test-pushmessage" enctype="multipart/form-data">
     <div class="my-3">
-        <label for="newMessage">Νέο μήνυμα προς τον υπεύθυνο</label>
-        <textarea class="form-control" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
+        <label for="newmessage">Νέο μήνυμα προς τον υπεύθυνο</label>
+        <textarea class="form-control" id="newmessage" name="newmessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
         <div class="form-text">
             Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
         </div>
     </div>
     <input type="hidden" name="caseId" value="{{whistle.id}}">
 
-    <button type="submit" class="btn btn-success my-2" id="submitBtn">Καταχώριση μηνύματος</button>
+    <div class="mb-3 mt-3">
+        <label for="evidence" class="form-label">Νέα αποδεικτικά στοιχεία (προαιρετικά):</label>
+        <input type="file" class="form-control" id="evidence" name="evidence" multiple>
+    </div>
+
+    <button type="submit" class="btn btn-success my-2" id="submitBtn" disabled>Καταχώριση μηνύματος</button>
 </form>
 
 
@@ -56,3 +65,21 @@
 <hr>
 
 {{!-- {{{whistleTable}}} --}}
+
+
+<script>
+    document.getElementById("newmessage").addEventListener("input", function() {
+        if (this.value.length > 0) {
+            document.getElementById("submitBtn").disabled = false;
+        } else {
+            document.getElementById("submitBtn").disabled = true;
+        }
+    });
+    document.getElementById("evidence").addEventListener("change", function() {
+        if (this.files.length > 0) {
+            document.getElementById("submitBtn").disabled = false;
+        } else {
+            document.getElementById("submitBtn").disabled = true;
+        }
+    });
+</script>

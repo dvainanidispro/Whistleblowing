@@ -67,21 +67,34 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
  * Sends email to the company notifying about the new Message from the user
  * @param {object} whistle The Whistle object
  */
-let aboutNewUserMessage = async (whistle) => {
+let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
 
+    // prepair mail
     let company = await Firebase.getCompany(whistle.companyID);
     let message = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
         subject: `Νέο μήνυμα για το περιστατικό ${whistle.id}`, // Subject line
-        html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
-                <p>Παρακαλώ κάντε είσοδο στην κονσόλα διαχείρισης για να διαβάσετε το νέο μήνυμα που λάβατε.</p>
+        html: /*html*/`<h1>Περιστατικό ${whistle.id} - Νέο μήνυμα</h1>
+                <h2>Νέο μήνυμα από χρήστη</h2>
+                <p>${message.text}</p>
         `, // html body
+        attachments: message.fileNames.map(fileName => {
+            return {
+                filename: fileName,
+                path: path.resolve(attachmentsFolder + fileName),   // resolve = relative to absolute path
+            }
+        }),
     }
 
     // send email
     await transporter.sendMail(message);
-    console.log("Στάλθηκε email σε εταιρία"); 
+    console.log("Στάλθηκε email σε εταιρία");
+
+    //delete attachments
+    whistle.fileNames.forEach(fileName => {
+        fs.unlinkSync(attachmentsFolder + fileName);
+    });
 };
 
 
