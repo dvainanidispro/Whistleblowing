@@ -5,9 +5,6 @@ window.App ??= {};
 
 let App = window.App;
 // let dynamicLinkDomain = window.location.hostname;
-App.domain ??= window.location.hostname;
-App.path ??= window.location.pathname;
-App.port ??= window.location.port ? `:${window.location.port}` : "";
 App.verificationUrl ??= `${window.location.protocol}//${window.location.hostname}${App.port}/pages/verify.html`;
 // App.notifyUserUrl ??= 'http://127.0.0.1:81/whistleblowing-app/europe-west3/whistle/notifyuser';  // for local testing
 App.notifyUserUrl ??= 'https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/notifyuser';
@@ -116,12 +113,15 @@ const actionCodeSettings = {
 });
 
 // Sign Out
-Q(".signOutBtn").on('click',function(e){
-    firebase.auth().signOut().then(() => {
-        window.location.href = "/";
-    }).catch((error) => {
-        console.log(error);
+window.addEventListener('load', function() {
+    Q(".signOutBtn").on('click',function(e){
+        firebase.auth().signOut().then(() => {
+            window.location.href = "/";
+        }).catch((error) => {
+            console.log(error);
+        });
     });
 });
+
 
 

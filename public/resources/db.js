@@ -3,13 +3,15 @@ const db = firebase.firestore();
 
 window.DB = {};
 
-let showToast = (toastID) => {
-    (new bootstrap.Toast( Q(`#${toastID}`) )).show();
-};
-
-DB.fetchOpenCases = async function(){
+DB.fetchCases = async function(){
+    let closed = (App.getParams.closed=='true');
     let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
-    let cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
+    let cases;
+    if (!closed){
+        cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
+    } else if (closed){
+        cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['completed','rejected','cancelled']).get();
+    }
     let openCases = [];
     cases.forEach((caseDoc) =>{
         let doc = caseDoc.data();
@@ -22,7 +24,7 @@ DB.fetchCase = async function(caseID){
     let caseDoc = await db.collection("cases").doc(caseID).get();
     let doc = caseDoc.data();
     return doc;
-}
+};
 
 DB.updateCase = async function(caseDoc){
     let caseID = caseDoc.id;
@@ -33,8 +35,18 @@ DB.updateCase = async function(caseDoc){
     }
     await db.collection("cases").doc(caseID).update(dataToUpdate);
     console.debug('Case updated');
-    try{showToast('saved')}catch(e){console.error(e)};
-}
+    App.showToast('saved');
+};
+
+DB.deleteCase = async function(caseDoc){
+    //confirmation
+    if ( confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε οριστικά την παρούσα υπόθεση; Δεν θα είναι δυνατή η επαναφορά της.') == false ) {return}
+    let caseID = caseDoc.id;
+    await db.collection("cases").doc(caseID).delete();
+    console.debug('Case deleted');
+    sessionStorage.setItem('toast','deleted');
+    window.location.href = '/pages/home.html';
+};
 
 DB.pushMessage = async function(caseDoc,message){
     let caseID = caseDoc.id;
@@ -50,7 +62,7 @@ DB.pushMessage = async function(caseDoc,message){
     }
     await db.collection("cases").doc(caseID).update(dataToUpdate);
     console.debug('Message pushed');
-    try{showToast('pushed')}catch(e){console.error(e)};
+    App.showToast('pushed');
     window.location.reload(); // refresh the page
 };
 

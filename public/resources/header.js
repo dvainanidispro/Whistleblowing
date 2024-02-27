@@ -6,8 +6,10 @@ let navDiv = /*HTML*/`
                 Μενού
             </button>
             <ul class="dropdown-menu dropdown-menu-dark" >  
-                    <li><a class="dropdown-item" href="/login" rel="noindex">Σύνδεση χρήστη</a></li>
-                    <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
+                    <li><a class="dropdown-item" href="/pages/home.html" rel="noindex">Ανοικτές υποθέσεις</a></li>
+                    <li><a class="dropdown-item" href="/pages/home.html?closed=true" rel="noindex">Κλειστές υποθέσεις</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><button class="dropdown-item signOutBtn">Αποσύνδεση</button></li>
             </ul>
         </div>
     </nav>
@@ -15,14 +17,12 @@ let navDiv = /*HTML*/`
 
 
 let AppHeader = /*HTML*/`
-
-
+        <div></div>
         <a href="/pages/home.html" class="index-link" aria-label="Home Page">
             <img src="/resources/logo.png" class="logo small-shadow" alt="Logo"/>
             <span class="h1 app-title"></span>
         </a>
-
-
+        ${navDiv}
 `;
 
 

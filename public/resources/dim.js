@@ -2,7 +2,11 @@
 
  /** App Global Settings */
 window.App = {};
- 
+App.domain ??= window.location.hostname;
+App.path ??= window.location.pathname;
+App.port ??= window.location.port ? `:${window.location.port}` : "";
+
+
 /** 
  * Returns the selected DOM elements, by ID, class, e.t.c.  
 */
@@ -122,3 +126,14 @@ class BootstrapToast extends HTMLElement {
 }
 window.customElements.define('bootstrap-toast',BootstrapToast);
 
+App.showToast = (toastID) => {
+    try{
+        (new bootstrap.Toast( Q(`#${toastID}`) )).show();
+    } catch (e) {console.error(e)}
+};
+document.addEventListener('DOMContentLoaded',()=>{
+    if ( sessionStorage.getItem('toast') ) {
+        App.showToast(sessionStorage.getItem('toast'));
+        sessionStorage.removeItem('toast');
+    }
+});

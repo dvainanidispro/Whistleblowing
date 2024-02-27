@@ -177,7 +177,9 @@
                                 </label>
                               </div>
                             
+                              <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
                             <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
+
 
                         </div>
                     <!-- General Tab -->
@@ -243,6 +245,8 @@
 
         </div>
 
+        
+
 
         <hr>
         <div class="my-4 center-contents">
@@ -251,6 +255,11 @@
 
         <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
         <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
+        <bootstrap-toast data-id="deleted" data-message="Η υπόθεση διαγράφτηκε!"></bootstrap-toast>
+
+
+
+
 
     </main>
 
