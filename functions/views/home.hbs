@@ -1,0 +1,93 @@
+<!-- Κείμενο αρχικής οθόνης -->
+<p>
+    Η παρούσα πλατφόρμα αποτελεί ένα εμπιστευτικό κανάλι ηλεκτρονικής υποβολής αναφορών για τον Oργανισμό <span data-variable="companyName">{companyName}</span>, το οποίο μπορείτε να αξιοποιήσετε για να υποβάλετε αναφορά για παραβιάσεις του ενωσιακού δικαίου τις οποίες αντιληφθήκατε εντός του εργασιακού σας πλαισίου. 
+</p>
+
+<p>
+Η πλατφόρμα ηλεκτρονικής υποβολής αναφορών αφορά την προστασία των προσώπων που αναφέρουν παραβιάσεις ενωσιακού δικαίου (whistleblowers) και έχει ως στόχο την διευκόλυνση και την ενθάρρυνση της υποβολής των εμπιστευτικών αναφορών και των πληροφοριών από άτομα, δίχως το φόβο αντιποίνων. 
+</p>
+
+<p>
+Συγκεκριμένα αποτελεί υποχρέωση βάσει της Ευρωπαϊκής Οδηγίας 2019/1937, όπως αυτή ενσωματώθηκε στο Εθνικό Δίκαιο βάσει του ν. 4990/2022. Περισσότερες πληροφορίες για το Νόμο 4990/2022 μπορείτε να δείτε εδώ. 
+</p>
+
+<p>
+Αν αποτελείτε εργαζόμενο ή σας συνδέσει οποιαδήποτε εργασιακή σχέση με το Φορέα και αποκτήσατε πληροφορίες στο πλαίσιο της εργασιακής σας σχέσης ή ακόμα και αν η εργασιακή σας σχέση έχει λήξει ή δεν έχει ξεκινήσει ακόμα, μπορείτε να υποβάλετε αναφορά εδώ. 
+</p>
+
+<!-- Κουμπί υποβολής -->
+<div class="center-contents">
+    <button type="button" class="btn btn-primary my-3 text-center" data-bs-toggle="modal" data-bs-target="#infoModal" >ΥΠΟΒΟΛΗ ΑΝΑΦΟΡΑΣ</button>
+</div>
+
+
+
+
+<hr>
+
+<p>Αν έχετε ήδη υποβάλει την αναφορά σας, εισαγάγετε εδώ τα στοιχεία της για να δείτε την εξέλιξή της:</p>
+
+<form method="POST" action="./case" enctype="application/x-www-form-urlencoded">
+  <div class="">
+    <label for="case" class="form-label">Aριθμός αναφοράς</label>
+    <input name="id" type="text" class="form-control" id="case" value="{{caseId}}" required>
+  </div>
+  <div class="">
+    <label for="pin" class="form-label">PIN αναφοράς</label>
+    <input name="pin" type="password" class="form-control" id="pin">
+  </div>
+  <div class="center-contents">
+    <button type="submit" class="btn btn-primary mt-5" required>ΠΡΟΒΟΛΗ ΑΝΑΦΟΡΑΣ</button>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="infoModalLabel">Σημαντική ενημέρωση</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+    <!-- Κείμενο pop-up -->
+      <div class="modal-body">
+        <p>
+            Η διαχείριση και παρακολούθηση των αναφορών που υποβάλλονται στον παρόντα εσωτερικό δίαυλο γίνεται από τον <span data-variable="companyName">{companyName}</span>. Τυχόν προκύπτουσες πειθαρχικές παραβάσεις διερευνώνται με βάση τον δημοσιοϋπαλληλικό κώδικα. Οι τυχόν ποινικές παραβάσεις διερευνώνται σύμφωνα με την ισχύουσα νομοθεσία. Τα προσωπικά δεδομένα των προσώπων που ονοματίζονται στην αναφορά θα προστατεύονται σύμφωνα με την κείμενη ενωσιακή και εθνική νομοθεσία περί προστασίας των προσωπικών δεδομένων (GDPR, ν. 4624/2019) και τις διατάξεις του Κεφαλαίου ΣΤ΄ του ν. 4990/2022.
+        </p>
+        <p>
+            Οι εσωτερικές αναφορές δύνανται να υποβληθούν, πέρα από την παρούσα ηλεκτρονική πλατφόρμα, και μέσω των ακόλουθων καναλιών: 
+        </p>
+        <ul>
+            <li>υποβολή αυτοπροσώπως ή ταχυδρομικά στην έδρα του Οργανισμού</li>
+            <li>email στην ηλεκτρονική διεύθυνση <span data-variable="companyEmail">{companyEmail}</span></li>
+            <li>προσωπική συνάντηση με τον Υ.Π.Π.Α. του ΦΟΡΕΑ κατόπιν αιτήματός στο <span data-variable="companyEmail">{companyEmail}</span> ή στην τηλεφωνική γραμμή <span data-variable="companyPhone">{companyPhone}</span> (Δευτέρα - Παρασκευή  09:00 έως 17:00)</li>
+            <li>τηλεφωνική κλήση στην τηλεφωνική γραμμή <span data-variable="companyEmail">{companyEmail}</span> ή στην τηλεφωνική γραμμή <span data-variable="companyWhistlePhone">{companyWhistlePhone}</span> (Δευτέρα - Παρασκευή  09:00 έως 17:00)</li>
+        </ul>
+        <p>
+            Εάν θέλετε να διατηρήσετε την ανωνυμία σας, θα πρέπει να χρησιμοποιήσετε το λογισμικό Tor για να υποβάλετε μια αναφορά <a href="https://www.torproject.org/download/">https://www.torproject.org/download/</a>. Μπορείτε να κατεβάσετε τον browser από εδώ: <a href="https://www.torproject.org/download/">https://www.torproject.org/download/</a>. Λειτουργεί όπως ο Safari, o Chrome ή άλλοι browsers, με τη διαφορά ότι ο Τor αποκρύπτει τα διαδικτυακά ίχνη σας. Αφού κατεβάσετε και εγκαταστήσετε τονTor, μπορείτε να εισέλθετε στην διεύθυνση <span data-variable="companyWhistleURL">{companyWhistleURL}</span> χρησιμοποιώντας τον Τοr, οπότε η διαδικτυακή σας διεύθυνση θα παραμένει μυστική.
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ΚΛΕΙΣΙΜΟ</button>
+        <a href="./new" class="btn btn-primary">ΣΥΝΕΧΕΙΑ</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+    if (window.location.pathname.endsWith('/whistle')) {window.location.href = window.location + "/"}
+</script>

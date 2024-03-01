@@ -1,24 +1,24 @@
 
     <form action="{{formPostUrl}}" method="post" enctype="multipart/form-data" id="whistleblowing-form">
         <div class="container mt-3">
-          <h1>Υποβολή νέας αναφοράς</h1>
+            <h1>Υποβολή νέας αναφοράς</h1>
 
           
-          <input type="hidden" readonly value="{{company.id}}" id="company" name="company">
+            <input type="hidden" readonly value="{{company.id}}" id="company" name="company">
           
         
-          <br>
+            <br>
 
-            <div class="mb-3 mt-3">
+            <div class="">
                 <label for="companyName">Οργανισμός</label>
                 <input type="text" class="form-control" id="companyName" name="companyName" value="{{company.name}}" disabled>
             </div>
-            <p><small>Πριν συνεχίσετε, παρακαλώ, βεβαιωθείτε ότι οδηγηθήκατε σε αυτή τη σελίδα από το επίσημο website του οργανισμού σας 
+            <small>Πριν συνεχίσετε, βεβαιωθείτε ότι οδηγηθήκατε σε αυτή τη σελίδα από το επίσημο website του οργανισμού σας 
                 κι όχι από άλλη προέλευση (όπως μέσω link σε e-mail), γιατί η αναφορά ενδέχεται να αποσταλεί σε μη έμπιστο προορισμό 
-                κι όχι στον υπεύθυνο του οργανισμού σας.</small></p>
+                κι όχι στον υπεύθυνο του οργανισμού σας.</small>
             <hr>
             
-            <label for="type">Τύπος παραβίασης *</label>
+            {{!-- <label for="type">Τύπος παραβίασης *</label>
             <select class="form-select" id="type" name="type" aria-label="Default select example" style="cursor: pointer;" required>
               <option disabled selected value>Παρακαλώ επιλέξτε...</option>
               <option value="Οικονομική Παρατυπία">Οικονομική Παρατυπία</option>
@@ -29,62 +29,139 @@
               <option value="Παράβαση Εταιρικών Πολιτικών">Παράβαση Εταιρικών Πολιτικών</option>
               <option value="Παράβαση Δεδομένων Ιδιωτικότητας">Παράβαση Δεδομένων Ιδιωτικότητας</option>
               <option value="Υγειονομικές Παραβάσεις">Υγειονομικές Παραβάσεις</option>
-            </select>
+            </select> --}}
       
-          <div>
-              <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
-              <div class="mb-3 mt-3">
-                  <label for="dateFacade" class="form-label">Ημερομηνία παραβίασης (προαιρετικά)</label>
-                  <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης" onclick="actualDate.showPicker()">
-                </div>
-          </div>
+            <div>
+                <div class="mb-3 mt-3">
+                    <label for="dateFacade" class="form-label">Πότε συνέβη το περιστατικό; (προαιρετικά)</label>
+                    <div class="form-check">
+                        <input class="form-check-input generaldate" type="radio" name="datetype" value="before5years" id="before5years">
+                        <label class="form-check-label" for="before5years">
+                            Περισσότερα από 5 χρόνια πριν
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input generaldate" type="radio" name="datetype" value="recent5years" id="recent5years">
+                        <label class="form-check-label" for="recent5years">
+                            Λιγότερο από 5 χρόνια πριν
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="datetype" value="specificdate" id="specificdate">
+                        <label class="form-check-label" for="specificdate">
+                            Συγκεκριμένη ημερομηνία
+                        </label>
+                    </div>
+                    <div id="specificdatepicker" class="d-none ms-5">
+                        <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης" onclick="actualDate.showPicker()">
+                        <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
+                    </div>
+                    </div>
+            </div>
 
           
       
-          <div class="mb-3 mt-3">
-            <label for="place" class="form-label">Τοποθεσία παραβίασης (προαιρετικά)</label>
-            <input type="text" class="form-control" id="place" name="place" placeholder="Τοποθεσία Παραβίασης">
-          </div>
+            <div class="">
+                <label for="people" class="form-label">Παραθέστε τα φυσικά πρόσωπα που εμπλέκονται στην υπόθεση (προαιρετικά)</label>
+                <input type="text" class="form-control" id="people" name="people" placeholder=" Πρόσωπα">
+            </div>
       
-          <div class="mb-3 mt-3">
-            <label for="description" class="form-label">Αναλυτική περιγραφή περιστατικού *</label>
-            <textarea class="form-control" id="description" name="description" placeholder="Αναλυτική Περιγραφή" style="height: 200px"></textarea>
-          </div>
+            <div class="">
+                <label for="description" class="form-label">Παρακαλούμε περιγράψτε αναλυτικά το περιστατικό  *</label>
+                <small>Η τεκμηριωμένη απάντηση διευκολύνει σημαντικά τη διερεύνηση της αναφοράς</small>
+                <textarea class="form-control" id="description" name="description" placeholder="Περιγραφή" rows="4" required></textarea>
+            </div>
            
-          <div class="mb-3 mt-3">
-            <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά):</label>
-            <input type="file" class="form-control" id="evidence" name="evidence" multiple>
-          </div>
+            <div class="">
+                <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά)</label>
+                <small>Μπορείτε να επισυνάψετε σχετικά αρχεία που υποστηρίζουν την αναφορά σας ή περιγράφουν το περιστατικό (όπως pdf, jpeg, κλπ με ανώτατο συνολικό όριο τα 10ΜΒ)</small>
+                <input type="file" class="form-control" id="evidence" name="evidence" multiple>
+            </div>
 
-          <hr>
+            <div class="">
+                <label class="form-label mt-4">Σημαντική ενημέρωση *</label>
+                <small>Στην περίπτωση που η αναφορά σας δεν εμπίπτει από τις επιλογές οι οποίες αποτελούν το πεδίο εφαρμογής του ν. 4990/2022 (ΦΕΚ Α' 210), αλλά προκύπτουν ενδείξεις τέλεσης αξιόποινης πράξης που διώκεται αυτεπαγγέλτως τότε η αναφορά σας διαβιβάζεται στις αρμόδιες εισαγγελικές αρχές με παράλληλη σχετική ενημέρωσή σας.<br>
+                Επισημαίνεται ότι σε αυτή την περίπτωση δεν συντρέχουν οι προϋποθέσεις προστασίας του ν. 4990/2022 (ΦΕΚ Α' 210).</small>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="notice" id="legal" required>
+                    <label class="form-check-label" for="legal">
+                        Έλαβα γνώση της ενημέρωσης
+                    </label>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="">
+                <label class="form-label mt-4">Πολιτική Προστασίας Προσωπικών Δεδομένων *</label>
+                <small>Πατήστε το "Διαβάστε αναλυτικά" και ενημερωθείτε για την Πολιτική Προστασίας Προσωπικών Δεδομένων.</small>
+
+                <a href="#" class="d-inline-flex align-items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                    <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z"/>
+                </svg>Διαβάστε αναλυτικά</a>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="gdpr" id="gdpr" required>
+                    <label class="form-check-label" for="gdpr">
+                        Διάβασα και κατανόησα την Πολιτική Προστασίας Προσωπικών Δεδομένων
+                    </label>
+                </div>
+            </div>
         
 
 
-          <p><small>Τα στοιχεία επικοινωνίας σας είναι προαιρετικά και θα παραμείνουν πάντα εμπιστευτικά. Μπορείτε να τα συμπληρώσετε στην περίπτωση που θέλετε να ενημερώνεστε για την πορεία της αναφοράς σας ή στην περίπτωση που θα χρειαστεί να επικοινωνήσουμε μαζί σας για διευκρινίσεις.
-            Αν δεν τα συμπληρώσετε, θα μπορείτε να παρακολουθείτε την πορεία της αναφοράς σας σε διεύθυνση (URL) που θα σας δωθεί μετά την υποβολή.
-          </small></p>
 
-          <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="agree" id="gdpr">
-                <label class="form-check-label" for="gdpr">
-                    Έχω διαβάσει και κατανοήσει την Πολιτική Προστασίας Προσωπικών Δεδομένων και επιθυμώ να δώσω στοιχεία επικοινωνίας.
+            <div class="">
+                <label>Θέλετε να αναφέρετε τα στοιχεία σας;</label>
+                <small>Η υποβολή των στοιχείων δεν είναι υποχρεωτική. Mπορείτε να την υποβάλλετε και ανώνυμα την αναφορά. Σε περίπτωση που κάνετε αναφορά, είτε επώνυμα είτε ανώνυμα, οι πληροφορίες παραμένουν εμπιστευτικές.</small>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="contact" id="contact">
+                <label class="form-check-label" for="contact">
+                    Επιθυμώ να κάνω επώνυμη αναφορά.
                 </label>
-           </div>
+            </div>
 
-           <div class="d-none" id="contactDiv">
+
+           <div class="d-none ms-5" id="contactDiv">
+
+
+                <div class="">
+                    <label for="firstname" class="form-label mt-2">Όνομα</label>
+                    <input type="text" class="form-control" id="firstname" name="firstname" >
+                </div>
+
+                 <div class="">
+                    <label for="surname" class="form-label mt-2">Επώνυμο</label>
+                    <input type="text" class="form-control" id="surname" name="surname" >
+                </div>
           
-                <div class="fting mb-3 mt-3">
-                    <label for="email" class="form-label">E-mail (προαιρετικά)</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="e-mail">
+                <div class="">
+                    <label for="email" class="form-label mt-2">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" >
                 </div>
 
-                <div class="mb-3 mt-3">
-                    <label for="contact" class="form-label">Λοιπά στοιχεία επικοινωνίας (προαιρετικά)</label>
-                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Λοιπά στοιχεία επικοινωνίας" >
+                <div class="">
+                    <label for="phone" class="form-label mt-2">Τηλέφωνο</label>
+                    <input type="text" class="form-control" id="phone" name="phone" >
                 </div>
 
-          </div>
+               <div class="form-check my-3">
+                    <input class="form-check-input" type="checkbox" name="notificationagree" value="notificationagree" id="notificationagree">
+                    <label class="form-check-label" for="notificationagree">
+                        Επιθυμώ να ενημερώνομαι μέσω e-mail ή/και SMS για την πορεία της υπόθεσης, πιθανή ερώτηση κλπ.
+                        <small>Σε περίπτωση που δεν επιθυμείτε, θα πρέπει να επισκέπτεστε την πλατφόρμα για να παρακολουθείτε την εξέλιξη. </small>
+                    </label>
+                </div>             
+
+
+
+            </div>
+
+            <hr>
       
+            <div>
+                <small>Βεβαιωθείτε ότι μετά την υποβολή της αναφοράς, θα εμφανιστεί μύνημα επιτυχούς παράδοσης.</small>
+            </div>
             <div class="d-flex">
                 <button type="submit" id="submit-btn" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
                 <div id="post-spinner" class="m-3 spinner-border text-primary d-none" role="status">
@@ -100,23 +177,38 @@
       </form>
 
 
-      <script>
+
+
+    <script>
         console.debug('Company ID: ' + document.getElementById('company').value);
         let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
-        document.getElementById('gdpr').addEventListener('change',{
-            handleEvent(e){
+        document.getElementById('contact').addEventListener('change',e=>{
                 if(e.target.checked){
                     document.getElementById('contactDiv').classList.remove('d-none');
+                    document.querySelectorAll('#contactDiv input.form-control').forEach(input=>{
+                        input.setAttribute('required',true);
+                    }); 
                 }else{
                     document.getElementById('contactDiv').classList.add('d-none');
+                    document.querySelectorAll('#contactDiv input.form-control').forEach(input=>{
+                        input.removeAttribute('required');
+                    });
                 }
-            }
+        });
+        document.getElementsByName('datetype').forEach(radio=>{
+            radio.addEventListener('change',e=>{
+                if(e.target.value === 'specificdate'){
+                    document.getElementById('specificdatepicker').classList.remove('d-none');
+                }else{
+                    document.getElementById('specificdatepicker').classList.add('d-none');
+                }
+            });
         });
         document.getElementById('submit-btn').addEventListener('click',()=>{
             if ( document.getElementById('whistleblowing-form').reportValidity() ) {     // if form is valid
                 document.getElementById('post-spinner').classList.remove('d-none');     // show spinner
             }
         });
-      </script>
+    </script>
       
       

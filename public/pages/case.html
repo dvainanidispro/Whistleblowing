@@ -124,38 +124,22 @@
                             <hr>
                 
                             <h2>Στοιχεία παράβασης</h2>
-                
-                            <label class="mt-3" for="type">Τύπος παραβίασης</label>
-                            <select x-model="caseDoc.type" class="form-select" id="type" name="type" aria-label="Default select example" required>
-                                <option x-show="!caseDoc.type" disabled selected value></option>
-                                <option value="Οικονομική Παρατυπία">Οικονομική Παρατυπία</option>
-                                <option value="Παραβίαση Ασφαλείας Εργασίας">Παραβίαση Ασφαλείας Εργασίας</option>
-                                <option value="Περιβαλλοντική Ζημιά">Περιβαλλοντική Ζημιά</option>
-                                <option value="Παραβίαση Πνευματικών Δικαιωμάτων">Παραβίαση Πνευματικών Δικαιωμάτων</option>
-                                <option value="Διακρίσεις/Παρενόχληση στο Χώρο Εργασίας">Διακρίσεις/Παρενόχληση στο Χώρο Εργασίας</option>
-                                <option value="Παράβαση Εταιρικών Πολιτικών">Παράβαση Εταιρικών Πολιτικών</option>
-                                <option value="Παράβαση Δεδομένων Ιδιωτικότητας">Παράβαση Δεδομένων Ιδιωτικότητας</option>
-                                <option value="Υγειονομικές Παραβάσεις">Υγειονομικές Παραβάσεις</option>
-                            </select>
-                
-                
+
                 
                 
                             <div class="my-3">
                                 <label for="date">Ημερομηνία παραβίασης (έτος-μήνας-ημέρα)</label>
-                                <!-- <input x-model="caseDoc.date" readonly type="text" class="form-control" id="date" placeholder="-" > -->
-                                <div x-text="caseDoc.date"></div>
+                                <div x-text="caseDoc.date.date??caseDoc.date.type"></div>
                             </div>
-                
+
                             <div class="my-3">
-                                <label for="place">Τοποθεσία παραβίασης</label>
-                                <!-- <input x-model="caseDoc.place" readonly type="text" class="form-control" id="place" placeholder="-"> -->
-                                <div x-text="caseDoc.place"></div>
+                                <label for="people">Πρόσωπα που εμπλέκονται</label>
+                                <div x-text="caseDoc.people"></div>
                             </div>
                 
                 
                             <div class="my-3">
-                                <label for="description">Αρχική περιγραφή</label>
+                                <label for="description">Περιγραφή</label>
                                 <!-- <textarea x-model="caseDoc.description" readonly class="form-control" id="description" placeholder="Αναλυτική Περιγραφή" rows="5"></textarea> -->
                                 <div x-text="caseDoc.description"></div>
                             </div>

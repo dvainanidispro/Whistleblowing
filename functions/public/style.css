@@ -243,7 +243,14 @@ main{
 }
 
 label:not(.form-check-label) {
+    display: block;
     font-weight: bold;
+    margin-top: 1.2rem;
+    margin-bottom: 0;
+}
+
+small{
+    display: block;
 }
 
 .btn{
@@ -358,10 +365,13 @@ textarea.form-control{
     min-height: 6rem;
 }
 
-input[readonly], .input[readonly]:focus, .input[readonly]:active{
-    background-color: hsl(249, 50%, 95%) !important;
+input, textarea, select{
+    margin-top: 0.3rem;
 }
 
+input[readonly], input[disabled], .input[readonly]:focus, .input[readonly]:active{
+    background-color: hsl(249, 50%, 85%) !important;
+}
 
 .bold{
     font-weight: bold;

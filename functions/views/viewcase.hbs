@@ -3,14 +3,11 @@
 
 <h2>Στοιχεία υπόθεσης</h2>
 
-<label>Τύπος παραβίασης</label>
-<p>{{whistle.type}}</p>
-
 <label>Ημερομηνία παραβίασης</label>
-<p>{{whistle.date}}</p>
+<p>{{whistle.date.date??whistle.date.type}}</p>
 
-<label>Τοποθεσία παραβίασης</label>
-<p>{{whistle.place}}</p>
+<label>Φυσικά πρόσωπα</label>
+<p>{{whistle.people}}</p>
 
 <label>Αναλυτική περιγραφή περιστατικού</label>
 <p>{{whistle.description}}</p>
@@ -46,7 +43,7 @@
         <label for="newmessage">Νέο μήνυμα προς τον υπεύθυνο</label>
         <textarea class="form-control" id="newmessage" name="newmessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
         <div class="form-text">
-            Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
+            Μετά την αποστολή του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
         </div>
     </div>
     <input type="hidden" name="caseId" value="{{whistle.id}}">
