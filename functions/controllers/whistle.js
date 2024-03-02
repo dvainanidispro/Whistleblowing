@@ -31,20 +31,20 @@ const proper = (value) => {
  * Set of middleware functions to handle the whistle object.
  */
 let Whistle = {
+
     /**
      * Middleware to constuct the Whistle object from the request body and files. Also, saves the files temorarily.
+     * Must be used as such: Whistle.toDbObject.bind(Whistle), because this===undefined inside a middleware
      * @param {*} req 
      * @param {*} res 
      * @returns 
     */
-    constructor: async (req, res, next) => {
+    toDbObject: async function (req, res, next) {
+
         let whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
-            date: {
-              type: req.body.datetype,
-              date: proper(req.body.date),  
-            },
+            date: proper(req.body.date) ? req.body.date : this.dateMap(req.body.datetype),
             people: req.body.people,
             description: req.body.description,
             submitter: {
@@ -73,6 +73,7 @@ let Whistle = {
         next();
     },
 
+
     toHTMLTable: (whistle) => {
         let table = '<table class="table"><tr><th>Key</th><th>Value</th></tr>';
         for (let key in whistle) {
@@ -89,7 +90,18 @@ let Whistle = {
         return table;
     },
 
-    whistleMap: function (status){
+    
+    dateMap: function (datetype){
+        let mapping = {
+            "specificdate": "Συγκεκριμένη Ημερομηνία",
+            "before5years": "Περισσότερα από 5 χρόνια πριν",
+            "recent5years": "Λιγότερο από 5 χρόνια πριν",
+        };
+        return mapping[datetype];
+    },
+
+
+    statusMap: function (status){
         let mapping = {
             "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
             "pending": "Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης",
@@ -102,23 +114,15 @@ let Whistle = {
         return mapping[status];
     },
 
-    dateMap: function (date){
-        let mapping = {
-            "specificdate": "Συγκεκριμένη Ημερομηνία",
-            "before5years": "Περισσότερα από 5 χρόνια πριν",
-            "recent5years": "Λιγότερο από 5 χρόνια πριν",
-        };
-        return mapping[date];
-    },
 
     toHumanFormat: function (whistle) {
         let clientWhistle = whistle;
-        clientWhistle.status = this.whistleMap(whistle.status);
-        clientWhistle.date = whistle.date.date ?? this.dateMap(whistle.date.type);
+        clientWhistle.status = this.statusMap(whistle.status);
+        // clientWhistle.date = whistle.date.date ?? this.dateMap(whistle.date.type);
         clientWhistle.messages.forEach(message=>{
             message.date = timestampToDate(message.date).toLocaleDateString();
         });
-        console.log(clientWhistle);
+        // console.log(clientWhistle);
         return clientWhistle;
     },
 
@@ -140,11 +144,14 @@ let Whistle = {
         next();
     },
 
-
+    test: function (req,res,next) {
+        console.log(this.dateMap);
+    }
 
 };
 
 
+// Whistle.test();
 
 
 
