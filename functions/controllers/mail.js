@@ -2,14 +2,14 @@
 import fs from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
-var transporter = nodemailer.createTransport({
+let transporter = nodemailer.createTransport({
     host: process.env.MAILHOST,
     port: process.env.MAILPORT,
     auth: {
       user: process.env.MAILUSER,
       pass: process.env.MAILPASS
     }
-  });
+});
 
 //////////////////    FIREBASE CONFIG    ////////////////
 import Firebase from './firebase.js';
@@ -23,10 +23,11 @@ import Firebase from './firebase.js';
  */
 let aboutNewWhistle = async (whistle, attachmentsFolder) => {
 
-    //TODO: add error handling
+    //TODO: add error handling (και για το maximum size 10MB)
+
 
     let company = await Firebase.getCompany(whistle.companyID);
-    
+
     // prepair mail with defined transport object
     let mail = {
         from: process.env.MAILFROM, // sender address
@@ -35,11 +36,6 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
         //   text: whistle.description, // plain text body
         html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
                 <h2>Στοιχεία περιστατικού</h2>
-                <p>Τύπος περιστατικού: ${whistle.type}</p>
-                <p>Ημερομηνία περιστατικού: ${whistle.date || " - "}</p>
-                <p>Τοποθεσία περιστατικού: ${whistle.place || " - "}</p>
-                <p>E-mail αναφέροντος: ${whistle.submitter.email || " - "}</p>
-                <p>Στοιχεία επικοινωνίας αναφέροντος: ${whistle.submitter.contact || " - "}</p>
                 <h2>Αναλυτική Περιγραφή</h2>
                 <p>${whistle.description}</p>
         `, // html body
@@ -50,6 +46,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
             }
         }),
     };
+
 
     // send email
     await transporter.sendMail(mail);

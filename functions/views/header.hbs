@@ -1,4 +1,12 @@
-<a href="./" class="index-link" aria-label="Home Page">
+<a id="homelink" href="./home" class="index-link" aria-label="Home Page">
 <img src="logo.png" class="logo small-shadow" alt="Logo Whistleblowing"/>
 <span class="h1 app-title"></span>
 </a>
+
+<script type="module">
+    let url = new URL(window.location.href);
+    let company = url.searchParams.get("company");
+    if (company) {
+        document.getElementById("homelink").href += "?company=" + company;
+    }
+</script>

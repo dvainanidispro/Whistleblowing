@@ -3,10 +3,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
   
-  	match /companies/{companyID} {
-    	allow get: if true;
-      allow list, write: if false;
-    }
   
     match /users/{userID} {
       allow read: if request.auth.token.email == userID;

@@ -4,16 +4,40 @@ import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firest
 const db = getFirestore();
 
 
+/** Map to cache things  */
+let DimCache = new Map();
 
 
 /**
  * Get company details from the Firestore database
  * @param {string} companyID 
- * @returns {Promise<Object>} company details
+ * @returns {Promise<Object>} company details or null
  */
 let getCompany = async (companyID) => {
+    if (companyID==null) {return null}
     let company = await db.collection('companies').doc(companyID).get();
-    return company.data()??null;
+    company = company.data()??null;
+    if (company) {company.id = companyID};
+    DimCache.set(companyID,company);    // store in cache
+    // if not a google cloud function, then setTimout to delete from cache
+    return company;
+};
+ 
+
+/** 
+ * Middleware to get the company details from the Firestore database or the cache
+ * @returns 
+ */
+let company = async (req, res, next) => {
+    let companyID = req.query.company;
+    // get from cache or from Firestore
+    let company = DimCache.get(companyID) ?? await getCompany(companyID);   
+    if (company==null) {
+        res.status(404).send("Η εταιρεία δεν βρέθηκε.");
+        return;
+    }
+    res.company = company;
+    next();
 };
 
 
@@ -104,4 +128,4 @@ let verifyToken = async (idToken) => {
 
 
 
-export default { getCompany, getCase, getUser, storeCase, pushMessage, verifyToken };
+export default { getCompany, company, getCase, getUser, storeCase, pushMessage, verifyToken };

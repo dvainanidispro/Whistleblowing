@@ -13,11 +13,15 @@ const pin = new ShortUniqueId({
     length: 4
 });
 
-//////////////    FIRESTORE DATES     ///////////////
+//////////////    FIRESTORE FIELDS    ///////////////
 import {Timestamp} from "firebase-admin/firestore";
 /** Converts a Firestore timestamp to a JavaScript date */
 const timestampToDate = (timestamp) => {
     return (new Timestamp(timestamp.seconds, timestamp.nanoseconds)).toDate();
+};
+/** If the incoming field does not have meaningfull value, then make it null */
+const proper = (value) => {
+    return (value==null || value==undefined || value=="") ? null : value;
 };
 
 
@@ -34,22 +38,21 @@ let Whistle = {
      * @returns 
     */
     constructor: async (req, res, next) => {
-        // console.log("here");
         let whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
-            type: req.body.type,
             date: {
               type: req.body.datetype,
-              date: req.body.date,  
+              date: proper(req.body.date),  
             },
             people: req.body.people,
             description: req.body.description,
             submitter: {
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
-                email: req.body.email,
-                phone: req.body.phone,
+                firstname: proper(req.body.firstname),
+                lastname: proper(req.body.lastname),
+                email: proper(req.body.email),
+                phone: proper(req.body.phone),
+                notify: !!req.body.notify, // convert to boolean
             },
             companyID: req.body.company,
             isTest: (req.body.company==req.app.locals.devCompany.id) ,
@@ -99,14 +102,26 @@ let Whistle = {
         return mapping[status];
     },
 
+    dateMap: function (date){
+        let mapping = {
+            "specificdate": "Συγκεκριμένη Ημερομηνία",
+            "before5years": "Περισσότερα από 5 χρόνια πριν",
+            "recent5years": "Λιγότερο από 5 χρόνια πριν",
+        };
+        return mapping[date];
+    },
+
     toHumanFormat: function (whistle) {
         let clientWhistle = whistle;
         clientWhistle.status = this.whistleMap(whistle.status);
+        clientWhistle.date = whistle.date.date ?? this.dateMap(whistle.date.type);
         clientWhistle.messages.forEach(message=>{
             message.date = timestampToDate(message.date).toLocaleDateString();
         });
+        console.log(clientWhistle);
         return clientWhistle;
     },
+
 
     messageConstructor: function (req, res, next) {
         let message = {

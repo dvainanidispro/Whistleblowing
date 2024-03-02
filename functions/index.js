@@ -43,46 +43,36 @@ import Firebase from './controllers/firebase.js';
 ////////////////////////////////////////     SERVER     ////////////////////////////////////////
 
 
-server.get('/', (req, res) => {
+server.get('/', Firebase.company, (req, res) => {
     res.render('home');
 });
 
-server.get('/home', (req, res) => {
-    res.render("home");
+server.get('/home', Firebase.company, (req, res) => {
+    res.render("home",{company: res.company});
 });
 
 
-
-// Just for development purposes
-server.get(['/form','/new'], (req, res) => {
-    let company = {
-        id: req.query.companyid || server.locals.devCompany.id,
-        name: req.query.companyname || server.locals.devCompany.name
-    };
-    let host = req.get('host');
-    let formPostUrl = (host.includes("127.0.0.1")) 
-        ? `http://${host}/whistleblowing-app/europe-west3/whistle/` 
-        : "https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/"; 
-    res.render('whistleform', {company,formPostUrl});
+server.get(['/form','/new'], Firebase.company, (req, res) => {
+    res.render('whistleform', {company:res.company});
 });
 
 
-server.post(['/','/new'], fileParser(), Whistle.constructor, async (req, res) => {
+server.post(['/','/new','/form'], fileParser(), Whistle.constructor, async (req, res) => {
     let whistle = res.whistle;
     console.log(whistle);
 
     //TODO: add handling for wrong company ID
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
-    // await Firebase.storeCase(whistle);
-    // SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);      //do not await the email delivery
+    await Firebase.storeCase(whistle);
+    SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);      //do not await the email delivery
     res.render('newcaseconfirm',{whistle});
 });
 
 
 
 
-
+// Δεν χρειάζεται πια 
 server.get('/case', async (req, res) => {
     res.render('searchcase', {caseId: req.query.id});
 });
@@ -148,7 +138,8 @@ server.get("/test-new", (req, res) => {
 });
 
 server.get("/test-case", (req, res) => {
-    let whistle = JSON.parse('{"messages":[{"date":{"seconds":1707469862,"nanoseconds":470000000},"order":1,"role":"Υπεύθυνος","text":"Αυτό είναι το πρώτο μήνυμα","user":"vainanidis@computerstudio.gr"},{"user":"vainanidis@computerstudio.gr","date":{"seconds":1707470658,"nanoseconds":323000000},"role":"Υπεύθυνος","order":2,"text":"Αυτό είναι το δεύτερο μήνυμα"},{"role":"Καταγγέλων","date":{"seconds":1707595514,"nanoseconds":695000000},"text":"τέταρτο"},{"date":{"seconds":1708347710,"nanoseconds":727000000},"user":"vainanidis@computerstudio.gr","order":5,"text":"Πέμπτο μήνυμα","role":"Υπεύθυνος"},{"text":"έκτο","role":"Υπεύθυνος","date":{"seconds":1708353674,"nanoseconds":71000000},"order":6,"user":"vainanidis@computerstudio.gr"},{"date":{"seconds":1708357891,"nanoseconds":154000000},"role":"Υπεύθυνος","user":"vainanidis@computerstudio.gr","order":7,"text":"κι άλλο!"},{"date":{"seconds":1708359274,"nanoseconds":263000000},"text":"Καινούργιο μήνυμα από καταγγέλλοντα","role":"Καταγγέλων"},{"role":"Καταγγέλων","date":{"seconds":1708371778,"nanoseconds":531000000},"text":"Δώσε"}],"filenames":[],"type":"Παραβίαση Ασφαλείας Εργασίας","description":"Μαζί τα φάγαμε!","submitter":{"contact":"694","email":"dvainanidis@gmail.com"},"isTest":true,"title":"Κοίτα να δεις 12","company":{"recipient":"dimitris@computerstudio.gr"},"origin":"http://127.0.0.1","id":"0254538630584255","companyID":"bkueHt76TQiUW7G8p1BK","submittedAt":{"seconds":1706926727,"nanoseconds":275000000},"status":"under investigation","date":"2024-02-02","pin":"1339","people":"Μήτσος"}');
+    // let whistle = JSON.parse('{"messages":[{"date":{"seconds":1707469862,"nanoseconds":470000000},"order":1,"role":"Υπεύθυνος","text":"Αυτό είναι το πρώτο μήνυμα","user":"vainanidis@computerstudio.gr"},{"user":"vainanidis@computerstudio.gr","date":{"seconds":1707470658,"nanoseconds":323000000},"role":"Υπεύθυνος","order":2,"text":"Αυτό είναι το δεύτερο μήνυμα"},{"role":"Καταγγέλων","date":{"seconds":1707595514,"nanoseconds":695000000},"text":"τέταρτο"},{"date":{"seconds":1708347710,"nanoseconds":727000000},"user":"vainanidis@computerstudio.gr","order":5,"text":"Πέμπτο μήνυμα","role":"Υπεύθυνος"},{"text":"έκτο","role":"Υπεύθυνος","date":{"seconds":1708353674,"nanoseconds":71000000},"order":6,"user":"vainanidis@computerstudio.gr"},{"date":{"seconds":1708357891,"nanoseconds":154000000},"role":"Υπεύθυνος","user":"vainanidis@computerstudio.gr","order":7,"text":"κι άλλο!"},{"date":{"seconds":1708359274,"nanoseconds":263000000},"text":"Καινούργιο μήνυμα από καταγγέλλοντα","role":"Καταγγέλων"},{"role":"Καταγγέλων","date":{"seconds":1708371778,"nanoseconds":531000000},"text":"Δώσε"}],"filenames":[],"type":"Παραβίαση Ασφαλείας Εργασίας","description":"Μαζί τα φάγαμε!","submitter":{"contact":"694","email":"dvainanidis@gmail.com"},"isTest":true,"title":"Κοίτα να δεις 12","company":{"recipient":"dimitris@computerstudio.gr"},"origin":"http://127.0.0.1","id":"0254538630584255","companyID":"bkueHt76TQiUW7G8p1BK","submittedAt":{"seconds":1706926727,"nanoseconds":275000000},"status":"under investigation","date":"2024-02-02","pin":"1339","people":"Μήτσος"}');
+    let whistle = JSON.parse('{"date":{"date":"2024-03-14","type":"specificdate"},"submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
