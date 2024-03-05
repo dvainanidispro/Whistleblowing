@@ -57,16 +57,16 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
 });
 
 
-server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject.bind(Whistle), async (req, res) => {
+server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
     console.log(whistle);
 
     //TODO: add handling for wrong company ID
 
-    //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
-    await Firebase.storeCase(whistle);
-    SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);      //do not await the email delivery
-    res.render('newcaseconfirm',{whistle});
+    //# 3 ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
+    // await Firebase.storeCase(whistle);                                      // store the case in the database`
+    // SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);         // send email but do not await the delivery
+    res.render('newcaseconfirm',{whistle});                                 // render the confirmation page
 });
 
 

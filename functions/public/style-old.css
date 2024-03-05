@@ -4,10 +4,9 @@
     --md: 768px;
     --lg: 992px;
     --xl: 1200px;
-    --bs-primary: hsl(249, 52%, 29%);
     --primarycolor: hsl(249, 52%, 29%);
-    --backgroundcolor: white;
-    --bodybackgroundcolor: white;
+    --backgroundcolor: hsl(248, 52%, 8%);
+    --bodybackgroundcolor: lavender;
     --headertextcolor: lavender;
     --unitcolor: hsl(250, 16%, 92%);
     --display-if-user: none;
@@ -125,8 +124,7 @@ header{
     color: var(--headertextcolor);
     padding: 0.5rem min(3rem,10%);
     border-bottom: 1px solid #e5e5e5;
-    display: none;
-    /*height: min(30vw,8rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+    height: min(30vw,8rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 }
 
 header a{
@@ -274,12 +272,12 @@ small{
     border-color: pink;
 }
 
-/* .body-container, .small-shadow {
+.body-container, .small-shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 header .app-title, .text-shadow{
     text-shadow: 1px 1px 2px #000000;
-} */
+}
 
 
 .show-if-user{
@@ -298,12 +296,6 @@ hr{
 /* Χρειάζεται για διαδοχικά στοιχεία element/group */
 .input-element, .input-group{
     margin-block: 1rem;
-}
-
-.form-control{
-    --bs-border-width: 2px;
-    --bs-border-radius: 0.7rem;
-    --bs-border-color: rgb(143,153,175);
 }
 
 .bootstrap-input-style{
@@ -377,9 +369,9 @@ input, textarea, select{
     margin-top: 0.3rem;
 }
 
-/* input[readonly], input[disabled], .input[readonly]:focus, .input[readonly]:active{
+input[readonly], input[disabled], .input[readonly]:focus, .input[readonly]:active{
     background-color: hsl(249, 50%, 85%) !important;
-} */
+}
 
 .bold{
     font-weight: bold;

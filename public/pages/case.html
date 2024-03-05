@@ -128,8 +128,8 @@
                 
                 
                             <div class="my-3">
-                                <label for="date">Ημερομηνία παραβίασης (έτος-μήνας-ημέρα)</label>
-                                <div x-text="caseDoc.date.date??caseDoc.date.type"></div>
+                                <label for="date">Ημερομηνία παραβίασης <span x-show="caseDoc.date.at(0)>0">(έτος-μήνας-ημέρα)</span></label>
+                                <div x-text="caseDoc.date"></div>
                             </div>
 
                             <div class="my-3">
@@ -155,9 +155,9 @@
                             <hr>
 
                             <div class="form-check my-1">
-                                <input x-model="notifyUser" class="form-check-input" type="checkbox" value="" id="informUser" :checked="caseDoc.submitter.email" :disabled="!caseDoc.submitter.email">
+                                <input x-model="notifyUser" class="form-check-input" type="checkbox" value="" id="informUser" :disabled="!caseDoc.submitter.notify">
                                 <label class="form-check-label" for="informUser" value="informUser">
-                                  Ενημέρωση καταγγέλοντα μέσω e-mail για τις αλλαγές μετά την αποθήκευση. <span x-show="!caseDoc.submitter.email">(Δεν εφαρμόζεται)</span>
+                                  Αυτόματη ενημέρωση καταγγέλοντα μέσω e-mail για τις αλλαγές μετά την αποθήκευση. <span x-show="!caseDoc.submitter.notify">(Δεν εφαρμόζεται)</span>
                                 </label>
                               </div>
                             
@@ -175,13 +175,23 @@
 
                         <hr>
                         <h2>Στοιχεία καταγγελίας</h2>
-                        <div class="my-3">
-                            <label for="email">E-mail καταγγέλοντα</label>
-                            <div x-text="caseDoc.submitter.email"></div>
+                        <div x-show="caseDoc.submitter.email">
+                            <div class="my-3">
+                                <label for="email">Όνομα καταγγέλοντα</label>
+                                <div x-text="caseDoc.submitter.lastname + ' ' + caseDoc.submitter.firstname"></div>
+                            </div>
+                            <div class="my-3">
+                                <label for="email">E-mail καταγγέλοντα</label>
+                                <div x-text="caseDoc.submitter.email"></div>
+                            </div>
+                            <div class="my-3">
+                                <label for="phone">Τηλέφωνο</label>
+                                <div x-text="caseDoc.submitter.phone"></div>
+                            </div>
                         </div>
                         <div class="my-3">
-                            <label for="contact">Λοιπά στοιχεία επικοινωνίας</label>
-                            <div x-text="caseDoc.submitter.contact"></div>
+                            <label for="phone">Επιθυμεί να λαμβάνει ειδοποιήσεις:</label>
+                            <div x-text="caseDoc.submitter.notify?'Ναι':'Όχι'"></div>
                         </div>
             
                         <hr>
@@ -214,7 +224,7 @@
                         </div>
             
                         
-                        <button type="button" class="btn btn-success my-2" x-on:click="DB.notifyUser(caseDoc);DB.pushMessage(caseDoc,caseDoc.newMessage);">Δημοσίευση μηνύματος και ενημέρωση καταγγέλοντα </button>
+                        <button type="button" class="btn btn-success my-2" x-on:click="DB.notifyUser(caseDoc);DB.pushMessage(caseDoc,caseDoc.newMessage);">Δημοσίευση μηνύματος <span x-show="caseDoc.submitter.notify">και αυτόματη ενημέρωση καταγγέλοντα </span></button>
             
                         <hr>
                     </div>

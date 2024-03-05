@@ -25,6 +25,23 @@ const proper = (value) => {
 };
 
 
+let Mappings = {
+    status: {
+        "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
+        "pending": "Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης",
+        "under investigation": "Υπο διερεύνηση - Ερευνάται η εγκυρότητα της καταγγελίας",
+        "under resolution": "Υπο επίλυση - Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης",
+        "completed": "Ολοκληρώθηκε",
+        "rejected": "Απορρίφθηκε",
+        "cancelled": "Ακυρώθηκε",
+    },
+    date: {
+        "specificdate": "Συγκεκριμένη Ημερομηνία",
+        "before5years": "Περισσότερα από 5 χρόνια πριν",
+        "recent5years": "Λιγότερο από 5 χρόνια πριν",
+    },
+};
+
 
 
 /**
@@ -44,7 +61,7 @@ let Whistle = {
         let whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
-            date: proper(req.body.date) ? req.body.date : this.dateMap(req.body.datetype),
+            date: proper(req.body.date) ? req.body.date : Mappings.date[req.body.datetype],
             people: req.body.people,
             description: req.body.description,
             submitter: {
@@ -90,35 +107,10 @@ let Whistle = {
         return table;
     },
 
-    
-    dateMap: function (datetype){
-        let mapping = {
-            "specificdate": "Συγκεκριμένη Ημερομηνία",
-            "before5years": "Περισσότερα από 5 χρόνια πριν",
-            "recent5years": "Λιγότερο από 5 χρόνια πριν",
-        };
-        return mapping[datetype];
-    },
-
-
-    statusMap: function (status){
-        let mapping = {
-            "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
-            "pending": "Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης",
-            "under investigation": "Υπο διερεύνηση - Ερευνάται η εγκυρότητα της καταγγελίας",
-            "under resolution": "Υπο επίλυση - Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης",
-            "completed": "Ολοκληρώθηκε",
-            "rejected": "Απορρίφθηκε",
-            "cancelled": "Ακυρώθηκε",
-        };
-        return mapping[status];
-    },
-
 
     toHumanFormat: function (whistle) {
         let clientWhistle = whistle;
-        clientWhistle.status = this.statusMap(whistle.status);
-        // clientWhistle.date = whistle.date.date ?? this.dateMap(whistle.date.type);
+        clientWhistle.status = Mappings.status[whistle.status];
         clientWhistle.messages.forEach(message=>{
             message.date = timestampToDate(message.date).toLocaleDateString();
         });
@@ -143,10 +135,6 @@ let Whistle = {
         res.message = message;
         next();
     },
-
-    test: function (req,res,next) {
-        console.log(this.dateMap);
-    }
 
 };
 

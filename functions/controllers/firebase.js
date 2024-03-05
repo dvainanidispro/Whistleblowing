@@ -6,6 +6,11 @@ const db = getFirestore();
 
 /** Map to cache things  */
 let DimCache = new Map();
+DimCache.set("bkueHt76TQiUW7G8p1BK",{       // for testing only
+    inbox: "whistle@computerstudio.gr",
+    name: "Computer Studio Α.Ε.",
+    phone: "2109761865"
+});
 
 
 /**
@@ -15,11 +20,12 @@ let DimCache = new Map();
  */
 let getCompany = async (companyID) => {
     if (companyID==null) {return null}
+    if (DimCache.has(companyID)) {return DimCache.get(companyID)};    // get from cache
     let company = await db.collection('companies').doc(companyID).get();
     company = company.data()??null;
     if (company) {company.id = companyID};
-    DimCache.set(companyID,company);    // store in cache
-    // if not a google cloud function, then setTimout to delete from cache
+    DimCache.set(companyID,company);    // store in cache, even if null
+    //NOTE: if not a google cloud function, then setTimout to delete from cache
     return company;
 };
  
@@ -31,7 +37,7 @@ let getCompany = async (companyID) => {
 let company = async (req, res, next) => {
     let companyID = req.query.company;
     // get from cache or from Firestore
-    let company = DimCache.get(companyID) ?? await getCompany(companyID);   
+    let company = await getCompany(companyID);   
     if (company==null) {
         res.status(404).send("Η εταιρεία δεν βρέθηκε.");
         return;
@@ -67,7 +73,7 @@ let storeCase = async (whistle) => {
 let getCase = async (id, pin=null) => {
     id = id.trim();
     let whistle = await db.collection('cases').doc(id).get();
-    if (pin==null) {    // return case without validation           TODO: test this!
+    if (pin==null) {    // return case without validation
         return whistle.data();          
     }
     if (whistle.data()?.pin==pin) {
