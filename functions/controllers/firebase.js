@@ -1,16 +1,23 @@
 import firebase from "firebase-admin";
-firebase.initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
 import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firestore";
+firebase.initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
 const db = getFirestore();
+import { getStorage } from 'firebase-admin/storage';
+const storage = getStorage().bucket();
 
+
+/** The folder with the temporary attachments */
+import config from './config.js';
+let attachmentsFolder = config.attachmentsFolder;
 
 /** Map to cache things  */
 let DimCache = new Map();
-DimCache.set("bkueHt76TQiUW7G8p1BK",{       // for testing only
-    inbox: "whistle@computerstudio.gr",
-    name: "Computer Studio Α.Ε.",
-    phone: "2109761865"
-});
+// DimCache.set("bkueHt76TQiUW7G8p1BK",{       // for testing only
+//     id: "bkueHt76TQiUW7G8p1BK",
+//     inbox: "whistle@computerstudio.gr",
+//     name: "Computer Studio Α.Ε.",
+//     phone: "2109761865"
+// });
 
 
 /**
@@ -46,6 +53,21 @@ let company = async (req, res, next) => {
     next();
 };
 
+/**
+ * Store the attachments in the Firebase Storage
+ * @param {string} whistleID
+ * @param {Array<string>} filenames
+ */
+let storeAttachments = async (whistleID, filenames) => {
+    if (filenames.length==0) {return}
+    let promises = filenames.map(filename => {
+        let storagePath = attachmentsFolder + filename; // it is not a genuine path, but a filename string
+        return storage.upload(storagePath, {destination: whistleID + '/' + filename});
+    });
+    await Promise.all(promises);
+    console.log("Αποθηκεύτηκαν τα συνημμένα στο Firebase Storage");
+};
+
 
 /**
  * Store the case in the Firestore database, in the collection 'cases'
@@ -55,11 +77,11 @@ let company = async (req, res, next) => {
 let storeCase = async (whistle) => {
     // if (whistle.isTest) {return null}
     whistle.submittedAt = FieldValue.serverTimestamp(); // firestore's timestamp
-    whistle.status = "initial";
 
     let whistleRef = db.collection('cases').doc(whistle.id);
     await whistleRef.set(whistle);
     console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
+    await storeAttachments(whistle.id, whistle.filenames);
     return whistleRef.id;
 }
 
@@ -117,10 +139,15 @@ let pushMessage = async (message) => {
         filenames: FieldValue.arrayUnion(...message.filenames)
     });   // this returns nothing (void)
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
+    await storeAttachments(message.caseId, message.filenames);
     return (await whistleRef.get()).data();
 };
 
-
+/** 
+ * Verify the token and return the decoded token
+ * @param {string} idToken 
+ * @returns {Promise<Object>} the decoded token
+ */
 let verifyToken = async (idToken) => {
     //If it fails, it will throw an error
     try{

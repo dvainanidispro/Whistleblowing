@@ -1,5 +1,8 @@
+//////////////           FILES         ///////////////
+/** The folder with the temporary attachments */
 import fs from 'fs';
-
+import config from './config.js';
+let attachmentsFolder = config.attachmentsFolder;
 
 
 //////////////          UNIQUE         ///////////////
@@ -24,7 +27,8 @@ const proper = (value) => {
     return (value==null || value==undefined || value=="") ? null : value;
 };
 
-
+//////////////        MAPPINGS       ///////////////
+/** Αντιστοίχιση των πεδίων σε "ανθρώπινη" περιγραφή */
 let Mappings = {
     status: {
         "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
@@ -43,6 +47,7 @@ let Mappings = {
 };
 
 
+//////////////       WHISTLE       ///////////////
 
 /**
  * Set of middleware functions to handle the whistle object.
@@ -63,6 +68,7 @@ let Whistle = {
             pin: pin.rnd(),
             date: proper(req.body.date) ? req.body.date : Mappings.date[req.body.datetype],
             people: req.body.people,
+            status: "initial",
             description: req.body.description,
             submitter: {
                 firstname: proper(req.body.firstname),
@@ -72,7 +78,7 @@ let Whistle = {
                 notify: !!req.body.notify, // convert to boolean
             },
             companyID: req.body.company,
-            isTest: (req.body.company==req.app.locals.devCompany.id) ,
+            isTest: (req.body.company==config.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
             filenames: [],
@@ -80,7 +86,7 @@ let Whistle = {
     
         req.files.forEach(file => {
             if (file.originalname == "") {return}   // if file exists (req.files always has something)
-            fs.writeFileSync(req.app.locals.uploadFolder + file.originalname, file.buffer, (err) => {
+            fs.writeFileSync(attachmentsFolder + file.originalname, file.buffer, (err) => {
                 if (err) throw err;
             }); 
             whistle.filenames.push(file.originalname);
@@ -127,7 +133,7 @@ let Whistle = {
         };
         req.files.forEach(file => {
             if (file.originalname == "") {return}   // if file exists (req.files always has something)
-            fs.writeFileSync(req.app.locals.uploadFolder + file.originalname, file.buffer, (err) => {
+            fs.writeFileSync(attachmentsFolder + file.originalname, file.buffer, (err) => {
                 if (err) throw err;
             }); 
             message.filenames.push(file.originalname);
@@ -136,11 +142,17 @@ let Whistle = {
         next();
     },
 
+    // anync delete attachments using promise.all
+    deleteAttachments: async function (whistleOrMessage) {
+        let filenames = whistleOrMessage.filenames;
+        console.log(filenames);
+        filenames.forEach(filename => {
+            try{
+                fs.unlink(attachmentsFolder + filename, _=>{});
+            } catch (e) {console.log(e)}
+        });
+    }
 };
-
-
-// Whistle.test();
-
 
 
 export default Whistle;

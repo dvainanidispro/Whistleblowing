@@ -11,6 +11,10 @@ let transporter = nodemailer.createTransport({
     }
 });
 
+/** The folder with the temporary attachments */
+import config from './config.js';
+let attachmentsFolder = config.attachmentsFolder;
+
 //////////////////    FIREBASE CONFIG    ////////////////
 import Firebase from './firebase.js';
 
@@ -21,7 +25,7 @@ import Firebase from './firebase.js';
  * @param {object} whistle The Whistle object
  * @param {string} attachmentsFolder The folder (relative path) where the attachments are stored tempoparily
  */
-let aboutNewWhistle = async (whistle, attachmentsFolder) => {
+let aboutNewWhistle = async (whistle) => {
 
     //TODO: add error handling (και για το maximum size 10MB)
 
@@ -39,12 +43,12 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
                 <h2>Αναλυτική Περιγραφή</h2>
                 <p>${whistle.description}</p>
         `, // html body
-        attachments: whistle.filenames.map(filename => {
-            return {
-                filename: filename,
-                path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
-            }
-        }),
+        // attachments: whistle.filenames.map(filename => {         // αν ενεργοποιηθούν, προσοχή με τα πολλά await...
+        //     return {
+        //         filename: filename,
+        //         path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
+        //     }
+        // }),
     };
 
 
@@ -64,7 +68,7 @@ let aboutNewWhistle = async (whistle, attachmentsFolder) => {
  * Sends email to the company notifying about the new Message from the user
  * @param {object} whistle The Whistle object
  */
-let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
+let aboutNewUserMessage = async (whistle) => {
 
     // prepair mail
     let company = await Firebase.getCompany(whistle.companyID);
@@ -77,22 +81,18 @@ let aboutNewUserMessage = async (whistle, attachmentsFolder) => {
                 <h2>Νέο μήνυμα από χρήστη</h2>
                 <p>${message.text}</p>
         `, // html body
-        attachments: message.filenames.map(filename => {
-            return {
-                filename: filename,
-                path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
-            }
-        }),
-    }
+        // attachments: message.filenames.map(filename => {
+        //     return {
+        //         filename: filename,
+        //         path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
+        //     }
+        // }),
+    };
 
     // send email
     await transporter.sendMail(mail);
     console.log("Στάλθηκε email σε εταιρία");
 
-    //delete attachments
-    message.filenames.forEach(filename => {
-        fs.unlinkSync(attachmentsFolder + filename);
-    });
 };
 
 

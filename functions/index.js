@@ -10,9 +10,7 @@ import {fileParser} from 'express-multipart-file-parser';
 server.use(express.urlencoded({extended: true})); 
 server.use(express.json());
 server.use(express.static('public')); 
-// Application configuration 
-server.locals.uploadFolder = './uploads/';
-server.locals.devCompany = {id:'NCWt4jXdnzQ5z19vaX9q',name:"Εταιρία δοκιμών Α.Ε."};
+
 
 // cookies, cors and other middleware
 
@@ -42,42 +40,42 @@ import Firebase from './controllers/firebase.js';
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////     SERVER     ////////////////////////////////////////
 
-
+// Αρχική σελίδα
 server.get('/', Firebase.company, (req, res) => {
     res.render('home');
 });
 
+// Αρχική σελίδα
 server.get('/home', Firebase.company, (req, res) => {
     res.render("home",{company: res.company});
 });
 
-
+// Φόρμα υποβολής νέας αναφοράς
 server.get(['/form','/new'], Firebase.company, (req, res) => {
     res.render('whistleform', {company:res.company});
 });
 
-
-server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, res) => {
-    let whistle = res.whistle;
-    console.log(whistle);
-
-    //TODO: add handling for wrong company ID
-
-    //# 3 ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
-    // await Firebase.storeCase(whistle);                                      // store the case in the database`
-    // SendEmail.aboutNewWhistle(whistle, server.locals.uploadFolder);         // send email but do not await the delivery
-    res.render('newcaseconfirm',{whistle});                                 // render the confirmation page
-});
-
-
-
-
-// Δεν χρειάζεται πια 
+// Δεν χρειάζεται πια διότι η φόρμα υπάρχει στο home
 server.get('/case', async (req, res) => {
     res.render('searchcase', {caseId: req.query.id});
 });
 
 
+// Υποβολή νέας αναφοράς από το χρήστη
+server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, res) => {
+    let whistle = res.whistle;
+    console.log(whistle);
+    //TODO: add handling for wrong company ID
+
+    //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
+    await Firebase.storeCase(whistle);                      // store the case in the database
+    // SendEmail.aboutNewWhistle(whistle);                     // send email, do not await the delivery
+    Whistle.deleteAttachments(whistle);                     // delete attachments from disk, do not await
+    res.render('newcaseconfirm',{whistle});                 // render the confirmation page
+});
+
+
+// Αναζήτηση υπόθεσης με το ID και το PIN από το χρήστη
 server.post('/case', async (req, res) => {
     if ( req.body.id.length<15 || req.body.pin.length<4 ) {   // req body items (form fields) are never null, just: ''
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
@@ -92,14 +90,16 @@ server.post('/case', async (req, res) => {
 });
 
 
-
+// Αποστολή νέου μηνύματος ή/και συνημμένων από το χρήστη
 server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
     let message = res.message;
     try{
+        //# ACTIONS AFTER USER MESSAGE
         // if whistleID is invalid, then it will throw an error
-        let whistle = await Firebase.pushMessage(message);
-        SendEmail.aboutNewUserMessage(whistle, server.locals.uploadFolder);   // do not await the email delivery
-        res.render('messageok');
+        let whistle = await Firebase.pushMessage(message);      // push the message to the database
+        // SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
+        Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
+        res.render('messageok');                                // render the confirmation page
     } catch (e) {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
         return;
@@ -107,8 +107,7 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
 });
 
 
-
-
+// Ειδοποίηση του χρήστη για την ενημέρωση της υπόθεσης από τον υπεύθυνο 
 server.post('/notifyuser', async (req, res) => {
     try{
         let body = JSON.parse(req.body);    // no-cors sends text/plain (not json)
@@ -138,7 +137,6 @@ server.get("/test-new", (req, res) => {
 });
 
 server.get("/test-case", (req, res) => {
-    // let whistle = JSON.parse('{"messages":[{"date":{"seconds":1707469862,"nanoseconds":470000000},"order":1,"role":"Υπεύθυνος","text":"Αυτό είναι το πρώτο μήνυμα","user":"vainanidis@computerstudio.gr"},{"user":"vainanidis@computerstudio.gr","date":{"seconds":1707470658,"nanoseconds":323000000},"role":"Υπεύθυνος","order":2,"text":"Αυτό είναι το δεύτερο μήνυμα"},{"role":"Καταγγέλων","date":{"seconds":1707595514,"nanoseconds":695000000},"text":"τέταρτο"},{"date":{"seconds":1708347710,"nanoseconds":727000000},"user":"vainanidis@computerstudio.gr","order":5,"text":"Πέμπτο μήνυμα","role":"Υπεύθυνος"},{"text":"έκτο","role":"Υπεύθυνος","date":{"seconds":1708353674,"nanoseconds":71000000},"order":6,"user":"vainanidis@computerstudio.gr"},{"date":{"seconds":1708357891,"nanoseconds":154000000},"role":"Υπεύθυνος","user":"vainanidis@computerstudio.gr","order":7,"text":"κι άλλο!"},{"date":{"seconds":1708359274,"nanoseconds":263000000},"text":"Καινούργιο μήνυμα από καταγγέλλοντα","role":"Καταγγέλων"},{"role":"Καταγγέλων","date":{"seconds":1708371778,"nanoseconds":531000000},"text":"Δώσε"}],"filenames":[],"type":"Παραβίαση Ασφαλείας Εργασίας","description":"Μαζί τα φάγαμε!","submitter":{"contact":"694","email":"dvainanidis@gmail.com"},"isTest":true,"title":"Κοίτα να δεις 12","company":{"recipient":"dimitris@computerstudio.gr"},"origin":"http://127.0.0.1","id":"0254538630584255","companyID":"bkueHt76TQiUW7G8p1BK","submittedAt":{"seconds":1706926727,"nanoseconds":275000000},"status":"under investigation","date":"2024-02-02","pin":"1339","people":"Μήτσος"}');
     let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });

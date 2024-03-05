@@ -7,6 +7,7 @@
     --bs-primary: hsl(249, 52%, 29%);
     --primarycolor: hsl(249, 52%, 29%);
     --backgroundcolor: white;
+    --darkbackground: hsl(249, 52%, 12%);
     --bodybackgroundcolor: white;
     --headertextcolor: lavender;
     --unitcolor: hsl(250, 16%, 92%);
@@ -265,8 +266,8 @@ small{
     border-color: var(--primarycolor);
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:focus-within {
-    background-color: var(--backgroundcolor);
-    border-color: var(--backgroundcolor);
+    background-color: var(--darkbackground);
+    border-color: var(--darkbackground);
 }
 
 .btn-primary:disabled{
