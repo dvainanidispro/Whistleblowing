@@ -77,7 +77,8 @@ let storeAttachments = async (whistleID, filenames) => {
 let storeCase = async (whistle) => {
     // if (whistle.isTest) {return null}
     whistle.submittedAt = FieldValue.serverTimestamp(); // firestore's timestamp
-
+    //TODO: add handling for wrong company ID
+    
     let whistleRef = db.collection('cases').doc(whistle.id);
     await whistleRef.set(whistle);
     console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");

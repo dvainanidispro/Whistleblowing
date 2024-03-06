@@ -376,6 +376,15 @@ textarea.form-control{
     border-color: silver;
 }
 
+.btn-link{
+    padding-top: 0;
+    padding-bottom: 0;
+    color: darkblue;
+}
+.btn-link:hover{
+    color: hsl(180, 30%, 5%)
+}
+
 input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled], textarea[disabled], textarea[readonly], select[disabled], select[readonly]{
     background-color: hsl(249, 50%, 95%) !important;
 }

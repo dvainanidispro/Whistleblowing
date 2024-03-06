@@ -65,7 +65,6 @@ server.get('/case', async (req, res) => {
 server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
     console.log(whistle);
-    //TODO: add handling for wrong company ID
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);                      // store the case in the database
@@ -77,6 +76,7 @@ server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, 
 
 // Αναζήτηση υπόθεσης με το ID και το PIN από το χρήστη
 server.post('/case', async (req, res) => {
+    //TOFIX: Φτιάξε τον κώδικα σε αυτό
     if ( req.body.id.length<15 || req.body.pin.length<4 ) {   // req body items (form fields) are never null, just: ''
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
         return;
@@ -95,7 +95,7 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
     let message = res.message;
     try{
         //# ACTIONS AFTER USER MESSAGE
-        // if whistleID is invalid, then it will throw an error
+        // if whistleID is invalid, then the following will throw an error
         let whistle = await Firebase.pushMessage(message);      // push the message to the database
         // SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
         Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
@@ -123,8 +123,8 @@ server.post('/notifyuser', async (req, res) => {
             return;
         }
 
-        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(body.caseId));
-        res.json(emailSent);
+        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(body.caseId));       //TOFIX: Γιατί όχι το whistle από πριν;
+        res.json(emailSent);        // true or false, but because the request is no-cors, it will not be read by browser
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
 

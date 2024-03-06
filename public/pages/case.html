@@ -18,7 +18,7 @@
     <script defer src="/__/firebase/9.21.0/firebase-firestore-compat.js"></script>
     <!-- <script defer src="/__/firebase/9.21.0/firebase-functions-compat.js"></script> -->
     <!-- <script defer src="/__/firebase/9.21.0/firebase-messaging-compat.js"></script> -->
-    <!-- <script defer src="/__/firebase/9.21.0/firebase-storage-compat.js"></script> -->
+    <script defer src="/__/firebase/9.21.0/firebase-storage-compat.js"></script>
     <!-- <script defer src="/__/firebase/9.21.0/firebase-analytics-compat.js"></script> -->
     <!-- <script defer src="/__/firebase/9.21.0/firebase-remote-config-compat.js"></script> -->
     <!-- <script defer src="/__/firebase/9.21.0/firebase-performance-compat.js"></script> -->
@@ -34,9 +34,9 @@
     
     <link href="/resources/style.css" rel="stylesheet" media="screen">
     <script defer src="/resources/dim.js"></script>
-    <script defer src="/resources/script.js"></script>
     <script defer src="/resources/auth.js"></script>
     <script defer src="/resources/db.js"></script>
+    <script defer src="/resources/storage.js"></script>
     
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
@@ -144,12 +144,8 @@
                                 <div x-text="caseDoc.description"></div>
                             </div>
                 
-                            <div class="my-3" x-show="caseDoc.filenames.length">
-                                <label for="filenames">Αρχεία</label>
-                                <!-- <input x-model="caseDoc.filenames" type="text" class="form-control" id="filenames" placeholder="-" readonly> -->
-                                <template x-for="file in caseDoc.filenames">
-                                    <div x-text="file"></div>
-                                </template>
+                            <div class="my-3" id="filelist" x-show="caseDoc.filenames.length">
+                                <label>Αρχεία</label>
                             </div>
 
                             <hr>
