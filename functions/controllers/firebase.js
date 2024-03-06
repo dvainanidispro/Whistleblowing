@@ -55,14 +55,15 @@ let company = async (req, res, next) => {
 
 /**
  * Store the attachments in the Firebase Storage
- * @param {string} whistleID
  * @param {Array<string>} filenames
+ * @param {string} whistleID
+ * @param {string} companyID
  */
-let storeAttachments = async (whistleID, filenames) => {
+let storeAttachments = async (filenames, whistleID, companyID) => {
     if (filenames.length==0) {return}
     let promises = filenames.map(filename => {
         let storagePath = attachmentsFolder + filename; // it is not a genuine path, but a filename string
-        return storage.upload(storagePath, {destination: whistleID + '/' + filename});
+        return storage.upload(storagePath, {destination: companyID + '/' + whistleID + '/' + filename});
     });
     await Promise.all(promises);
     console.log("Αποθηκεύτηκαν τα συνημμένα στο Firebase Storage");
@@ -82,7 +83,7 @@ let storeCase = async (whistle) => {
     let whistleRef = db.collection('cases').doc(whistle.id);
     await whistleRef.set(whistle);
     console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
-    await storeAttachments(whistle.id, whistle.filenames);
+    await storeAttachments(whistle.filenames, whistle.id, whistle.companyID);
     return whistleRef.id;
 }
 
@@ -140,8 +141,10 @@ let pushMessage = async (message) => {
         filenames: FieldValue.arrayUnion(...message.filenames)
     });   // this returns nothing (void)
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
-    await storeAttachments(message.caseId, message.filenames);
-    return (await whistleRef.get()).data();
+    //TODO: Δεν χρειάζεται ολόκληρο το object, μόνο το id (για την αποστολή email) και το companyID (για τα Attachments). 
+    let updatedWhistle = (await whistleRef.get()).data();       
+    await storeAttachments(message.filenames, message.caseId, updatedWhistle.companyID);
+    return updatedWhistle;
 };
 
 /** 

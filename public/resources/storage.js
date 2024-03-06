@@ -1,7 +1,8 @@
 const storage = firebase.storage();
-let caseStorage = storage.ref(App.getParams.caseid);
 
 document.addEventListener('DOMContentLoaded', async function(){
+    let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
+    let caseStorage = storage.ref(companyID + '/' + App.getParams.caseid);
     let files = await caseStorage.listAll();
     files.items.forEach(async function(item){
         let url = await item.getDownloadURL();
