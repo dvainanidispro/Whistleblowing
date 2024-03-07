@@ -102,13 +102,12 @@ let aboutNewUserMessage = async (whistle) => {
  * @param {object} whistle The Whistle object
  */
 let aboutCaseUpdate = async (whistle) => {
-
-    if (whistle.submitter?.email==null || whistle.submitter?.email=="") {   // usually =="" if not set
+    if (whistle.submitter?.email==null || whistle.submitter?.email=="") {   // μπορεί να είναι "" αντί για undefined
         console.log("Δεν υπάρχει email αναφέροντος προς ειδοποίηση");
         return false;
     }
 
-    let message = {
+    let email = {
         from: process.env.MAILFROM, // sender address
         to: whistle.submitter.email, // one recipient
         subject: `Ενημέρωση για το περιστατικό ${whistle.id}`, // Subject line
@@ -119,7 +118,7 @@ let aboutCaseUpdate = async (whistle) => {
     }
 
     // send email
-    await transporter.sendMail(message);
+    await transporter.sendMail(email);
     console.log("Στάλθηκε email σε καταγγέλλοντα");
     return true
 };

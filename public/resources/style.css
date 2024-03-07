@@ -1,5 +1,6 @@
 
 :root{
+    --xs: 400px;
     --sm: 576px;
     --md: 768px;
     --lg: 992px;
@@ -232,6 +233,9 @@ h2{
     font-size: 1.5rem;
 }
 
+.xs{
+    max-width: var(--xs);
+}
 .sm{
     max-width: var(--sm);
 }

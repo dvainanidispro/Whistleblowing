@@ -69,23 +69,6 @@ window.cookies = {
 };
 
 
-/** 
- * dimFetch  
-*/
-window.dimFetch = async (URL,property=true) => {      // property for result object property, true for entire object, null or false for text, 
-    return fetchResult = await fetch(URL)               //return, so user can use "then"
-            .then(response=>{
-                if (!response.ok) {throw new Error('dimFetch failed')} 
-                else {return property?response.json():response.text()}
-            })
-            .then(data=>(property&&property!==true)?data[property]:data)      //property truthy but not true!
-            .catch(e=>{return e});     // fetchResult=null;
-};
-
-/* returns the array's unique values */
-window.unique = (arr) => [...new Set(arr)];
-
-
 
 ///////////////////    BOOTSTRAP CUSTOM COMPONENTS    //////////////////
 
@@ -114,13 +97,12 @@ class BootstrapToast extends HTMLElement {
         this.backClass = this.getAttribute('data-back-class')??"bg-success";
         this.innerHTML = /*html*/`
             <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3 my-5 ">
-            <div id="${this.dataid}" class="toast ${this.backClass}" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header center-contents bg-success text-white rounded">
-                    <div><strong >${this.message??'OK...'}</strong></div>
+                <div id="${this.dataid}" class="toast ${this.backClass}" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header center-contents bg-success text-white rounded">
+                        <div><strong >${this.message??'OK...'}</strong></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
         `;
     }
 }

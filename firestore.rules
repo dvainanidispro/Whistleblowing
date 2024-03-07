@@ -10,7 +10,7 @@ service cloud.firestore {
     }
     
     match /cases/{caseID} {
-      allow read, update, delete: if get(/databases/$(database)/documents/users/$(request.auth.token.email)).data.companyID == resource.data.companyID;
+      allow read, update, delete: if request.auth.token.companyID == resource.data.companyID;
     }
   }
 }

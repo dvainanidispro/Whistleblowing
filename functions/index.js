@@ -111,20 +111,14 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
 server.post('/notifyuser', async (req, res) => {
     try{
         let body = JSON.parse(req.body);    // no-cors sends text/plain (not json)
-        let user = await Firebase.verifyToken(body.userToken);
-        if (!user) {
-            res.status(401).json("Unauthorized");
-            return;
-        }
-        // if caseId is invalid, then it will throw an error
-        let whistle = await Firebase.getCase(body.caseId);
-        if (user.companyID!=whistle.companyID) {
-            res.status(403).json("Unauthorized");
-            return;
-        }
+        let user = await Firebase.verifyToken(body.userToken);      // Firebase user
+        if ( !user ) { return res.status(401).json("Unauthorized") }
 
-        let emailSent = await SendEmail.aboutCaseUpdate(await Firebase.getCase(body.caseId));       //TOFIX: Γιατί όχι το whistle από πριν;
-        res.json(emailSent);        // true or false, but because the request is no-cors, it will not be read by browser
+        let whistle = await Firebase.getCase(body.caseId);      // whistle object or error //TOFIX: δες το αυτό στο getCase.
+        if ( !whistle || user.companyID!=whistle.companyID ) { return res.status(404).json("Δεν βρέθηκε η υπόθεση") }
+
+        let emailSent = await SendEmail.aboutCaseUpdate(whistle);     // returns true (sent) or false (without sumbitter email)
+        res.json(emailSent);        // but because the request is no-cors, it will not be read by browser
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
 
