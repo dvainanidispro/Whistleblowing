@@ -55,10 +55,6 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
     res.render('whistleform', {company:res.company});
 });
 
-// Δεν χρειάζεται πια διότι η φόρμα υπάρχει στο home
-server.get('/case', async (req, res) => {
-    res.render('searchcase', {caseId: req.query.id});
-});
 
 
 // Υποβολή νέας αναφοράς από το χρήστη
@@ -76,17 +72,13 @@ server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, 
 
 // Αναζήτηση υπόθεσης με το ID και το PIN από το χρήστη
 server.post('/case', async (req, res) => {
-    //TOFIX: Φτιάξε τον κώδικα σε αυτό
-    if ( req.body.id.length<15 || req.body.pin.length<4 ) {   // req body items (form fields) are never null, just: ''
+    let whistle = await Firebase.getCase(req.body.id, req.body.pin??"no");    // pin="no" is wrong on purpose (in case no pin provided)
+    // whistle is now the case object or null
+    if (whistle) {
+        res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
+    } else {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
-        return;
     }
-    let whistle = await Firebase.getCase(req.body.id, req.body.pin);        // if pin==null, it will not get validated
-    if ( whistle==null ) {
-        res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
-        return;
-    }
-    res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
 
@@ -111,13 +103,14 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
 server.post('/notifyuser', async (req, res) => {
     try{
         let body = JSON.parse(req.body);    // no-cors sends text/plain (not json)
-        let user = await Firebase.verifyToken(body.userToken);      // Firebase user
+        let user = await Firebase.verifyToken(body.userToken);      // Firebase user or null
         if ( !user ) { return res.status(401).json("Unauthorized") }
 
-        let whistle = await Firebase.getCase(body.caseId);      // whistle object or error //TOFIX: δες το αυτό στο getCase.
+        let whistle = await Firebase.getCase(body.caseId);      // whistle object or null
         if ( !whistle || user.companyID!=whistle.companyID ) { return res.status(404).json("Δεν βρέθηκε η υπόθεση") }
 
-        let emailSent = await SendEmail.aboutCaseUpdate(whistle);     // returns true (sent) or false (without sumbitter email)
+        let emailSent = false;
+        // emailSent = await SendEmail.aboutCaseUpdate(whistle);     // returns true (sent) or false (without sumbitter email) //TODO: enable this
         res.json(emailSent);        // but because the request is no-cors, it will not be read by browser
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
@@ -141,6 +134,7 @@ server.get('/test-pushmessage', fileParser(), Whistle.messageConstructor, async 
 });
 
 
+
 //////////////////       404       //////////////////
 server.get("*", (req, res) => {
     console.log(req.url);
@@ -153,6 +147,7 @@ server.post("*", (req, res) => {
 
 
 
+//////////////////   GIVE SERVER A NAME TO EXPORT   //////////////////
 const whistle = onRequest({ region: 'europe-west3' }, server);
 
 

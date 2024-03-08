@@ -89,19 +89,22 @@ let storeCase = async (whistle) => {
 
 
 /**
- * Get the case from the Firestore database, from the collection 'cases'
+ * Get the case from the Firestore database, from the collection 'cases', or null if not found
  * @param {string} id the Whistle ID
  * @param {string} pin If set, then the function validates it before returns
- * @returns {Promise<Object>} the case
+ * @returns {Promise<Object>} the case object or null
  */
 let getCase = async (id, pin=null) => {
+    // initial basic validation
     id = id.trim();
+    pin = pin && pin?.trim();   // if pin is set, then trim it
+    if ( id.length!=16 || (pin && pin?.length!=4) ) { return null } 
+
+    // get case from Firestore
     let whistle = await db.collection('cases').doc(id).get();
-    if (pin==null) {    // return case without validation
+    if ( pin==null || whistle.data().pin==pin ) {    
+        // DO NOT CHANGE to !pin, because malicious user can send: pin=false
         return whistle.data();          
-    }
-    if (whistle.data()?.pin==pin) {
-        return whistle.data();
     } else {
         return null;
     }
@@ -127,7 +130,6 @@ let getUser = (userEmail) => {
 let pushMessage = async (message) => {
     let whistleRef = db.collection('cases').doc(message.caseId);
     let messageObject = {
-        // order: '-',
         text: message.text,
         // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
@@ -135,33 +137,32 @@ let pushMessage = async (message) => {
         filenames: message.filenames,
         // user: 'Ανώνυμος'
     };
-    // if there is no whistle with this id, it will throw an error
+    // if there is no whistle with this id, the following will throw an error
     await whistleRef.update({
         messages: FieldValue.arrayUnion(messageObject),
         filenames: FieldValue.arrayUnion(...message.filenames)
     });   // this returns nothing (void)
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
-    //TODO: Δεν χρειάζεται ολόκληρο το object, μόνο το id (για την αποστολή email) και το companyID (για τα Attachments). 
+    //NOTE: Δεν χρειάζεται ολόκληρο το object, μόνο το id (για την αποστολή email) και το companyID (για τα Attachments - Firebase Storage). 
     let updatedWhistle = (await whistleRef.get()).data();       
     await storeAttachments(message.filenames, message.caseId, updatedWhistle.companyID);
     return updatedWhistle;
 };
 
 /** 
- * Verify the token and return the decoded token
+ * Verifies the firebase token and returns the decoded token (as a user object or null)
  * @param {string} idToken 
- * @returns {Promise<Object>} the decoded token
+ * @returns {Promise<Object>} the decoded token as a user object (or null)
  */
 let verifyToken = async (idToken) => {
-    //If it fails, it will throw an error
     try{
+        //If it fails, it will throw an error
         let decodedToken = await firebase.auth().verifyIdToken(idToken);
         return decodedToken;
     } catch (e) {
         return null;    
     }
 };
-
 
 
 
