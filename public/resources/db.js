@@ -51,11 +51,11 @@ DB.deleteCase = async function(caseDoc){
 DB.pushMessage = async function(caseDoc,message){
     let caseID = caseDoc.id;
     let messageObject = {
-        order: (caseDoc.messages?.length??0)+1,
         text: message,
         date: firebase.firestore.Timestamp.now(),
         role: 'Υπεύθυνος',
-        user: (await App.user()).email,
+        submittedBy: (await App.user()).email,
+        readByUser: false,
     };
     let dataToUpdate = {
         messages: firebase.firestore.FieldValue.arrayUnion(messageObject)

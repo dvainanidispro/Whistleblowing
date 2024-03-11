@@ -131,11 +131,12 @@ let pushMessage = async (message) => {
     let whistleRef = db.collection('cases').doc(message.caseId);
     let messageObject = {
         text: message.text,
-        // server's timespatme, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
+        // server's timestamp, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
         role: 'Καταγγέλων',
+        readByCompany: false,
         filenames: message.filenames,
-        // user: 'Ανώνυμος'
+        // submittedBy: 'Ανώνυμος'
     };
     // if there is no whistle with this id, the following will throw an error
     await whistleRef.update({
