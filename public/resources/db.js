@@ -114,15 +114,18 @@ DB.checkForUnreadMessages = async (caseDoc) => {
 
 DB.markMessagesAsRead = async (caseDoc) => {
     let caseID = caseDoc.id;
-    let messages = caseDoc.messages.map(message => {
-        if (message.role=="Καταγγέλλων") {
-            message.readByCompany = true;
+    // Αν υπάρχουν αδιάβαστα μηνύματα από τον καταγγέλλοντα
+    if ( caseDoc.messages.some( message => message.role=="Καταγγέλλων" && !message.readByCompany ) ) {
+        let messages = caseDoc.messages.map(message => {
+            if (message.role=="Καταγγέλλων") {
+                message.readByCompany = true;
+            }
+            return message;
+        });
+        let dataToUpdate = {
+            messages: messages
         }
-        return message;
-    });
-    let dataToUpdate = {
-        messages: messages
+        await db.collection("cases").doc(caseID).update(dataToUpdate);
+        console.debug('Messages marked as read');
     }
-    await db.collection("cases").doc(caseID).update(dataToUpdate);
-    console.debug('Messages marked as read');
 };

@@ -25,8 +25,9 @@
 {{#each whistle.messages}}
     <div class="row">
         <div class="col-md-2"><p>
-            <span class="text-muted">{{role}}</span><br>
-            <span class="text-muted">{{date}}</span>
+            <div class="text-muted">{{role}}</div>
+            <div class="text-muted">{{date}}</div>
+            <div class="text-muted italics small">{{readByCompany}}</div>
         </p></div>
         <div class="col-md-10 my-2">
             <textarea class="form-control" readonly disabled>{{text}}</textarea>

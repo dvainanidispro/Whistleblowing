@@ -75,6 +75,7 @@ server.post('/case', async (req, res) => {
     let whistle = await Firebase.getCase(req.body.id, req.body.pin??"no");    // pin="no" is wrong on purpose (in case no pin provided)
     // whistle is now the case object or null
     if (whistle) {
+        Firebase.markMessagesAsRead(whistle);     // mark messages as read. Do not await
         res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
     } else {
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτά τα στοιχεία.");
@@ -88,11 +89,12 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
     try{
         //# ACTIONS AFTER USER MESSAGE
         // if whistleID is invalid, then the following will throw an error
-        let whistle = await Firebase.pushMessage(message);      // push the message to the database
+        let whistle = await Firebase.pushMessageByUser(message);      // push the message to the database
         // SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
         Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
         res.render('messageok');                                // render the confirmation page
     } catch (e) {
+        console.log(e);
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
         return;
     }
@@ -109,9 +111,8 @@ server.post('/notifyuser', async (req, res) => {
         let whistle = await Firebase.getCase(body.caseId);      // whistle object or null
         if ( !whistle || user.companyID!=whistle.companyID ) { return res.status(404).json("Δεν βρέθηκε η υπόθεση") }
 
-        let emailSent = false;
-        // emailSent = await SendEmail.aboutCaseUpdate(whistle);     // returns true (sent) or false (without sumbitter email) //TODO: enable this
-        res.json(emailSent);        // but because the request is no-cors, it will not be read by browser
+        // SendEmail.aboutCaseUpdate(whistle);     // do not await. Returns true (sent) or false (without sumbitter email) //TODO: enable this
+        res.json("ok");        //  because the request is no-cors, it will not be read by browser, so send anything
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
 

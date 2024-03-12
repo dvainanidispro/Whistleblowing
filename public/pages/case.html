@@ -76,7 +76,7 @@
                       <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-tab-pane" type="button" role="tab" aria-controls="general-tab-pane" aria-selected="true">Στοιχεία υπόθεσης</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="communication-tab" data-bs-toggle="tab" data-bs-target="#communication-tab-pane" type="button" role="tab" aria-controls="communication-tab-pane" aria-selected="false" @click="DB.markMessagesAsRead(caseDoc)" >Επικοινωνία με καταγγέλοντα</button>
+                      <button class="nav-link" id="communication-tab" data-bs-toggle="tab" data-bs-target="#communication-tab-pane" type="button" role="tab" aria-controls="communication-tab-pane" aria-selected="false" @click.once="DB.markMessagesAsRead(caseDoc)" >Επικοινωνία με καταγγέλοντα</button>
                     </li>
                 </ul>
 

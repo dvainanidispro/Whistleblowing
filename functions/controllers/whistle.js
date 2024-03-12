@@ -20,7 +20,7 @@ const pin = new ShortUniqueId({
 import {Timestamp} from "firebase-admin/firestore";
 /** Converts a Firestore timestamp to a JavaScript date */
 const timestampToDate = (timestamp) => {
-    return (new Timestamp(timestamp.seconds, timestamp.nanoseconds)).toDate();
+    return (new Timestamp(timestamp._seconds, timestamp._nanoseconds)).toDate();
 };
 /** If the incoming field does not have meaningfull value, then make it null */
 const proper = (value) => {
@@ -81,7 +81,7 @@ let Whistle = {
             isTest: (req.body.company==config.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
-            filenames: [],
+            filenames: [],          //TODO: not important to store to firestore...
         };
     
         req.files.forEach(file => {
@@ -115,12 +115,14 @@ let Whistle = {
 
 
     toHumanFormat: function (whistle) {
-        let clientWhistle = whistle;
+        // deep clone whistle object. Warning! If we change the status (messages), then it will change the original object!
+        let clientWhistle = structuredClone(whistle);
         clientWhistle.status = Mappings.status[whistle.status];
         clientWhistle.messages.forEach(message=>{
             message.date = timestampToDate(message.date).toLocaleDateString();
+            message.readByCompany = (message.role=="Υπεύθυνος") ? "" :
+                (message.role=="Καταγγέλλων" && message.readByCompany) ? "Διαβάστηκε" : "Δεν διαβάστηκε";
         });
-        // console.log(clientWhistle);
         return clientWhistle;
     },
 
@@ -142,10 +144,9 @@ let Whistle = {
         next();
     },
 
-    // anync delete attachments using promise.all
+
     deleteAttachments: async function (whistleOrMessage) {
         let filenames = whistleOrMessage.filenames;
-        console.log(filenames);
         filenames.forEach(filename => {
             try{
                 fs.unlink(attachmentsFolder + filename, _=>{});

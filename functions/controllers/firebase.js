@@ -62,7 +62,7 @@ let company = async (req, res, next) => {
 let storeAttachments = async (filenames, whistleID, companyID) => {
     if (filenames.length==0) {return}
     let promises = filenames.map(filename => {
-        let storagePath = attachmentsFolder + filename; // it is not a genuine path, but a filename string
+        let storagePath = attachmentsFolder + filename;     // storagePath is not a genuine path, but a filename string
         return storage.upload(storagePath, {destination: companyID + '/' + whistleID + '/' + filename});
     });
     await Promise.all(promises);
@@ -127,7 +127,7 @@ let getUser = (userEmail) => {
  * @param {string} messageText 
  * @returns {Promise<Object>} the case
  */
-let pushMessage = async (message) => {
+let pushMessageByUser = async (message) => {
     let whistleRef = db.collection('cases').doc(message.caseId);
     let messageObject = {
         text: message.text,
@@ -138,12 +138,20 @@ let pushMessage = async (message) => {
         filenames: message.filenames,
         // submittedBy: 'Ανώνυμος'
     };
-    // if there is no whistle with this id, the following will throw an error
-    await whistleRef.update({
-        messages: FieldValue.arrayUnion(messageObject),
-        filenames: FieldValue.arrayUnion(...message.filenames)
-    });   // this returns nothing (void)
+
+    // if there is no whistle with this id, the update command will throw an error. Else, it returns nothing (void)
+    if (messageObject.filenames.length){    // Αν έχει αρχεία
+        await whistleRef.update({
+            messages: FieldValue.arrayUnion(messageObject),
+            filenames: FieldValue.arrayUnion(...message.filenames)      // this does not work with empty array / null
+        });
+    } else {
+        await whistleRef.update({
+            messages: FieldValue.arrayUnion(messageObject)
+        });
+    }
     console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
+
     //NOTE: Δεν χρειάζεται ολόκληρο το object, μόνο το id (για την αποστολή email) και το companyID (για τα Attachments - Firebase Storage). 
     let updatedWhistle = (await whistleRef.get()).data();       
     await storeAttachments(message.filenames, message.caseId, updatedWhistle.companyID);
@@ -165,6 +173,21 @@ let verifyToken = async (idToken) => {
     }
 };
 
+/** Updates case so the user has read all the messages */
+let markMessagesAsRead = async (whistle) => {
+    let whistleRef = db.collection('cases').doc(whistle.id);
+    let dataToUpdate = {
+        messages: whistle.messages.map(message => {
+            if (message.role=="Υπεύθυνος") {
+                message.readByUser = true;
+            }
+            return message;
+        })
+    };
+    await whistleRef.update(dataToUpdate);
+    return true;
+};
 
 
-export default { getCompany, company, getCase, getUser, storeCase, pushMessage, verifyToken };
+
+export default { getCompany, company, getCase, getUser, storeCase, pushMessageByUser, verifyToken , markMessagesAsRead };

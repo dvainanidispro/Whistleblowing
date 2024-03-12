@@ -43,12 +43,6 @@ let aboutNewWhistle = async (whistle) => {
                 <h2>Αναλυτική Περιγραφή</h2>
                 <p>${whistle.description}</p>
         `, // html body
-        // attachments: whistle.filenames.map(filename => {         // αν ενεργοποιηθούν, προσοχή με τα πολλά await...
-        //     return {
-        //         filename: filename,
-        //         path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
-        //     }
-        // }),
     };
 
 

@@ -382,6 +382,6 @@ input, textarea, select{
     background-color: hsl(249, 50%, 85%) !important;
 } */
 
-.bold{
-    font-weight: bold;
-}
+.bold {font-weight: bold}
+.italics {font-style: italic}
+.small {font-size: small}
