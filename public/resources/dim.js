@@ -98,7 +98,7 @@ class BootstrapToast extends HTMLElement {
         this.innerHTML = /*html*/`
             <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3 my-5 ">
                 <div id="${this.dataid}" class="toast ${this.backClass}" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header center-contents bg-success text-white rounded">
+                    <div class="toast-header center-contents ${this.backClass} text-white rounded">
                         <div><strong >${this.message??'OK...'}</strong></div>
                     </div>
                 </div>

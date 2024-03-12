@@ -32,7 +32,7 @@ let getCompany = async (companyID) => {
     company = company.data()??null;
     if (company) {company.id = companyID};
     DimCache.set(companyID,company);    // store in cache, even if null
-    //NOTE: if not a google cloud function, then setTimout to delete from cache
+    //NOTE: if not a google cloud function, then setTimeout to delete from cache
     return company;
 };
  
@@ -133,7 +133,7 @@ let pushMessage = async (message) => {
         text: message.text,
         // server's timestamp, because: FieldValue.serverTimestamp() cannot be used inside of an array! (only on root document?)
         date: Timestamp.now(),      
-        role: 'Καταγγέλων',
+        role: 'Καταγγέλλων',
         readByCompany: false,
         filenames: message.filenames,
         // submittedBy: 'Ανώνυμος'

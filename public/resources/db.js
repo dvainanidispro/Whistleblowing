@@ -3,6 +3,7 @@ const db = firebase.firestore();
 
 window.DB = {};
 
+
 DB.fetchCases = async function(){
     let closed = (App.getParams.closed=='true');
     let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
@@ -20,11 +21,14 @@ DB.fetchCases = async function(){
     return openCases;
 };
 
+
 DB.fetchCase = async function(caseID){
     let caseDoc = await db.collection("cases").doc(caseID).get();
     let doc = caseDoc.data();
+    DB.checkForUnreadMessages(doc);
     return doc;
 };
+
 
 DB.updateCase = async function(caseDoc){
     let caseID = caseDoc.id;
@@ -38,6 +42,7 @@ DB.updateCase = async function(caseDoc){
     App.showToast('saved');
 };
 
+
 DB.deleteCase = async function(caseDoc){
     //confirmation
     if ( confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε οριστικά την παρούσα υπόθεση; Δεν θα είναι δυνατή η επαναφορά της.') == false ) {return}
@@ -47,6 +52,7 @@ DB.deleteCase = async function(caseDoc){
     sessionStorage.setItem('toast','deleted');
     window.location.href = '/pages/home.html';
 };
+
 
 DB.pushMessage = async function(caseDoc,message){
     let caseID = caseDoc.id;
@@ -67,10 +73,10 @@ DB.pushMessage = async function(caseDoc,message){
 };
 
 
-// Notify User (not belongs exactly in the DB object...)
+/** Ενημερώνει το χρήστη για αλλαγή κατάστασης της υπόθεσης (not belongs exactly in the DB object...)  */
 DB.notifyUser ??= async (whistle) => {
     if (whistle.submitter?.email==null || whistle.submitter?.email=="") {return false}
-    console.log('Sending email to user...');
+    console.debug('Sending email to user...');
 
     fetch(App.notifyUserUrl, {
         method: 'POST',
@@ -80,8 +86,43 @@ DB.notifyUser ??= async (whistle) => {
         },
         body: JSON.stringify({
             userToken: await firebase.auth().currentUser.getIdToken(),
-            caseId: whistle.id,
+            caseId: whistle
+            .id,
         }),
     });
 };
 
+/** Επιστρέφει μια φράση η οποία υποδηλώνει αν το μύνημα έχει διαβαστεί από το χρήστη */
+DB.wasRead = (message) => {
+    if (message.role=="Καταγγέλλων") {return ""}
+    if (message.role=="Υπεύθυνος" && message.readByUser) {return "Διαβάστηκε"}
+    if (message.role=="Υπεύθυνος" && !message.readByUser) {return "Δεν έχει διαβαστεί"}
+    {return ""}
+};
+
+
+DB.checkForUnreadMessages = async (caseDoc) => {
+    let unreadMessages = caseDoc.messages.filter(message => message.role=="Καταγγέλλων" && !message.readByCompany);
+    if (unreadMessages.length>0) {
+        console.debug('There are unread messages');
+        App.showToast("unread");
+        return true;
+    }
+    return false;
+};
+
+
+DB.markMessagesAsRead = async (caseDoc) => {
+    let caseID = caseDoc.id;
+    let messages = caseDoc.messages.map(message => {
+        if (message.role=="Καταγγέλλων") {
+            message.readByCompany = true;
+        }
+        return message;
+    });
+    let dataToUpdate = {
+        messages: messages
+    }
+    await db.collection("cases").doc(caseID).update(dataToUpdate);
+    console.debug('Messages marked as read');
+};

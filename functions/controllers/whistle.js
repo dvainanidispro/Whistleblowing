@@ -55,7 +55,7 @@ let Mappings = {
 let Whistle = {
 
     /**
-     * Middleware to constuct the Whistle object from the request body and files. Also, saves the files temorarily.
+     * Middleware to construct the Whistle object from the request body and files. Also, saves the files temorarily.
      * Must be used as such: Whistle.toDbObject.bind(Whistle), because this===undefined inside a middleware
      * @param {*} req 
      * @param {*} res 

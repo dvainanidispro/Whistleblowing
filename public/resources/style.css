@@ -106,6 +106,10 @@ body{
     grid-auto-flow: column;
 }
 
+.bold {font-weight: bold}
+.italics {font-style: italic}
+.small {font-size: small}
+
 
 /*********************  HEADER FOOTER   *********************/
 

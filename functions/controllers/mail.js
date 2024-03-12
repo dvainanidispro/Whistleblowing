@@ -32,7 +32,7 @@ let aboutNewWhistle = async (whistle) => {
 
     let company = await Firebase.getCompany(whistle.companyID);
 
-    // prepair mail with defined transport object
+    // prepare mail with defined transport object
     let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
@@ -70,7 +70,7 @@ let aboutNewWhistle = async (whistle) => {
  */
 let aboutNewUserMessage = async (whistle) => {
 
-    // prepair mail
+    // prepare mail
     let company = await Firebase.getCompany(whistle.companyID);
     let message = whistle.messages[whistle.messages.length-1];   // the last message
     let mail = {

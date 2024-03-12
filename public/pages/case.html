@@ -76,7 +76,7 @@
                       <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-tab-pane" type="button" role="tab" aria-controls="general-tab-pane" aria-selected="true">Στοιχεία υπόθεσης</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="communication-tab" data-bs-toggle="tab" data-bs-target="#communication-tab-pane" type="button" role="tab" aria-controls="communication-tab-pane" aria-selected="false">Επικοινωνία με καταγγέλοντα</button>
+                      <button class="nav-link" id="communication-tab" data-bs-toggle="tab" data-bs-target="#communication-tab-pane" type="button" role="tab" aria-controls="communication-tab-pane" aria-selected="false" @click="DB.markMessagesAsRead(caseDoc)" >Επικοινωνία με καταγγέλοντα</button>
                     </li>
                 </ul>
 
@@ -144,7 +144,7 @@
                                 <div x-text="caseDoc.description"></div>
                             </div>
                 
-                            <div class="my-3 list-group xs" id="filelist" x-show="caseDoc.filenames.length">
+                            <div class="my-3 list-group xs" id="filelist" x-show="caseDoc.filenames.length" x-init="fetchCaseFiles()">
                                 <label for="filelist" class="my-1">Αρχεία</label>
                             </div>
 
@@ -166,7 +166,7 @@
 
 
 
-                    <!-- Comminication Tab -->
+                    <!-- Communication Tab -->
                     <div class="tab-pane fade" id="communication-tab-pane" role="tabpanel" aria-labelledby="communication-tab" tabindex="0">
 
                         <hr>
@@ -199,11 +199,12 @@
                             <!-- <template x-if="caseDoc.messages.length"><h2>Ιστορικό μηνυμάτων</h2></template> -->
                             <template x-for="message in caseDoc.messages">
                                 <div class="row">
-                                    <div class="col-md-2"><p>
-                                        <span class="text-muted" x-text="message.role"></span><br>
-                                        <span class="text-muted" x-text="message?.date?.toDate()?.toLocaleDateString()"></span>
+                                    <div class="col-md-3"><p>
+                                        <div class="text-muted" x-text="message.role" ></div>
+                                        <div class="text-muted" x-text="message?.date?.toDate()?.toLocaleDateString()" ></div>
+                                        <div class="text-muted italics small" x-text="DB.wasRead(message)" ></div>
                                     </p></div>
-                                    <div class="col-md-10 my-2">
+                                    <div class="col-md-9 my-2">
                                         <textarea x-model="message.text" class="form-control" readonly></textarea>
                                     </div>
                                 </div>
@@ -224,7 +225,7 @@
             
                         <hr>
                     </div>
-                    <!-- Comminication Tab -->
+                    <!-- Communication Tab -->
                 </div>  
 
 
@@ -246,6 +247,7 @@
         <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
         <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
         <bootstrap-toast data-id="deleted" data-message="Η υπόθεση διαγράφτηκε!"></bootstrap-toast>
+        <bootstrap-toast data-id="unread" data-message="Υπάρχουν αδιάβαστα μυνήματα!" data-back-class="bg-primary"></bootstrap-toast>
 
 
 
