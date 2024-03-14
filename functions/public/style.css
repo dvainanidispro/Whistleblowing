@@ -111,22 +111,17 @@ body{
 /*********************  HEADER FOOTER   *********************/
 
 
-header, header > a:first-of-type, header nav>ul {    /*header, left logo, right navs*/
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;  /*vertical align, when big logo*/
+header {    /*header, left logo, right navs*/
     list-style-type: none; 
     padding-inline-start: 0;    /*fixes ul*/
     gap: 2rem 1.5rem;
 }
 
 header{
-    background-color:var(--primarycolor);
+    background-color:var(--backgroundcolor);
     color: var(--headertextcolor);
-    padding: 0.5rem min(3rem,10%);
-    border-bottom: 1px solid #e5e5e5;
-    display: none;
+    padding: 1rem min(3rem,10%) 0 min(3rem,10%);
+    /* border-bottom: 1px solid #e5e5e5; */
     /*height: min(30vw,8rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 }
 
@@ -145,7 +140,7 @@ footer p{font-size: small}
 
 /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 .logo{
-    max-height: 6rem;
+    max-height: 5rem;
     width: auto;
 }
 
@@ -242,7 +237,7 @@ h2{
 }
 
 main{
-    padding: 2rem min(3rem,5%);
+    padding: 1rem min(3rem,5%);
 }
 
 label:not(.form-check-label) {
