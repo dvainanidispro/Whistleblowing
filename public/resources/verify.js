@@ -1,12 +1,17 @@
 console.debug("verify.html")
 
 
-///////////////////////   VARIABLES   ///////////////////////
+///////////////////////    VARIABLES    ///////////////////////
 
 /** The cookie duration in days */
 // let cookieDuration = 3; // days
 let redirectPageAfterLogin = "/pages/home.html";
 let createLinkPath = "/";
+
+
+//////////////////////    APP CHECK    ////////////////////////
+const appCheck = firebase.appCheck();
+appCheck.activate('6LcLAnEpAAAAAEHXuFLhEojhtCCFPsAsDKTS51xO',true);
 
 
 

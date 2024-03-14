@@ -11,6 +11,7 @@ DB.fetchCases = async function(){
     if (!closed){
         cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
     } else if (closed){
+        Q('~casesDescription').set("Κλειστές υποθέσεις");
         cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['completed','rejected','cancelled']).get();
     }
     let openCases = [];
@@ -129,3 +130,23 @@ DB.markMessagesAsRead = async (caseDoc) => {
         console.debug('Messages marked as read');
     }
 };
+
+
+DB.getMyCompanyName = async () => {
+    if (localStorage.getItem('companyName')) {return localStorage.getItem('companyName')}
+    console.debug("Fetching company name from Firestore");
+    let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
+    let companyDoc = await db.collection("companies").doc(companyID).get();
+    let company = companyDoc.data();
+    let companyName = company.name;
+    localStorage.setItem('companyName',companyName);
+    return companyName;
+};
+DB.getMyCompanyName().then(companyName => {
+    Q('~companyName').set(companyName);
+});
+// Q('~companyName').set( await DB.getMyCompanyName() );
+
+
+
+

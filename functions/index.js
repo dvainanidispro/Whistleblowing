@@ -12,8 +12,6 @@ server.use(express.json());
 server.use(express.static('public')); 
 
 
-// cookies, cors and other middleware
-
 //////////////////    HANDLEBARS    ///////////////////
 server.set('views', "views");   // folder of views
 import { create as HandlebarsCreator } from 'express-handlebars';
@@ -63,7 +61,7 @@ server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, 
     console.log(whistle);
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
-    await Firebase.storeCase(whistle);                      // store the case in the database
+    await Firebase.storeCase(whistle);                      // store the case in the database, whistle object is modified here
     // SendEmail.aboutNewWhistle(whistle);                     // send email, do not await the delivery
     Whistle.deleteAttachments(whistle);                     // delete attachments from disk, do not await
     res.render('newcaseconfirm',{whistle});                 // render the confirmation page
@@ -120,7 +118,7 @@ server.post('/notifyuser', async (req, res) => {
 
 //////////////////   TEST PAGES   //////////////////
 server.get("/test-new", (req, res) => {
-    let whistle = {id: 1234567890123456, pin: 1234}
+    let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
     res.render('newcaseconfirm',{whistle});
 });
 
