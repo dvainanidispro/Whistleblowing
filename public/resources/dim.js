@@ -78,7 +78,7 @@ class BootstrapSpinner extends HTMLElement {
             this.message = this.getAttribute('data-message')??'Παρακαλώ περιμένετε...';
             this.innerHTML = /*html*/`
                 <div class="d-flex flex-column align-items-center m-4">
-                    <div class="spinner-border text-success m-2" role="status">
+                    <div class="spinner-border text-primary m-2" role="status">
                         <span class="visually-hidden">${this.message}</span>
                     </div>
                     <div>${this.message}</div>

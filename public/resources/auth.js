@@ -42,6 +42,7 @@ App.user.claims ??= async (claim=null) => {
 
 // sign-in & sign-out
 firebase.auth().onAuthStateChanged(async function(user) {
+    Q(".loadingUser").show(false);
     if (user) {
         console.debug("User is signed in");
         console.debug({user});
@@ -49,6 +50,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
         App.setCssVariable('--display-if-guest','none');
         App.setCssVariable('--display-if-user','block');
         Q("~email").set(user.email);
+        Q("~displayName").set(user.displayName);
         // Q("~displayName").set(user.displayName);
     } else {
         if (App.path != "/") {

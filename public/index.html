@@ -58,18 +58,22 @@
     <main>
         <div id="message">
             <h1 data-variable="companyName"></h1>
-            <h2>Καλώς ήρθατε</h2>
+            <h2>Καλώς ήρθατε στην Υπηρεσία Αναφορών του Οργανισμού σας</h2>
         </div>
 
 
+        <bootstrap-spinner class="loadingUser" data-message="Παρακαλώ περιμένετε..."></bootstrap-spinner>
+
 
         <div class="is-user">
-            <p>Είστε συνδεδεμένος ως: <span data-variable="email"></span><br>
-            Μπορείτε να συνεχίσετε στην εφαρμογή:</p>
-                <a href="/pages/home.html" type="button" class="btn btn-primary mb-3 small-shadow">Συνέχεια στην εφαρμογή</a>
+            <p>Έχετε συνδεθεί ως: <br>
+                <span data-variable="displayName"></span> - <span data-variable="email"></span>
+            </p>
+            <p>Μπορείτε να συνεχίσετε στην εφαρμογή:</p>
+            <a href="/pages/home.html" type="button" class="btn btn-primary mb-3 small-shadow">Συνέχεια στην εφαρμογή</a>
 
-                <p>Για αποσύνδεση, πατήστε εδω:</p> 
-                <button class="btn btn-secondary btn-sm signOutBtn" id="signOutBtn">Αποσύνδεση</button>
+            <p>Για αποσύνδεση, πατήστε εδω:</p> 
+            <button class="btn btn-secondary btn-sm signOutBtn" id="signOutBtn">Αποσύνδεση</button>
                 
         </div>
 

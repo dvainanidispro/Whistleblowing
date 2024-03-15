@@ -11,7 +11,7 @@
     --headertextcolor: lavender;
     --unitcolor: hsl(250, 16%, 92%);
     --display-if-user: none;
-    --display-if-guest: block;
+    --display-if-guest: none;
     --unknown-answer: silver;
     --partiescolorstest: rgba(201, 38, 44, 0.8);
     /* --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); */
@@ -266,10 +266,21 @@ label:not(.form-check-label) {
     background-color: var(--backgroundcolor);
     border-color: var(--backgroundcolor);
 }
-
 .btn-primary:disabled{
     background-color: pink;
     border-color: pink;
+}
+.btn-danger{
+    background-color: darkred;
+    border-color: darkred;
+}
+.text-primary{
+    color: var(--primarycolor) !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: lavender;
+    background-color: darkblue;
+    border-color: var(--bs-nav-tabs-link-active-border-color);
 }
 
 .body-container, .small-shadow {
@@ -279,11 +290,6 @@ header .app-title, .text-shadow{
     text-shadow: 1px 1px 2px #000000;
 }
 
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    color: lavender;
-    background-color: darkred;
-    border-color: var(--bs-nav-tabs-link-active-border-color);
-}
 
 
 .if-user, .is-user{

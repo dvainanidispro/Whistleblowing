@@ -67,7 +67,8 @@
 
         <div class="cases-frame" id="casesFrame">
 
-            <div x-data="{cases: []}" x-init="cases = await DB.fetchCases()" class="open-cases" id="openCases" >
+            <div x-data="{cases: [], loaded:false}" x-init="cases = await DB.fetchCases(); loaded=true" class="open-cases" id="openCases" >
+                <bootstrap-spinner data-message="Φόρτωση υποθέσεων..." x-show="!loaded"></bootstrap-spinner>
                 <template x-for="item in cases" :key="item.id">
                         <a :href="'/pages/case.html?caseid=' + item.id" class="case-item">
                             <div x-text="item.id"></div> 
