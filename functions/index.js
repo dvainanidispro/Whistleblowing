@@ -42,8 +42,9 @@ import Firebase from './controllers/firebase.js';
 server.get(['/','/home'], Firebase.company, (req, res) => {
     if (!res.company){
         res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
+    } else {
+        res.render('home', {company:res.company});
     }
-    res.render('home', {company:res.company});
 });
 
 
@@ -51,8 +52,9 @@ server.get(['/','/home'], Firebase.company, (req, res) => {
 server.get(['/form','/new'], Firebase.company, (req, res) => {
     if (!res.company){
         res.send("Δεν βρέθηκε ο Οργανισμός. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο.");
+    } else {
+        res.render('whistleform', {company:res.company});
     }
-    res.render('whistleform', {company:res.company});
 });
 
 
@@ -96,7 +98,6 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
     } catch (e) {
         console.log(e);
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
-        return;
     }
 });
 
@@ -149,7 +150,7 @@ server.post("*", (req, res) => {
 
 
 //////////////////   GIVE SERVER A NAME TO EXPORT   //////////////////
-const whistle = onRequest({ region: 'europe-west3' }, server);
+const whistle = onRequest({ region: 'europe-west3' , maxInstances: 2 , concurrency: 8 }, server);
 
 
 
@@ -158,7 +159,7 @@ const whistle = onRequest({ region: 'europe-west3' }, server);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////     BLOCKING FUNCTION BEFORE USER CREATED     ///////////////////////////
 
-const beforeCreated = beforeUserCreated({ region: 'europe-west3' }, async (event) => {
+const beforeCreated = beforeUserCreated({ region: 'europe-west3' , maxInstances: 2 , concurrency: 4 }, async (event) => {
 
     /** Tells firebase to reject the new user */
     let failValidation = function(){
