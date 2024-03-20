@@ -38,17 +38,13 @@ let getCompany = async (companyID) => {
  
 
 /** 
- * Middleware to get the company details from the Firestore database or the cache
- * @returns 
+ * Middleware to validate and store the company details to res.company. Uses the get parameter of the request (not the form value) 
+ * @returns {Promise<void>} The company object is stored in res.company
  */
 let company = async (req, res, next) => {
     let companyID = req.query.company;
     // get from cache or from Firestore
     let company = await getCompany(companyID);   
-    if (company==null) {
-        res.status(404).send("Η εταιρεία δεν βρέθηκε.");
-        return;
-    }
     res.company = company;
     next();
 };

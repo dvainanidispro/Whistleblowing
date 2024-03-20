@@ -39,24 +39,26 @@ import Firebase from './controllers/firebase.js';
 ////////////////////////////////////////     SERVER     ////////////////////////////////////////
 
 // Αρχική σελίδα
-server.get('/', Firebase.company, (req, res) => {
-    res.render('home');
+server.get(['/','/home'], Firebase.company, (req, res) => {
+    if (!res.company){
+        res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
+    }
+    res.render('home', {company:res.company});
 });
 
-// Αρχική σελίδα
-server.get('/home', Firebase.company, (req, res) => {
-    res.render("home",{company: res.company});
-});
 
 // Φόρμα υποβολής νέας αναφοράς
 server.get(['/form','/new'], Firebase.company, (req, res) => {
+    if (!res.company){
+        res.send("Δεν βρέθηκε ο Οργανισμός. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο.");
+    }
     res.render('whistleform', {company:res.company});
 });
 
 
 
 // Υποβολή νέας αναφοράς από το χρήστη
-server.post(['/','/new','/form'], fileParser(), Whistle.toDbObject, async (req, res) => {
+server.post(['/','/form','/new'], Firebase.company, fileParser(), Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
     console.log(whistle);
 

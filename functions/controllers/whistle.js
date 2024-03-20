@@ -77,7 +77,7 @@ let Whistle = {
                 phone: proper(req.body.phone),
                 notify: !!req.body.notify, // convert to boolean
             },
-            companyID: req.body.company,
+            companyID: res.company.id,      // old: req.body.company
             isTest: (req.body.company==config.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
