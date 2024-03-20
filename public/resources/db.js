@@ -9,7 +9,7 @@ DB.fetchCases = async function(){
     let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
     let cases;
     if (!closed){
-        cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).get();
+        cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).orderBy("submittedAt","desc").get();
     } else if (closed){
         Q('~casesDescription').set("Κλειστές υποθέσεις");
         cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['completed','rejected','cancelled']).get();
