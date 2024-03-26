@@ -380,3 +380,8 @@ input, textarea, select{
 .bold {font-weight: bold}
 .italics {font-style: italic}
 .small {font-size: small}
+.center-left {
+    @media screen and (max-width: 768px) {
+        text-align: center;
+    }
+}
