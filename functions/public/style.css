@@ -373,6 +373,15 @@ input, textarea, select{
     margin-top: 0.3rem;
 }
 
+fieldset legend {
+    display: block;
+    font-weight: bold;
+    margin-top: 1.2rem;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+
+
 /* input[readonly], input[disabled], .input[readonly]:focus, .input[readonly]:active{
     background-color: hsl(249, 50%, 85%) !important;
 } */

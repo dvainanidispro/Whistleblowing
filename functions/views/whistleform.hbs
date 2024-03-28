@@ -32,8 +32,8 @@
             </select> --}}
       
             <div>
-                <div class="mb-3 mt-3">
-                    <label for="dateFacade" class="form-label">Πότε συνέβη το περιστατικό; (προαιρετικά)</label>
+                <div class="mb-3 mt-3"><fieldset>
+                    <legend>Πότε συνέβη το περιστατικό; (προαιρετικά)</legend>
                     <div class="form-check">
                         <input class="form-check-input generaldate" type="radio" name="datetype" value="before5years" id="before5years">
                         <label class="form-check-label" for="before5years">
@@ -47,16 +47,18 @@
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="datetype" value="specificdate" id="specificdate" autocomplete="off">
+                        <input class="form-check-input" type="radio" name="datetype" value="specificdate" id="specificdate" autocomplete="off" aria-describedby="specificdateElaborate">
                         <label class="form-check-label" for="specificdate">
                             Συγκεκριμένη ημερομηνία
                         </label>
+                        <p hidden id="specificdateElaborate">Στο επόμενο πεδίο επιλέξτε ημερομηνία με το date picker</p>
+                        <div id="specificdatepicker" class="d-none ms-5">
+                            <input type="text" class="form-control" id="dateFacade" placeholder="Ημερομηνία Παραβίασης" onclick="actualDate.showPicker()" onfocus="actualDate.showPicker()" autocomplete="off">
+                            <input hidden name="date" type="date" id="actualDate"  class="form-control" onchange="dateFacade.value=facade(this.value)">
+                        </div>
                     </div>
-                    <div id="specificdatepicker" class="d-none ms-5">
-                        <input type="text" class="form-control" id="dateFacade" placeholder="Ημ/νία Παραβίασης" onclick="actualDate.showPicker()" autocomplete="off">
-                        <input name="date" type="date" id="actualDate" hidden class="form-control" onchange="dateFacade.value=facade(this.value)">
-                    </div>
-                    </div>
+
+                    </fieldset></div>
             </div>
 
           
@@ -160,7 +162,7 @@
             <hr>
       
             <div>
-                <small>Βεβαιωθείτε ότι μετά την υποβολή της αναφοράς, θα εμφανιστεί μύνημα επιτυχούς παράδοσης.</small>
+                <small>Βεβαιωθείτε ότι μετά την υποβολή της αναφοράς, θα εμφανιστεί μήνυμα επιτυχούς παράδοσης.</small>
             </div>
             <div class="d-flex">
                 <button type="submit" id="submit-btn" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>

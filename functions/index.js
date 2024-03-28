@@ -94,7 +94,7 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
         let whistle = await Firebase.pushMessageByUser(message);      // push the message to the database
         // SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
         Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
-        res.render('messageok');                                // render the confirmation page
+        res.render('newmessageconfirm',{whistle});                                // render the confirmation page
     } catch (e) {
         console.log(e);
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
@@ -130,9 +130,9 @@ server.get("/test-case", (req, res) => {
     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 });
 
-server.get('/test-pushmessage', fileParser(), Whistle.messageConstructor, async (req, res) => {
+server.get('/test-pushmessage', async (req, res) => {
     let message = {caseId: "1234567890123456", text: "Αυτό είναι ένα μήνυμα από τον καταγγέλoντα", filenames: []};
-    res.render('messageok');
+    res.render('newmessageconfirm',{whistle: {id: message.caseId, companyID: "bkueHt76TQiUW7G8p1BK"}});
 });
 
 
