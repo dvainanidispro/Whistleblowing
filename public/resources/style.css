@@ -438,3 +438,25 @@ input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled
 .red{
     color: darkred;
 }
+
+
+.user-info{
+    min-height: 5rem;
+    margin-block: 0.5rem;
+    padding: 1rem 2rem;
+    
+    background: var(--primarycolor);
+    color: Snow;
+    
+    border-radius: 10px;
+    box-shadow: 3px 3px 7px 0px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(7, 90, 174, 0.17);
+    
+    @media (min-width: 600px){
+        display: grid;
+        grid-template-columns: 20% 80%;
+        gap: 10px 20px;
+    }
+}

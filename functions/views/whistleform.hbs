@@ -1,13 +1,11 @@
 
     <form action="" method="post" enctype="multipart/form-data" id="whistleblowing-form">
-        <div class="container mt-3">
             <h1 class="center-left">Υποβολή νέας αναφοράς</h1>
 
           
             <input type="hidden" readonly value="{{company.id}}" id="company" name="company">
           
         
-            <br>
 
             <div class="">
                 <label for="companyName">Οργανισμός</label>
@@ -32,8 +30,8 @@
             </select> --}}
       
             <div>
-                <div class="mb-3 mt-3"><fieldset>
-                    <legend>Πότε συνέβη το περιστατικό; (προαιρετικά)</legend>
+                <div class="mb-3"><fieldset>
+                    <legend class="mt-2">Πότε συνέβη το περιστατικό; (προαιρετικά)</legend>
                     <div class="form-check">
                         <input class="form-check-input generaldate" type="radio" name="datetype" value="before5years" id="before5years">
                         <label class="form-check-label" for="before5years">
@@ -175,7 +173,6 @@
             
               
          
-        </div>
       </form>
 
 

@@ -237,7 +237,8 @@ h2{
 }
 
 main{
-    padding: 1rem min(3rem,5%);
+    padding: 1rem 0;
+    /* padding: 1rem min(3rem,5%); */
 }
 
 label:not(.form-check-label) {

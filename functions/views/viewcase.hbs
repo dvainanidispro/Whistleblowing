@@ -1,5 +1,5 @@
 
-<h1>Αναφορά {{whistle.id}}</h1>
+<h1 class="center-left">Αναφορά {{whistle.id}}</h1>
 
 <h2>Στοιχεία υπόθεσης</h2>
 
@@ -24,14 +24,15 @@
 
 {{#each whistle.messages}}
     <div class="row">
-        <div class="col-md-2"><p>
+        <div class="col-md-2 pt-3">
             <div class="text-muted">{{role}}</div>
             <div class="text-muted">{{date}}</div>
             <div class="text-muted italics small">{{readByCompany}}</div>
-        </p></div>
+        </div>
         <div class="col-md-10 my-2">
             <textarea class="form-control" readonly disabled>{{text}}</textarea>
         </div>
+        <hr class="my-1 d-md-none"->
     </div>
 {{/each}}
 

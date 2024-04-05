@@ -55,10 +55,15 @@
 
         <div class="is-user">
             <p>Έχετε συνδεθεί ως: <br>
-                <span data-variable="displayName"></span> - <span data-variable="email"></span>
+                <div class="user-info sm">				
+                    <div>Username:</div> 
+                    <div data-variable="email"></div>
+                    <div>Όνομα:</div>  
+                    <div data-variable="displayName"></div>
+                </div>   
             </p>
             <p>Μπορείτε να συνεχίσετε στην εφαρμογή:</p>
-            <a href="/pages/home.html" type="button" class="btn btn-primary mb-3 small-shadow">Συνέχεια στην εφαρμογή</a>
+            <a href="/pages/home.html" type="button" class="btn btn-success mb-3 small-shadow">Συνέχεια στην εφαρμογή</a>
 
             <p>Για αποσύνδεση, πατήστε εδω:</p> 
             <button class="btn btn-secondary btn-sm signOutBtn" id="signOutBtn">Αποσύνδεση</button>
