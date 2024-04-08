@@ -66,7 +66,7 @@ server.post(['/','/form','/new'], Firebase.company, fileParser(), Whistle.toDbOb
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);                      // store the case in the database, whistle object is modified here
-    // SendEmail.aboutNewWhistle(whistle);                     // send email, do not await the delivery
+    SendEmail.aboutNewWhistle(whistle);                     // send email, do not await the delivery
     Whistle.deleteAttachments(whistle);                     // delete attachments from disk, do not await
     res.render('newcaseconfirm',{whistle});                 // render the confirmation page
 });
@@ -92,7 +92,7 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
         //# ACTIONS AFTER USER MESSAGE
         // if whistleID is invalid, then the following will throw an error
         let whistle = await Firebase.pushMessageByUser(message);      // push the message to the database
-        // SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
+        SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
         Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
         res.render('newmessageconfirm',{whistle});                                // render the confirmation page
     } catch (e) {
@@ -112,7 +112,7 @@ server.post('/notifyuser', async (req, res) => {
         let whistle = await Firebase.getCase(body.caseId);      // whistle object or null
         if ( !whistle || user.companyID!=whistle.companyID ) { return res.status(404).json("Δεν βρέθηκε η υπόθεση") }
 
-        // SendEmail.aboutCaseUpdate(whistle);     // do not await. Returns true (sent) or false (without sumbitter email) //TODO: enable this
+        SendEmail.aboutCaseUpdate(whistle);     // do not await. Returns true (sent) or false (without sumbitter email) //TODO: enable this
         res.json("ok");        //  because the request is no-cors, it will not be read by browser, so send anything
     } catch (e) { res.status(404).json("Σφάλμα");}
 });

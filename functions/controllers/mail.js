@@ -36,12 +36,10 @@ let aboutNewWhistle = async (whistle) => {
     let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
-        subject: `Περιστατικό ${whistle.id}`, // Subject line
+        subject: `Νέο περιστατικό ${whistle.id}`, // Subject line
         //   text: whistle.description, // plain text body
-        html: /*html*/`<h1>Περιστατικό ${whistle.id}</h1>
-                <h2>Στοιχεία περιστατικού</h2>
-                <h2>Αναλυτική Περιγραφή</h2>
-                <p>${whistle.description}</p>
+        html: /*html*/`<p>Νέο περιστατικό ${whistle.id}</p>
+                <p>Παρακαλώ, συνδεθείτε στην κονσόλα για να δείτε την υπόθεση</p>
         `, // html body
     };
 

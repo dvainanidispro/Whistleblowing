@@ -153,7 +153,8 @@ footer p{font-size: small}
 .body-container{
     background-color: var(--bodybackgroundcolor);
     min-height: 400px;
-    max-width: min(100% - 2rem, var(--lg));
+    max-width: var(--lg);
+    padding: 1rem;
     margin-inline: auto; /*centers */
     overflow-x: hidden;
     overflow-y: hidden;
