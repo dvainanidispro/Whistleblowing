@@ -66,6 +66,10 @@
           {
             "key": "Permissions-Policy",
             "value": "camera=()"
+          },
+          {
+            "key": "Content-Security-Policy",
+            "value": " default-src 'self' data: https: 'unsafe-inline' 'unsafe-eval';  object-src 'none';  upgrade-insecure-requests "
           }
         ]
       }

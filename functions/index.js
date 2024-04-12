@@ -25,10 +25,12 @@ const handlebarsConfig = { /* config */
 server.engine('hbs', HandlebarsCreator(handlebarsConfig).engine);       // if view extension is hbs, then use handlebars
 server.set('view engine', "hbs");   // use handlebars as the default engine when extension is not specified in res.render
 
-//////////////////    CONTROLLERS    ///////////////////
+//////////////////    CONTROLLERS & MIDDLEWARE   ///////////////////
 import SendEmail from './controllers/mail.js';
 import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
+import Security from "./controllers/security.js";
+server.use(Security);
 
 
 

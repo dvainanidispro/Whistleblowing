@@ -145,9 +145,10 @@
                                 </label>
                               </div>
                             
-                              <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
-                            <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
-
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
+                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
+                            </div>
 
                         </div>
                     <!-- General Tab -->
@@ -202,16 +203,14 @@
             
                         <div class="my-3">
                             <label for="newMessage">Νέο μήνυμα ή ενημέρωση</label>
-                            <textarea x-model="caseDoc.newMessage" class="form-control" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
-                            <div class="form-text">
-                                Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
-                            </div>
+                            <textarea x-model="caseDoc.newMessage" class="form-control my-1" id="newMessage" name="newMessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
+                            <div class="form-text">* Μετά τη δημοσίευση του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.</div>
                         </div>
             
-                        
-                        <button type="button" class="btn btn-success my-2" x-on:click="DB.notifyUser(caseDoc);DB.pushMessage(caseDoc,caseDoc.newMessage);">Δημοσίευση μηνύματος <span x-show="caseDoc.submitter.notify">και αυτόματη ενημέρωση καταγγέλοντα </span></button>
-            
-                        <hr>
+                        <div class="center-contents">
+                            <button type="button" class="btn btn-success my-2" x-on:click="DB.notifyUser(caseDoc);DB.pushMessage(caseDoc,caseDoc.newMessage);">Δημοσίευση μηνύματος <span x-show="caseDoc.submitter.notify">και αυτόματη ενημέρωση καταγγέλοντα </span></button>
+                        </div>
+
                     </div>
                     <!-- Communication Tab -->
                 </div>  

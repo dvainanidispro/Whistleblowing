@@ -7,7 +7,7 @@ const SecurityHelmet = helmet({
     contentSecurityPolicy:     
         {directives: 
             {
-                "script-src": ["'self'","ajax.googleapis.com","cdn.jsdelivr.net"],
+                "script-src": ["'self'","www.gstatic.com","ajax.googleapis.com","cdn.jsdelivr.net","'unsafe-inline'"],
                 "style-src": ["*"],
                 "script-src-attr": ["'none'"],  // prevent scripts in (image) attributes
                 "img-src": ["*","data:"]        // without "data:", we get a Bootstrap svg error
@@ -25,8 +25,6 @@ const SecurityHeaders = function(req, res, next) {
     next();
 };
 
+const Security = [SecurityHelmet, SecurityHeaders];
 
-module.exports = [
-    SecurityHelmet,
-    SecurityHeaders
-];
+export default Security;
