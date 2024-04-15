@@ -62,7 +62,7 @@
             <div class="">
                 <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά)</label>
                 <small>Μπορείτε να επισυνάψετε σχετικά αρχεία που υποστηρίζουν την αναφορά σας ή περιγράφουν το περιστατικό (όπως pdf, jpeg, κλπ με ανώτατο συνολικό όριο τα 10ΜΒ)</small>
-                <input type="file" class="form-control" id="evidence" name="evidence" multiple>
+                <input type="file" class="form-control" id="evidence" name="evidence" multiple data-input-size="10">
             </div>
 
             <div class="">
@@ -197,6 +197,19 @@
                 document.getElementById('post-spinner').classList.remove('d-none');     // show spinner
             }
         });
+        document.querySelectorAll('input[data-input-size]').forEach(inputElement=>{
+            inputElement.addEventListener("change",function(el){
+                let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
+                let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+                [...this.files].forEach(file=>{
+                    if(file.size > maxSizeInBytes){
+                        alert("Το αρχείο " + file.name + " υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                        this.value = "";
+                    }
+                });
+            })
+        });
+
     </script>
       
       

@@ -36,7 +36,6 @@ DB.updateCase = async function(caseDoc){
     let dataToUpdate = {
         title: caseDoc.title??'',
         status: caseDoc.status??'',
-        type: caseDoc.type??'',
     }
     await db.collection("cases").doc(caseID).update(dataToUpdate);
     console.debug('Case updated');
@@ -77,20 +76,19 @@ DB.pushMessage = async function(caseDoc,message){
 /** Ενημερώνει το χρήστη για αλλαγή κατάστασης της υπόθεσης (not belongs exactly in the DB object...)  */
 DB.notifyUser ??= async (whistle) => {
     if (whistle.submitter?.email==null || whistle.submitter?.email=="") {return false}
-    console.debug('Sending email to user...');
+    console.debug('Notifying user...');
 
     fetch(App.notifyUserUrl, {
         method: 'POST',
         mode: 'no-cors', // we do not need an answer
         headers: {
-            'Content-Type': 'text/plain',   // application/json fails with no-cors
+            'Content-Type': 'text/plain',   // application/json fails when no-cors
         },
         body: JSON.stringify({
             userToken: await firebase.auth().currentUser.getIdToken(),
-            caseId: whistle
-            .id,
+            caseId: whistle.id,
         }),
-    });
+    }).catch(error => console.warn("CORS error but notification sent"));    // CORS error, but the fetch request is sent
 };
 
 /** Επιστρέφει μια φράση η οποία υποδηλώνει αν το μήνυμα έχει διαβαστεί από το χρήστη */
