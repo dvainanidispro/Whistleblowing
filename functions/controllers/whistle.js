@@ -81,7 +81,7 @@ let Whistle = {
             isTest: (req.body.company==config.devCompany.id) ,
             origin: req.get('origin'),
             messages: [],
-            filenames: [],          //TODO: not important to store to firestore...
+            filenames: [],          // χρησιμοποιείται όταν ο χρήστης βλέπει την υπόθεσή του
         };
     
         req.files.forEach(file => {

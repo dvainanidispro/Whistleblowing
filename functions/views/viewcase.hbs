@@ -15,11 +15,18 @@
 <label>Κατάσταση υπόθεσης</label>
 <p>{{whistle.status}}</p>
 
+{{#if whistle.filenames}}
+<label>Υποστηρικτικά αρχεία</label>
+<ul>
+    {{#each whistle.filenames}}
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
+{{/if}}
+
+
 <hr>
-
 <h2>Μηνύματα υπόθεσης</h2>
-
-
 
 
 {{#each whistle.messages}}
@@ -42,7 +49,7 @@
 <form method="POST" action="./pushmessage" enctype="multipart/form-data">
     <div class="my-3">
         <label for="newmessage">Νέο μήνυμα προς τον υπεύθυνο</label>
-        <textarea class="form-control" id="newmessage" name="newmessage" placeholder="Νέο μήνυμα" rows="4"></textarea>
+        <textarea class="form-control" id="newmessage" name="newmessage" placeholder="Νέο μήνυμα" rows="4" required></textarea>
         <div class="form-text">
             Μετά την αποστολή του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
         </div>
@@ -54,7 +61,7 @@
         <input type="file" class="form-control" id="evidence" name="evidence" multiple data-input-size="10">
     </div>
 
-    <button type="submit" class="btn btn-success my-2" id="submitBtn" disabled>Αποστολή μηνύματος</button>
+    <button type="submit" class="btn btn-success my-2" id="submitBtn">Αποστολή μηνύματος</button>
 </form>
 
 
@@ -66,29 +73,22 @@
 
 
 <script>
-    document.getElementById("newmessage").addEventListener("input", function() {
-        if (this.value.length > 0) {
-            document.getElementById("submitBtn").disabled = false;
-        } else {
-            document.getElementById("submitBtn").disabled = true;
-        }
-    });
-    document.getElementById("evidence").addEventListener("change", function() {
-        if (this.files.length > 0) {
-            document.getElementById("submitBtn").disabled = false;
-        }
-    });
     document.querySelectorAll('input[data-input-size]').forEach(inputElement=>{
         inputElement.addEventListener("change",function(el){
             let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
             let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+            let sumSize = 0;
             [...this.files].forEach(file=>{
+                sumSize += file.size;
                 if(file.size > maxSizeInBytes){
                     alert("Το αρχείο " + file.name + " υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
                     this.value = "";
+                } else if (sumSize > maxSizeInBytes) {
+                    alert("Το συνολικό μέγεθος των αρχείων υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                    this.value = "";
                 }
             });
-        })
+        });
     });
 
 

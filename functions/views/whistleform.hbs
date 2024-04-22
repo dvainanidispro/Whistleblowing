@@ -201,13 +201,18 @@
             inputElement.addEventListener("change",function(el){
                 let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
                 let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+                let sumSize = 0;
                 [...this.files].forEach(file=>{
+                    sumSize += file.size;
                     if(file.size > maxSizeInBytes){
                         alert("Το αρχείο " + file.name + " υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
                         this.value = "";
+                    } else if (sumSize > maxSizeInBytes) {
+                        alert("Το συνολικό μέγεθος των αρχείων υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                        this.value = "";
                     }
                 });
-            })
+            });
         });
 
     </script>
