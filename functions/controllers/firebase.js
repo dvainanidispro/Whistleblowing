@@ -1,5 +1,6 @@
 import firebase from "firebase-admin";
-import {getFirestore, Timestamp, FieldValue, Filter} from "firebase-admin/firestore";
+import { getFirestore, Timestamp, FieldValue, Filter } from "firebase-admin/firestore";
+import { onDocumentDeleted } from "firebase-functions/v2/firestore";
 firebase.initializeApp();    // Make sure you call initializeApp() before using any of the Firebase services.
 const db = getFirestore();
 import { getStorage } from 'firebase-admin/storage';
@@ -12,12 +13,6 @@ let attachmentsFolder = config.attachmentsFolder;
 
 /** Map to cache things  */
 let DimCache = new Map();
-// DimCache.set("bkueHt76TQiUW7G8p1BK",{       // for testing only
-//     id: "bkueHt76TQiUW7G8p1BK",
-//     inbox: "whistle@computerstudio.gr",
-//     name: "Computer Studio Α.Ε.",
-//     phone: "2109761865"
-// });
 
 
 /**
@@ -186,4 +181,22 @@ let markMessagesAsRead = async (whistle) => {
 
 
 
-export default { getCompany, company, getCase, getUser, storeCase, pushMessageByUser, verifyToken , markMessagesAsRead };
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////     DELETE ATTACHMENTS AFTER A CASE IS DELETED     ////////////////////////
+
+// When a case is delete, delete its folder from the Firebase Storage
+const afterCaseDeleted = onDocumentDeleted({ region: 'europe-west3' , maxInstances: 2 , concurrency: 4, document: "cases/{caseID}" }, async (event) => {
+    let snap = event.data;
+    let whistle = snap.data();
+    let companyID = whistle.companyID;
+    let whistleID = snap.id;
+    let folder = companyID + '/' + whistleID + '/';
+    let files = await storage.deleteFiles({prefix: folder});
+});
+
+
+
+
+export default { getCompany, company, getCase, getUser, storeCase, pushMessageByUser, verifyToken , markMessagesAsRead, afterCaseDeleted };

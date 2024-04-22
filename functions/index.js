@@ -158,10 +158,11 @@ const whistle = onRequest({ region: 'europe-west3' , maxInstances: 2 , concurren
 
 
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////     BLOCKING FUNCTION BEFORE USER CREATED     ///////////////////////////
 
-const beforeCreated = beforeUserCreated({ region: 'europe-west3' , maxInstances: 2 , concurrency: 4 }, async (event) => {
+const userCreation = beforeUserCreated({ region: 'europe-west3' , maxInstances: 2 , concurrency: 4 }, async (event) => {
 
     /** Tells firebase to reject the new user */
     let failValidation = function(){
@@ -190,4 +191,16 @@ const beforeCreated = beforeUserCreated({ region: 'europe-west3' , maxInstances:
 
 
 
-export { whistle, beforeCreated };
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////     DELETE ATTACHMENTS AFTER A CASE IS DELETED     ////////////////////////
+
+const afterCaseDeleted = Firebase.afterCaseDeleted;
+
+
+
+
+
+///////////////////////////////////////      EXPORTS      ////////////////////////////////////////////
+
+export { whistle, userCreation, afterCaseDeleted };
