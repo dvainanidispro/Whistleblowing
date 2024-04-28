@@ -74,7 +74,7 @@
             <li>προσωπική συνάντηση με τον Υ.Π.Π.Α. του ΦΟΡΕΑ κατόπιν αιτήματός στο <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> ή στην τηλεφωνική γραμμή <a href="tel:{{company.phone}}">{{company.phone}}</a> (Δευτέρα - Παρασκευή  09:00 έως 17:00)</li>
             <li>τηλεφωνική κλήση στην τηλεφωνική γραμμή {{company.phone}} (Δευτέρα - Παρασκευή  09:00 έως 17:00)</li>
         </ul>
-        <p>
+        <p id="torinfo">
             Εάν θέλετε να διατηρήσετε την ανωνυμία σας, θα πρέπει να χρησιμοποιήσετε το λογισμικό Tor για να υποβάλετε μια αναφορά. <a href="https://www.torproject.org/download/">Μπορείτε να κατεβάσετε τον browser από εδώ: https://www.torproject.org/download/</a>. Λειτουργεί όπως ο Safari, o Chrome ή άλλοι browsers, με τη διαφορά ότι ο Τor αποκρύπτει τα διαδικτυακά ίχνη σας. 
             Αφού κατεβάσετε και εγκαταστήσετε τον Tor, μπορείτε να εισέλθετε στην διεύθυνση <a id="onionlink"></a> χρησιμοποιώντας τον Τοr, οπότε η διαδικτυακή σας διεύθυνση θα παραμένει μυστική.
         </p>
@@ -97,11 +97,14 @@
     let url = new URL(window.location.href);
     let company = url.searchParams.get("company");
 
-    let onionWebsite = 'http://4ilvgtc46d7dtfv22cxtk7iwad2a5ovda7szu2jk4zyqibpalpwfqbyd.onion';     // onion URL
+    let onionWebsite = 'https://4ilvgtc46d7dtfv22cxtk7iwad2a5ovda7szu2jk4zyqibpalpwfqbyd.onion';     // onion URL
     if (company) {
         document.getElementById("formlink").href = "./new?company=" + company;
         let onionLink = onionWebsite + '/home?company=' + company;
         document.getElementById("onionlink").innerText = onionLink;
         document.getElementById("onionlink").href = onionLink;
+    }
+    if (window.location.href.includes('.onion')) {
+        document.getElementById("torinfo").style.display = "none";
     }
 </script>

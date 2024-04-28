@@ -64,7 +64,7 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
 // Υποβολή νέας αναφοράς από το χρήστη
 server.post(['/','/form','/new'], Firebase.company, fileParser(), Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
-    console.log(whistle);
+    // console.log(whistle);
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);                      // store the case in the database, whistle object is modified here

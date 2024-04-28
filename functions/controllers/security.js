@@ -7,16 +7,18 @@ const SecurityHelmet = helmet({
     contentSecurityPolicy:     
         {directives: 
             {
+                "default-src": ["'self'"], 
+                "style-src": ["'self'","https:"],
                 "script-src": ["'self'","www.gstatic.com","ajax.googleapis.com","cdn.jsdelivr.net","'unsafe-inline'"],
-                "style-src": ["*"],
-                "script-src-attr": ["'none'"],  // prevent scripts in (image) attributes
-                "img-src": ["*","data:"]        // without "data:", we get a Bootstrap svg error
+                "script-src-attr": ["'unsafe-inline'"],  // 'none' prevent scripts in html attributes (onclick, img onerror, etc.)
+                "img-src": ["*","data:"],        // without "data:", we get a Bootstrap svg error
+                upgradeInsecureRequests: [],
             },
         },
     referrerPolicy: {policy: "same-origin"},    // strict-origin-when-cross-origin (default) |  same-origin
-    frameguard: {action: "deny"},               // X-Frame-Options, deny framing
-    // hsts: false,                             // enable on Firebase projects 
-    // crossOriginEmbedderPolicy: false,        // if true (default), everything on my page is CORS (crossorigin="anonymous")
+    xFrameOptions: {action: "deny"},               // X-Frame-Options, deny framing
+    crossOriginEmbedderPolicy: true,        // if true, everything on my page is CORS (crossorigin="anonymous")
+    // crossOriginResourcePolicy: { policy: "same-site" }, // same-site | cross-origin. Policy for no-cors requests
 });
 
 const SecurityHeaders = function(req, res, next) {
