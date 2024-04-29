@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <meta name="description" content="Whistleblowing">
+    <meta name="author" content="Computer Studio">
+    <link href="favicon.png" rel="icon">
+    <meta name="theme-color" content="#2f2370">
+    <title>Whistleblowing</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <link href="./style.css" rel="stylesheet" media="screen">
+
+  </head>
+
+
+
+
+  <body>
+
+
+    <div class="body-container">
+
+    <header id="app-header">
+        <a id="homelink" href="./home?company=NCWt4jXdnzQ5z19vaX9q" class="index-link" aria-label="Αρχική σελίδα">
+            <img src="logo.png" class="logo small-shadow" alt="Logo Whistleblowing"/>
+            <span class="h1 app-title"></span>
+        </a>
+    </header>
+
+
+
+
+
+
+    <main>
+
+<form action="http://127.0.0.1/whistleblowing-app/europe-west3/whistle/new" method="post" enctype="multipart/form-data" id="whistleblowing-form">
+    <h1 class="center-left">Υποβολή νέας αναφοράς</h1>
+
+  
+    <input type="hidden" readonly value="NCWt4jXdnzQ5z19vaX9q" id="company" name="company">
+  
+
+
+    <div class="">
+        <label for="companyName">Οργανισμός</label>
+        <input type="text" class="form-control" id="companyName" name="companyName" value="Δοκιμαστική Εταιρία Α.Ε." disabled>
+    </div>
+    <small>Πριν συνεχίσετε, βεβαιωθείτε ότι οδηγηθήκατε σε αυτή τη σελίδα από το επίσημο website του οργανισμού σας 
+        κι όχι από άλλη προέλευση (όπως μέσω link σε e-mail), γιατί η αναφορά ενδέχεται να αποσταλεί σε μη έμπιστο προορισμό 
+        κι όχι στον υπεύθυνο του οργανισμού σας.</small>
+    <hr>
+    
+    <div>
+        <div class="mb-3"><fieldset>
+            <legend class="mt-2">Πότε συνέβη το περιστατικό; (προαιρετικά)</legend>
+            <div class="form-check">
+                <input class="form-check-input generaldate" type="radio" name="datetype" value="before5years" id="before5years">
+                <label class="form-check-label" for="before5years">
+                    Περισσότερα από 5 χρόνια πριν
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input generaldate" type="radio" name="datetype" value="recent5years" id="recent5years" required>
+                <label class="form-check-label" for="recent5years">
+                    Λιγότερο από 5 χρόνια πριν
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="datetype" value="specificdate" id="specificdate" autocomplete="off" aria-describedby="specificdateElaborate">
+                <label class="form-check-label" for="specificdate">
+                    Συγκεκριμένη ημερομηνία
+                </label>
+                <p hidden id="specificdateElaborate">Στο επόμενο πεδίο επιλέξτε ημερομηνία με το date picker</p>
+                <div id="specificdatepicker" class="d-none ms-5">
+                    <input type="text" class="form-control" id="dateFacade" placeholder="Ημερομηνία Παραβίασης" onclick="actualDate.showPicker()" onfocus="actualDate.showPicker()" autocomplete="off">
+                    <input hidden name="date" type="date" id="actualDate"  class="form-control" onchange="dateFacade.value=facade(this.value)">
+                </div>
+            </div>
+
+            </fieldset></div>
+    </div>
+
+  
+
+    <div class="">
+        <label for="people" class="form-label">Παραθέστε τα φυσικά πρόσωπα που εμπλέκονται στην υπόθεση (προαιρετικά)</label>
+        <input type="text" class="form-control" id="people" name="people" placeholder="Πρόσωπα" autocomplete="off">
+    </div>
+
+    <div class="">
+        <label for="description" class="form-label">Παρακαλούμε περιγράψτε αναλυτικά το περιστατικό  *</label>
+        <small>Η τεκμηριωμένη απάντηση διευκολύνει σημαντικά τη διερεύνηση της αναφοράς</small>
+        <textarea class="form-control" id="description" name="description" placeholder="Περιγραφή" rows="4" required></textarea>
+    </div>
+   
+    <div class="">
+        <label for="evidence" class="form-label">Αποδεικτικά στοιχεία (προαιρετικά)</label>
+        <small>Μπορείτε να επισυνάψετε σχετικά αρχεία που υποστηρίζουν την αναφορά σας ή περιγράφουν το περιστατικό (όπως pdf, jpeg, κλπ με ανώτατο συνολικό όριο τα 10ΜΒ)</small>
+        <input type="file" class="form-control" id="evidence" name="evidence" multiple data-input-size="10">
+    </div>
+
+    <div class="">
+        <label class="form-label mt-4">Σημαντική ενημέρωση *</label>
+        <small>Στην περίπτωση που η αναφορά σας δεν εμπίπτει από τις επιλογές οι οποίες αποτελούν το πεδίο εφαρμογής του ν. 4990/2022 (ΦΕΚ Α' 210), αλλά προκύπτουν ενδείξεις τέλεσης αξιόποινης πράξης που διώκεται αυτεπαγγέλτως τότε η αναφορά σας διαβιβάζεται στις αρμόδιες εισαγγελικές αρχές με παράλληλη σχετική ενημέρωσή σας.<br>
+        Επισημαίνεται ότι σε αυτή την περίπτωση δεν συντρέχουν οι προϋποθέσεις προστασίας του ν. 4990/2022 (ΦΕΚ Α' 210).</small>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="notice" id="legal" required>
+            <label class="form-check-label" for="legal">
+                Έλαβα γνώση της ενημέρωσης
+            </label>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="">
+        <label class="form-label mt-4">Πολιτική Προστασίας Προσωπικών Δεδομένων *</label>
+        <small>Πατήστε το "Διαβάστε αναλυτικά" και ενημερωθείτε για την Πολιτική Προστασίας Προσωπικών Δεδομένων.</small>
+
+        <a href="#" class="d-inline-flex align-items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z"/>
+        </svg>Διαβάστε αναλυτικά</a>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="gdpr" id="gdpr" required>
+            <label class="form-check-label" for="gdpr">
+                Διάβασα και κατανόησα την Πολιτική Προστασίας Προσωπικών Δεδομένων
+            </label>
+        </div>
+    </div>
+
+
+
+
+    <div class="">
+        <label>Θέλετε να αναφέρετε τα στοιχεία σας;</label>
+        <small>Η υποβολή των στοιχείων δεν είναι υποχρεωτική. Μπορείτε να την υποβάλλετε και ανώνυμα την αναφορά. Σε περίπτωση που κάνετε αναφορά, είτε επώνυμα είτε ανώνυμα, οι πληροφορίες παραμένουν εμπιστευτικές.</small>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="contact" id="contact">
+        <label class="form-check-label" for="contact">
+            Επιθυμώ να κάνω επώνυμη αναφορά.
+        </label>
+    </div>
+
+
+   <div class="d-none ms-5" id="contactDiv">
+
+
+        <div class="">
+            <label for="firstname" class="form-label mt-2">Όνομα</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" >
+        </div>
+
+         <div class="">
+            <label for="lastname" class="form-label mt-2">Επώνυμο</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" >
+        </div>
+  
+        <div class="">
+            <label for="email" class="form-label mt-2">E-mail</label>
+            <input type="email" class="form-control" id="email" name="email" >
+        </div>
+
+        <div class="">
+            <label for="phone" class="form-label mt-2">Τηλέφωνο</label>
+            <input type="text" class="form-control" id="phone" name="phone" >
+        </div>
+
+       <div class="form-check my-3">
+            <input class="form-check-input" type="checkbox" name="notify" value="true" id="notify">
+            <label class="form-check-label" for="notify">
+                Επιθυμώ να ενημερώνομαι μέσω e-mail ή/και SMS για την πορεία της υπόθεσης, πιθανή ερώτηση κλπ.
+                <small>Σε περίπτωση που δεν επιθυμείτε, θα πρέπει να επισκέπτεστε την πλατφόρμα για να παρακολουθείτε την εξέλιξη. </small>
+            </label>
+        </div>             
+
+
+
+    </div>
+
+    <hr>
+
+    <div>
+        <small>Βεβαιωθείτε ότι μετά την υποβολή της αναφοράς, θα εμφανιστεί μήνυμα επιτυχούς παράδοσης.</small>
+    </div>
+    <div class="d-flex">
+        <button type="submit" id="submit-btn" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
+        <div id="post-spinner" class="m-3 spinner-border text-primary d-none" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+
+    
+      
+ 
+</form>
+
+
+
+
+<script>
+console.debug('Company ID: ' + document.getElementById('company').value);
+let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
+document.getElementById('contact').addEventListener('change',e=>{
+        if(e.target.checked){  // user wants to be contacted
+            document.getElementById('contactDiv').classList.remove('d-none');
+            document.querySelectorAll('#contactDiv input').forEach(input=>{
+                input.disabled = false;
+                if (input.classList.contains('form-control')) {input.setAttribute('required',true)};
+            }); 
+        }else{  // user does not want to be contacted
+            document.getElementById('contactDiv').classList.add('d-none');
+            document.querySelectorAll('#contactDiv input').forEach(input=>{
+                input.removeAttribute('required');
+                input.disabled = true;
+            });
+        }
+});
+document.getElementsByName('datetype').forEach(radio=>{
+    radio.addEventListener('change',e=>{
+        if(e.target.value === 'specificdate'){
+            document.getElementById('specificdatepicker').classList.remove('d-none');
+        }else{
+            document.getElementById('specificdatepicker').classList.add('d-none');
+        }
+    });
+});
+document.getElementById('submit-btn').addEventListener('click',()=>{
+    if ( document.getElementById('whistleblowing-form').reportValidity() ) {     // if form is valid
+        document.getElementById('post-spinner').classList.remove('d-none');     // show spinner
+    }
+});
+document.querySelectorAll('input[data-input-size]').forEach(inputElement=>{
+    inputElement.addEventListener("change",function(el){
+        let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
+        let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+        let sumSize = 0;
+        [...this.files].forEach(file=>{
+            sumSize += file.size;
+            if(file.size > maxSizeInBytes){
+                alert("Το αρχείο " + file.name + " υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                this.value = "";
+            } else if (sumSize > maxSizeInBytes) {
+                alert("Το συνολικό μέγεθος των αρχείων υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                this.value = "";
+            }
+        });
+    });
+});
+
+</script>
+
+
+
+</main>
+
+
+
+<footer>
+
+</footer>
+
+
+
+
+
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -37,7 +37,7 @@ let getCompany = async (companyID) => {
  * @returns {Promise<void>} The company object is stored in res.company
  */
 let company = async (req, res, next) => {
-    let companyID = req.query.company;
+    let companyID = req?.query?.company ?? req?.body?.company;      // req.body.company για όταν στέλνεται από άλλο website
     // get from cache or from Firestore
     let company = await getCompany(companyID);   
     res.company = company;

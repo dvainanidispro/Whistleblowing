@@ -62,7 +62,7 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
 
 
 // Υποβολή νέας αναφοράς από το χρήστη
-server.post(['/','/form','/new'], Firebase.company, fileParser(), Whistle.toDbObject, async (req, res) => {
+server.post(['/','/form','/new'], fileParser(), Firebase.company, Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
     // console.log(whistle);
 

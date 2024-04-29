@@ -48,11 +48,6 @@ let aboutNewWhistle = async (whistle) => {
     await transporter.sendMail(mail);
     console.log("Στάλθηκε email σε εταιρία");
     
-    //delete attachments
-    whistle.filenames.forEach(filename => {
-        fs.unlinkSync(attachmentsFolder + filename);
-    });
-    // console.log("Attachments deleted");
 }
 
 
