@@ -56,10 +56,21 @@
                 <bootstrap-spinner data-message="Φόρτωση υποθέσεων..." x-show="!loaded"></bootstrap-spinner>
                 <template x-for="item in cases" :key="item.id">
                         <a :href="'/pages/case.html?caseid=' + item.id" class="case-item">
-                            <div x-text="item.id"></div> 
-                            <!-- <span x-text="item.submittedAt.toDate().toLocaleDateString()"></span> -  -->
-                            <div x-text="item.title"></div>
-                            <div class="red" x-show="item.status=='initial'">Νέα υπόθεση!</div>
+                            <div class="red bold" x-show="item.status=='initial'">Νέα υπόθεση!</div>
+                            <div class="d-flex gap-4">
+                                <div>
+                                    <div>Αριθμός: </div> 
+                                    <div x-show="item.title">Τίτλος: </div> 
+                                    <div>Υποβλήθηκε: </div> 
+                                    <div>Κατάσταση: </div> 
+                                </div>
+                                <div>
+                                    <div x-text="item.id"></div> 
+                                    <div x-text="item.title"></div> 
+                                    <div x-text="item.submittedAt.toDate().toLocaleDateString()"></div> 
+                                    <div x-text="DB.status[item.status].text"></div> 
+                                </div>
+                            </div>
                         </a>
                 </template>
             </div>

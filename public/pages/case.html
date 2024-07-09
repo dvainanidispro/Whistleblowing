@@ -77,15 +77,11 @@
 
                             <div class="my-3">
                             <label for="status">Κατάσταση υπόθεσης</label>
-                            <select x-model="caseDoc.status" class="form-select" id="status" name="status" aria-label="Default select example" required>
-                                <option x-show="!caseDoc.status" disabled selected value></option>
-                                <option value="initial">Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας</option>
-                                <option value="pending">Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης</option>
-                                <option value="under investigation">Υπο διερεύνηση - Ερευνάται η εγκυρότητα της καταγγελίας</option>
-                                <option value="under resolution">Υπο επίλυση - Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης</option>
-                                <option value="completed">Ολοκληρώθηκε</option>
-                                <option value="rejected">Απορρίφθηκε</option>
-                                <option value="cancelled">Ακυρώθηκε</option>
+                            <select x-model="caseDoc.status" class="form-select" id="status" name="status" aria-label="Κατάσταση υπόθεσης" required>
+                                <option x-show="!caseDoc.status" disabled value></option>
+                                <template x-for="status in DB.status" :key="status.value">
+                                    <option :value="status.value" x-bind:selected="caseDoc.status===status.value" x-text="status.text + ' - ' + status.description" ></option>
+                                </template>
                             </select>
                             <p x-show="caseDoc.status=='initial'" class="alert alert-danger my-1 py-2">Παρακαλώ, αλλάξτε την κατάσταση της υπόθεσης.</p>
                             </div>

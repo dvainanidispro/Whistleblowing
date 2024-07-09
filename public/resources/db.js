@@ -145,6 +145,14 @@ DB.getMyCompanyName().then(companyName => {
 });
 // Q('~companyName').set( await DB.getMyCompanyName() );
 
-
+DB.status = {
+    "initial": {value: "initial", text: "Αρχική", description: "Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας"},
+    "pending": {value: "pending", text: "Υπό επεξεργασία", description: "Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης"},
+    "under investigation": {value: "under investigation", text: "Υπο διερεύνηση", description: "Ερευνάται η εγκυρότητα της καταγγελίας"},
+    "under resolution": {value: "under resolution", text: "Υπο επίλυση", description: "Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης"},
+    "completed": {value: "completed", text: "Ολοκληρώθηκε", description: "Ολοκληρώθηκε"},
+    "rejected": {value: "rejected", text: "Απορρίφθηκε", description: "Απορρίφθηκε"},
+    "cancelled": {value: "cancelled", text: "Ακυρώθηκε", description: "Ακυρώθηκε"},
+};
 
 
