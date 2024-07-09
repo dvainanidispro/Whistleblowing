@@ -46,8 +46,7 @@ firebase.auth().onAuthStateChanged(async function(user) {
     if (user) {
         console.debug("User is signed in");
         console.debug({user});
-        // TODO: Αν έχει γίνει λάθος (με λάθος ή undefined companyID), τότε δεν λειτουργεί και προκαλεί πρόβλημα στο DB.fetchCases
-        localStorage.getItem('companyID') || localStorage.setItem('companyID', await App.user.claims('companyID'));
+        localStorage.setItem('companyID', await App.user.claims('companyID'));
         App.setCssVariable('--display-if-guest','none');
         App.setCssVariable('--display-if-user','block');
         Q("~email").set(user.email);
