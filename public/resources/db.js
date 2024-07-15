@@ -26,33 +26,50 @@ DB.fetchCases = async function(){
 DB.fetchCase = async function(caseID){
     let caseDoc = await db.collection("cases").doc(caseID).get();
     let doc = caseDoc.data();
-    if (DB.status[doc.status].type=="open") {delete doc.toBeDeleted}    // delete local (not DB) property
     DB.checkForUnreadMessages(doc);
+    window.thisCase = doc;
     return doc;
 };
 
 
 DB.updateCase = async function(caseDoc){
-    // validation
-    if (DB.status[caseDoc.status].type=="closed" && (!caseDoc.toBeDeleted||caseDoc.toBeDeleted==0)) {
-        alert('Παρακαλώ, επιλέξτε ημερομηνία αυτόματης διαγραφής υπόθεσης.');
-        return;
-    } else if (DB.status[caseDoc.status].type=="open"){
-        delete caseDoc.toBeDeleted;
-    }
+    try{
+        let caseID = caseDoc.id;
+        const toBeDeleted = caseDoc.toBeDeleted;
+        window.toBeDeleted = toBeDeleted;
+        
+        // validation
+        if (DB.status[caseDoc.status].type=="closed" && (!toBeDeleted||toBeDeleted==0)) {
+            alert('Παρακαλώ, επιλέξτε ημερομηνία αυτόματης διαγραφής υπόθεσης.');
+            return;
+        } 
+        
+        // update object
+        let dataToUpdate = {
+            title: caseDoc.title??'',
+            status: caseDoc.status??'',
+        }
+        if (DB.status[caseDoc.status].type=="open"){
+            dataToUpdate.toBeDeleted = null;
+        } else if (!isNaN(new Date(toBeDeleted))) {              // αν φτάσει εδώ, τότε είναι closed με toBeDeleted
+            // To toBeDeleted μπορεί να είναι είτε JavaScript "Date/Number" που ορίστικε τώρα (και αποθηκεύεται με το new Date())...
+            dataToUpdate.toBeDeleted = new Date(toBeDeleted);
+        } else {
+            // ...είτε το toBeDeleted είναι το Firestore Timestamp που ήρθε (το οποίο εμφανίζεται με το toDate() γενικά)
+            // Αυτή η περίπτωση συμβαίνει όταν κάποιος ανοιγοκλείνει υποθέσεις χωρίς refresh ξεκινώντας από μια κλειστή υπόθεση. 
+            dataToUpdate.toBeDeleted = toBeDeleted;
+        }
+        // console.debug(dataToUpdate);
+        
+        // update Firestore
+        await db.collection("cases").doc(caseID).update(dataToUpdate);
+        console.debug('Case updated');
+        App.showToast('saved');
     
-    // update object
-    let caseID = caseDoc.id;
-    let dataToUpdate = {
-        title: caseDoc.title??'',
-        status: caseDoc.status??'',
-        toBeDeleted: caseDoc.toBeDeleted ? new Date(caseDoc.toBeDeleted) : null,
+    } catch (e){
+        console.error(e.message);
+        App.showToast('error');
     }
-
-    // update Firestore
-    await db.collection("cases").doc(caseID).update(dataToUpdate);
-    console.debug('Case updated');
-    App.showToast('saved');
 };
 
 

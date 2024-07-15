@@ -49,7 +49,7 @@ if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
     .catch((error) => {         // Σφάλμα στην επιβεβαίωση του link
         // Some error occurred, you can inspect the code: error.code
         // Common errors could be invalid email and invalid or expired OTPs.
-        console.log(error);
+        console.error(error);
         Q("#status").set("Σφάλμα!");
 
         if (error.message.includes("Unauthorized") || error.message.includes("Μη έγκυρος χρήστης")) {

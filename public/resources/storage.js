@@ -16,7 +16,7 @@ let fetchCaseFiles = async () => {
                 a.classList.add(...['list-group-item','list-group-item-action','list-group-item-light']);
                 Q('#filelist').appendChild(a);      //TOFIX: κάποιες φορές βγάζει σφάλμα (λόγω του alpine template x-if="caseLoaded")
             } catch(e) {
-                console.log(e);
+                console.error(e);
             }
         });
 };

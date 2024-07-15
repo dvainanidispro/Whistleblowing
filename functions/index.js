@@ -30,6 +30,7 @@ import SendEmail from './controllers/mail.js';
 import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
 import Security from "./controllers/security.js";
+import Cleanup from "./controllers/cleanup.js";
 server.use(Security);
 
 
@@ -200,7 +201,13 @@ const afterCaseDeleted = Firebase.afterCaseDeleted;
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////      AUTO DELETE CASES AFTER TIME      //////////////////////////////
+
+const casesCleanup = Cleanup.casesCleanUp;
+
+
 
 ///////////////////////////////////////      EXPORTS      ////////////////////////////////////////////
 
-export { whistle, userCreation, afterCaseDeleted };
+export { whistle, userCreation, afterCaseDeleted, casesCleanup };

@@ -49,8 +49,8 @@
 
     <main class="is-user">
 
-        <div x-data="{caseDoc:{submitter:{}},caseLoaded:false,notifyUser:false,originalDeletedDate:null}" 
-        x-init="caseDoc = await DB.fetchCase(App.getParams.caseid);originalDeletedDate=caseDoc.toBeDeleted;caseLoaded=true;console.log(caseDoc)" 
+        <div x-data="{caseDoc:{submitter:{}},caseLoaded:false,notifyUser:false,originalDeleteDate:null}" 
+        x-init="caseDoc = await DB.fetchCase(App.getParams.caseid);originalDeleteDate=caseDoc.toBeDeleted?.toDate()??null;caseLoaded=true;" 
         class="case-frame" id="caseFrame">
 
             <bootstrap-spinner data-message="Φόρτωση υπόθεσης..." x-show="!caseLoaded"></bootstrap-spinner>
@@ -91,8 +91,8 @@
                             <div class="my-3" x-show="DB.status[caseDoc.status].type=='closed'" 
                                 x-data="{inMonths(n){return new Date(new Date().setMonth(new Date().getMonth()+n))},months:[6,12,24]}">
                                 <label for="toBeDeleted">Αυτόματη διαγραφή υπόθεσης και αρχείων</label>
-                                <template x-if="originalDeletedDate"><input disabled x-model="originalDeletedDate.toDate().toLocaleDateString()" type="text" class="form-control" name="title"></template>
-                                <template x-if="!originalDeletedDate"><select x-model="caseDoc.toBeDeleted" class="form-select" id="toBeDeleted" name="toBeDeleted" aria-label="Αυτόματη διαγραφή δεδομένων">
+                                <template x-if="originalDeleteDate"><input disabled :value="originalDeleteDate.toLocaleDateString()" type="text" class="form-control" name="title"></template>
+                                <template x-if="!originalDeleteDate"><select x-model="caseDoc.toBeDeleted" class="form-select" id="toBeDeleted" name="toBeDeleted" aria-label="Αυτόματη διαγραφή δεδομένων">
                                     <option value="0" selected>Παρακαλώ επιλέξτε</option>
                                     <template x-for="month in months" :key="month">
                                         <option :value="inMonths(month)" x-text="'Σε ' + month + ' μήνες - ' + inMonths(month).toLocaleDateString()"></option>
@@ -159,7 +159,7 @@
                             
                             <div class="text-center">
                                 <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
-                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);if(!caseDoc.toBeDeleted){originalDeletedDate=null}">Αποθήκευση</button>
+                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
                             </div>
 
                         </div>
@@ -252,6 +252,7 @@
         <bootstrap-toast data-id="pushed" data-message="Το μήνυμα αποθηκεύτηκε!"></bootstrap-toast>
         <bootstrap-toast data-id="deleted" data-message="Η υπόθεση διαγράφτηκε!"></bootstrap-toast>
         <bootstrap-toast data-id="unread" data-message="Υπάρχουν αδιάβαστα μυνήματα!" data-back-class="bg-primary"></bootstrap-toast>
+        <bootstrap-toast data-id="error" data-message="Η υπόθεση δεν ενημερώθηκε! Παρακαλώ προσπαθήστε ξανά!" data-back-class="bg-danger"></bootstrap-toast>
 
 
 

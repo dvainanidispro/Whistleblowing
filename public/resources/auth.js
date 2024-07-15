@@ -120,7 +120,7 @@ window.addEventListener('load', function() {
         firebase.auth().signOut().then(() => {
             window.location.href = "/";
         }).catch((error) => {
-            console.log(error);
+            console.error(error.message);
         });
     });
 });
