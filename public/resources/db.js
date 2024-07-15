@@ -26,17 +26,30 @@ DB.fetchCases = async function(){
 DB.fetchCase = async function(caseID){
     let caseDoc = await db.collection("cases").doc(caseID).get();
     let doc = caseDoc.data();
+    if (DB.status[doc.status].type=="open") {delete doc.toBeDeleted}    // delete local (not DB) property
     DB.checkForUnreadMessages(doc);
     return doc;
 };
 
 
 DB.updateCase = async function(caseDoc){
+    // validation
+    if (DB.status[caseDoc.status].type=="closed" && (!caseDoc.toBeDeleted||caseDoc.toBeDeleted==0)) {
+        alert('Παρακαλώ, επιλέξτε ημερομηνία αυτόματης διαγραφής υπόθεσης.');
+        return;
+    } else if (DB.status[caseDoc.status].type=="open"){
+        delete caseDoc.toBeDeleted;
+    }
+    
+    // update object
     let caseID = caseDoc.id;
     let dataToUpdate = {
         title: caseDoc.title??'',
         status: caseDoc.status??'',
+        toBeDeleted: caseDoc.toBeDeleted ? new Date(caseDoc.toBeDeleted) : null,
     }
+
+    // update Firestore
     await db.collection("cases").doc(caseID).update(dataToUpdate);
     console.debug('Case updated');
     App.showToast('saved');
@@ -146,13 +159,13 @@ DB.getMyCompanyName().then(companyName => {
 // Q('~companyName').set( await DB.getMyCompanyName() );
 
 DB.status = {
-    "initial": {value: "initial", text: "Αρχική", description: "Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας"},
-    "pending": {value: "pending", text: "Υπό επεξεργασία", description: "Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης"},
-    "under investigation": {value: "under investigation", text: "Υπο διερεύνηση", description: "Ερευνάται η εγκυρότητα της καταγγελίας"},
-    "under resolution": {value: "under resolution", text: "Υπο επίλυση", description: "Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης"},
-    "completed": {value: "completed", text: "Ολοκληρώθηκε", description: "Ολοκληρώθηκε"},
-    "rejected": {value: "rejected", text: "Απορρίφθηκε", description: "Απορρίφθηκε"},
-    "cancelled": {value: "cancelled", text: "Ακυρώθηκε", description: "Ακυρώθηκε"},
+    "initial": {value: "initial", text: "Αρχική", description: "Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας", type:"open"},
+    "pending": {value: "pending", text: "Υπό επεξεργασία", description: "Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης", type:"open"},
+    "under investigation": {value: "under investigation", text: "Υπο διερεύνηση", description: "Ερευνάται η εγκυρότητα της καταγγελίας", type:"open"},
+    "under resolution": {value: "under resolution", text: "Υπο επίλυση", description: "Η υπόθεση έχει διερευνηθεί και γίνονται ενέργειες αποκατάστασης", type:"open"},
+    "rejected": {value: "rejected", text: "Απορρίφθηκε", description: "Το αίτημα απορρίφθηκε ως μη αποδεκτό", type:"closed"},
+    "cancelled": {value: "cancelled", text: "Ακυρώθηκε", description: "Ο καταγγέλλων ή ο oργανισμός αποφάσισε να μην διερευνηθεί περαιτέρω", type:"closed"},
+    "completed": {value: "completed", text: "Ολοκληρώθηκε", description: "Η υπόθεση ολοκληρώθηκε με επιτυχία", type:"closed"},
 };
 
 

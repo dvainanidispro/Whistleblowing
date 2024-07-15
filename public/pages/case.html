@@ -49,7 +49,9 @@
 
     <main class="is-user">
 
-        <div x-data="{caseDoc:{submitter:{}},caseLoaded:false,notifyUser:false}" x-init="caseDoc = await DB.fetchCase(App.getParams.caseid);caseLoaded=true;" class="case-frame" id="caseFrame">
+        <div x-data="{caseDoc:{submitter:{}},caseLoaded:false,notifyUser:false,originalDeletedDate:null}" 
+        x-init="caseDoc = await DB.fetchCase(App.getParams.caseid);originalDeletedDate=caseDoc.toBeDeleted;caseLoaded=true;console.log(caseDoc)" 
+        class="case-frame" id="caseFrame">
 
             <bootstrap-spinner data-message="Φόρτωση υπόθεσης..." x-show="!caseLoaded"></bootstrap-spinner>
             <template x-if="caseLoaded"><div>
@@ -83,8 +85,22 @@
                                     <option :value="status.value" x-bind:selected="caseDoc.status===status.value" x-text="status.text + ' - ' + status.description" ></option>
                                 </template>
                             </select>
-                            <p x-show="caseDoc.status=='initial'" class="alert alert-danger my-1 py-2">Παρακαλώ, αλλάξτε την κατάσταση της υπόθεσης.</p>
+                            <div x-show="caseDoc.status=='initial'" class="alert alert-danger my-1">Παρακαλώ, αλλάξτε την κατάσταση της υπόθεσης.</div>
                             </div>
+
+                            <div class="my-3" x-show="DB.status[caseDoc.status].type=='closed'" 
+                                x-data="{inMonths(n){return new Date(new Date().setMonth(new Date().getMonth()+n))},months:[6,12,24]}">
+                                <label for="toBeDeleted">Αυτόματη διαγραφή υπόθεσης και αρχείων</label>
+                                <template x-if="originalDeletedDate"><input disabled x-model="originalDeletedDate.toDate().toLocaleDateString()" type="text" class="form-control" name="title"></template>
+                                <template x-if="!originalDeletedDate"><select x-model="caseDoc.toBeDeleted" class="form-select" id="toBeDeleted" name="toBeDeleted" aria-label="Αυτόματη διαγραφή δεδομένων">
+                                    <option value="0" selected>Παρακαλώ επιλέξτε</option>
+                                    <template x-for="month in months" :key="month">
+                                        <option :value="inMonths(month)" x-text="'Σε ' + month + ' μήνες - ' + inMonths(month).toLocaleDateString()"></option>
+                                    </template>
+                                </select></template>
+                                <div class="alert alert-warning my-1" x-show="!caseDoc.toBeDeleted">Παρακαλώ, επιλέξτε ημερομηνία αυτόματης διαγραφής υπόθεσης.</div>
+                            </div>
+
                             
                             <div class="my-3">
                                 <label for="title">Τίτλος υπόθεσης</label>
@@ -143,7 +159,7 @@
                             
                             <div class="text-center">
                                 <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
-                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
+                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);if(!caseDoc.toBeDeleted){originalDeletedDate=null}">Αποθήκευση</button>
                             </div>
 
                         </div>
@@ -224,7 +240,12 @@
 
         <hr>
         <div class="my-4 center-contents">
-            <a class="btn btn-secondary" href="/pages/home.html">Επιστροφή στις υποθέσεις</a>
+            <a id="returnToCases" class="btn btn-secondary" href="/pages/home.html">Επιστροφή στις υποθέσεις</a>
+            <script type="module">
+                if (document.referrer.includes('closed')){
+                    Q('#returnToCases').href = document.referrer;
+                }
+            </script>
         </div>
 
         <bootstrap-toast data-id="saved" data-message="Η υπόθεση ενημερώθηκε!"></bootstrap-toast>
