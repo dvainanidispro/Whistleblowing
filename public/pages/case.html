@@ -159,7 +159,13 @@
                             
                             <div class="text-center">
                                 <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
-                                <button type="button" class="btn btn-success my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.updateCase(caseDoc);">Αποθήκευση</button>
+                                <button type="button" class="btn btn-success my-2" 
+                                    x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};Q('#SaveSpinner').show();await DB.updateCase(caseDoc);Q('#SaveSpinner').show(false);">
+                                    <span>Αποθήκευση</span>
+                                    <span id="SaveSpinner" class="d-none spinner-border spinner-border-sm text-light" role="status">
+                                        <span class="visually-hidden">Αποθήκευση</span>
+                                    </span>
+                                </button>
                             </div>
 
                         </div>

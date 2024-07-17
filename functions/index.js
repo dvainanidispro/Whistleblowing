@@ -1,5 +1,6 @@
 ////////////////////    FIREBASE    ////////////////////
-import {onRequest} from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
+import { onSchedule } from "firebase-functions/v2/scheduler";
 import logger from "firebase-functions/logger";
 import { beforeUserCreated, beforeUserSignedIn, HttpsError } from "firebase-functions/v2/identity";
 
@@ -204,7 +205,7 @@ const afterCaseDeleted = Firebase.afterCaseDeleted;
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////      AUTO DELETE CASES AFTER TIME      //////////////////////////////
 
-const casesCleanup = Cleanup.casesCleanUp;
+const casesCleanup = onSchedule({ region: 'europe-west3' , schedule: 'every 168 hours' }, Cleanup.casesCleanUp);     // 168=24*7 = 1 week
 
 
 

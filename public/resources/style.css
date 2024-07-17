@@ -19,7 +19,7 @@
 
 
 
-/* BASIC BOILERPLATE CORRECTIONS */
+/************* BASIC BOILERPLATE CORRECTIONS **************/
 
 /* Box sizing rules */
 *,
@@ -258,6 +258,12 @@ label:not(.form-check-label) {
     font-weight: bold;
 }
 
+/******************    BOOTSTRAP    ******************/
+
+.btn:not(.menu-button){
+    min-width: 18ch;
+}
+
 .btn-primary {
     background-color: var(--primarycolor);
     border-color: var(--primarycolor);
@@ -406,13 +412,21 @@ input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled
     background-color: hsl(249, 50%, 95%) !important;
 }
 
+
+
+
+
+/****************    APPLICATION    *****************/
+
+
+
 .case-item{
     display: block;
     min-height: 5rem;
     margin: 0.4rem;
     padding: 0.8rem;
     
-    font-weight: 500;
+    font-weight: 600;   /* Το 600 δουλεύει καλά σε Chrome και Firefox */
     color: rgb(0, 0, 70);
     background: rgba(7, 90, 174, 0.05);
     border-radius: 10px;
@@ -461,4 +475,10 @@ input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled
         grid-template-columns: 20% 80%;
         gap: 10px 20px;
     }
+}
+
+
+.toast-shadow{
+    border: 2px solid lightgray;
+    box-shadow: 1px 1px 10px 6px rgba(102,102,102,1);
 }

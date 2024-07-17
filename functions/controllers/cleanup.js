@@ -23,7 +23,7 @@ let casesCleanUp = async _=> {
         // doc.ref.delete();
     });
 }
-casesCleanUp();
+// casesCleanUp();
 
 // export
 export default { casesCleanUp };
