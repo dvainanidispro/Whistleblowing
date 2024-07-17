@@ -20,7 +20,7 @@ let casesCleanUp = async _=> {
         // console.log(doc.id, "=>", doc.data().toBeDeleted.toDate().toLocaleDateString());
         logger.log(`Διαγραφή υπόθεσης ${doc.id} - Είχε οριστεί προς διαγραφή για τις ${doc.data().toBeDeleted.toDate().toLocaleDateString()}`);
         // console.log(doc.ref);
-        // doc.ref.delete();
+        doc.ref.delete();
     });
 }
 // casesCleanUp();

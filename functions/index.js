@@ -205,7 +205,7 @@ const afterCaseDeleted = Firebase.afterCaseDeleted;
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////      AUTO DELETE CASES AFTER TIME      //////////////////////////////
 
-const casesCleanup = onSchedule({ region: 'europe-west3' , schedule: 'every 168 hours' }, Cleanup.casesCleanUp);     // 168=24*7 = 1 week
+const casesCleanup = onSchedule({ region: 'europe-west3' , maxInstances: 2 , schedule: 'every 168 hours' } , Cleanup.casesCleanUp);     // 168=24*7 = 1 week
 
 
 
