@@ -139,8 +139,12 @@ footer{padding: 1rem 3rem;}
 footer p{font-size: small}
 
 /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+.logo-container{
+    display: block;
+    height: min(10vw,5rem);
+}
 .logo{
-    height: 5rem;
+    max-height: 100%;
     width: auto;
 }
 

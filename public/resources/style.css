@@ -128,7 +128,7 @@ header {    /*header, left logo, right navs*/
     color: var(--headertextcolor);
     padding: 0.5rem min(3rem,10%);
     border-bottom: 1px solid #e5e5e5;
-    height: min(30vw,7rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+    /* height: min(10vw,7rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 }
 
 header > *:last-child{
@@ -149,8 +149,13 @@ footer{padding: 1rem 3rem;}
 footer p{font-size: small}
 
 /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
+.logo-container{
+    display: block;
+    height: min(10vw,5rem);
+}
 .logo{
-    max-height: 5rem;
+    display: block;
+    height: 100%;
     width: auto;
 }
 

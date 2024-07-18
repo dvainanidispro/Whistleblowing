@@ -19,7 +19,7 @@ let navDiv = /*HTML*/`
 
 let AppHeader = /*HTML*/`
         <div></div>
-        <a href="/pages/home.html" class="index-link" aria-label="Home Page">
+        <a href="/pages/home.html" class="index-link logo-container" aria-label="Home Page">
             <img src="/resources/logo.png" class="logo small-shadow" alt="Logo"/>
             <span class="h1 app-title"></span>
         </a>
