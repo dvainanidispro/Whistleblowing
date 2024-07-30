@@ -66,7 +66,7 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
 // Υποβολή νέας αναφοράς από το χρήστη
 server.post(['/','/form','/new'], fileParser(), Firebase.company, Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
-    // console.log(whistle);
+    // console.debug(whistle);
 
     //# ACTIONS AFTER WHISTLE OBJECT CONSTRUCTION
     await Firebase.storeCase(whistle);                      // store the case in the database, whistle object is modified here
@@ -100,7 +100,7 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
         Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
         res.render('newmessageconfirm',{whistle});                                // render the confirmation page
     } catch (e) {
-        console.log(e);
+        console.error(e);
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
     }
 });
@@ -143,11 +143,11 @@ server.get('/test-pushmessage', async (req, res) => {
 
 //////////////////       404       //////////////////
 server.get("*", (req, res) => {
-    console.log(req.url);
+    // console.debug(req.url);
     res.status(404).send("Η σελίδα δεν βρέθηκε.");
 });
 server.post("*", (req, res) => {
-    console.log(req.url);
+    // console.debug(req.url);
     res.status(404).send("Η σελίδα δεν βρέθηκε.");
 });
 

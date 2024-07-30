@@ -150,7 +150,7 @@ let Whistle = {
         filenames.forEach(filename => {
             try{
                 fs.unlink(attachmentsFolder + filename, _=>{});
-            } catch (e) {console.log(e)}
+            } catch (e) {console.error(e)}
         });
     }
 };

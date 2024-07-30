@@ -17,9 +17,9 @@ let casesCleanUp = async _=> {
     }
     logger.warn(`Διαγραφή ${snapshot.size} ${snapshot.size==1?'υπόθεσης':'υποθέσεων'}...`);     
     snapshot.forEach(doc => {
-        // console.log(doc.id, "=>", doc.data().toBeDeleted.toDate().toLocaleDateString());
+        // console.debug(doc.id, "=>", doc.data().toBeDeleted.toDate().toLocaleDateString());
         logger.log(`Διαγραφή υπόθεσης ${doc.id} - Είχε οριστεί προς διαγραφή για τις ${doc.data().toBeDeleted.toDate().toLocaleDateString()}`);
-        // console.log(doc.ref);
+        // console.debug(doc.ref);
         doc.ref.delete();
     });
 }

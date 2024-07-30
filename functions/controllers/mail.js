@@ -46,7 +46,7 @@ let aboutNewWhistle = async (whistle) => {
 
     // send email
     await transporter.sendMail(mail);
-    console.log("Στάλθηκε email σε εταιρία");
+    console.debug("Στάλθηκε email σε εταιρία");
     
 }
 
@@ -78,7 +78,7 @@ let aboutNewUserMessage = async (whistle) => {
 
     // send email
     await transporter.sendMail(mail);
-    console.log("Στάλθηκε email σε εταιρία");
+    console.debug("Στάλθηκε email σε εταιρία");
 
 };
 
@@ -90,7 +90,7 @@ let aboutNewUserMessage = async (whistle) => {
  */
 let aboutCaseUpdate = async (whistle) => {
     if (whistle.submitter?.email==null || whistle.submitter?.email=="") {   // μπορεί να είναι "" αντί για undefined
-        console.log("Δεν υπάρχει email αναφέροντος προς ειδοποίηση");
+        console.debug("Δεν υπάρχει email αναφέροντος προς ειδοποίηση");
         return false;
     }
 
@@ -106,7 +106,7 @@ let aboutCaseUpdate = async (whistle) => {
 
     // send email
     await transporter.sendMail(email);
-    console.log("Στάλθηκε email σε καταγγέλλοντα");
+    console.debug("Στάλθηκε email σε καταγγέλλοντα");
     return true
 };
 

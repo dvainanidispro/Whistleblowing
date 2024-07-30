@@ -57,7 +57,7 @@ let storeAttachments = async (filenames, whistleID, companyID) => {
         return storage.upload(storagePath, {destination: companyID + '/' + whistleID + '/' + filename});
     });
     await Promise.all(promises);
-    console.log("Αποθηκεύτηκαν τα συνημμένα στο Firebase Storage");
+    console.debug("Αποθηκεύτηκαν τα συνημμένα στο Firebase Storage");
 };
 
 
@@ -73,7 +73,7 @@ let storeCase = async (whistle) => {
     
     let whistleRef = db.collection('cases').doc(whistle.id);
     await whistleRef.set(whistle);
-    console.log("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
+    console.debug("Αποθηκεύτηκε νέα υπόθεση σε Firestore");
     await storeAttachments(whistle.filenames, whistle.id, whistle.companyID);
     return whistleRef.id;
 }
@@ -141,7 +141,7 @@ let pushMessageByUser = async (message) => {
             messages: FieldValue.arrayUnion(messageObject)
         });
     }
-    console.log("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
+    console.debug("Αποθηκεύτηκε νέο μήνυμα σε Firestore");
 
     //NOTE: Δεν χρειάζεται ολόκληρο το object, μόνο το id (για την αποστολή email) και το companyID (για τα Attachments - Firebase Storage). 
     let updatedWhistle = (await whistleRef.get()).data();       
