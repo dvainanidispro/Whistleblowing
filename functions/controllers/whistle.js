@@ -22,7 +22,7 @@ import {Timestamp} from "firebase-admin/firestore";
 const timestampToDate = (timestamp) => {
     return (new Timestamp(timestamp._seconds, timestamp._nanoseconds)).toDate();
 };
-/** If the incoming field does not have meaningfull value, then make it null */
+/** If the incoming field does not have meaningful value, then make it null */
 const proper = (value) => {
     return (value==null || value==undefined || value=="") ? null : value;
 };
@@ -43,6 +43,7 @@ let Mappings = {
         "specificdate": "Συγκεκριμένη Ημερομηνία",
         "before5years": "Περισσότερα από 5 χρόνια πριν",
         "recent5years": "Λιγότερο από 5 χρόνια πριν",
+        "unknown": "Άγνωστη",
     },
 };
 
@@ -66,7 +67,8 @@ let Whistle = {
         let whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
-            date: proper(req.body.date) ? req.body.date : Mappings.date[req.body.datetype],
+            // Aν υπάρχει το date (ημερομηνία), τότε αυτό. Aλλιώς, το datetype (περιγραφή ημερομηνίας) στα ελληνικά, αλλιώς 'Άγνωστη'
+            date: proper(req.body.date) ? req.body.date : Mappings.date[req.body?.datetype]??Mappings.date['unknown'],
             people: req.body.people,
             status: "initial",
             description: req.body.description,

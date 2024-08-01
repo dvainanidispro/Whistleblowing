@@ -18,7 +18,7 @@ let DimCache = new Map();
 /**
  * Get company details from the Firestore database
  * @param {string} companyID 
- * @returns {Promise<Object>} company details or null
+ * @returns {Promise<Object>|null} company details or null
  */
 let getCompany = async (companyID) => {
     if (companyID==null) {return null}
@@ -33,15 +33,20 @@ let getCompany = async (companyID) => {
  
 
 /** 
- * Middleware to validate and store the company details to res.company. Uses the get parameter of the request (not the form value) 
+ * Middleware to validate the company and store the company details to res.company. 
+ * Uses mainly the get parameter of the request (and if it does not exist, then the form value). 
  * @returns {Promise<void>} The company object is stored in res.company
  */
 let company = async (req, res, next) => {
     let companyID = req?.query?.company ?? req?.body?.company;      // req.body.company για όταν στέλνεται από άλλο website
     // get from cache or from Firestore
     let company = await getCompany(companyID);   
-    res.company = company;
-    next();
+    if (!company){
+        res.status(404).send("Δεν βρέθηκε ο Οργανισμός και η αναφορά δεν καταχωρίστικε. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο ή επικοινωνήστε με το διαχειριστή της ιστοσελίδας.");
+    } else {
+        res.company = company;
+        next();
+    }
 };
 
 /**

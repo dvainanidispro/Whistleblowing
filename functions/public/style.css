@@ -324,6 +324,10 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     color: var(--bs-secondary);
 }
 
+.form-check-input + label{
+    cursor: pointer;
+}
+
 
 .input-group > .input-group-text{
     min-width: 5rem;

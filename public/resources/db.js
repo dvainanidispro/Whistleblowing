@@ -75,7 +75,7 @@ DB.updateCase = async function(caseDoc){
 
 DB.deleteCase = async function(caseDoc){
     //confirmation
-    if ( confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε οριστικά την παρούσα υπόθεση; Δεν θα είναι δυνατή η επαναφορά της.') == false ) {return}
+    if ( confirm('Είστε σίγουρος ότι θέλετε να διαγράψετε οριστικά αυτή την υπόθεση; Δεν θα είναι δυνατή η επαναφορά της.') == false ) {return}
     let caseID = caseDoc.id;
     await db.collection("cases").doc(caseID).delete();
     console.debug('Case deleted');
