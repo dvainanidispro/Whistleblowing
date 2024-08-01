@@ -67,13 +67,6 @@ let aboutNewUserMessage = async (whistle) => {
         html: /*html*/`<h2>Υπάρχει νέο μήνυμα για το περιστατικό ${whistle.id}.</h2>
                 <p>Παρακαλώ, συνδεθείτε στην κονσόλα διαχείρισης για να δείτε το νέο μήνυμα.</p>
         `, // html body
-        // <p>${message.text}</p>
-        // attachments: message.filenames.map(filename => {
-        //     return {
-        //         filename: filename,
-        //         path: path.resolve(attachmentsFolder + filename),   // resolve = relative to absolute path
-        //     }
-        // }),
     };
 
     // send email

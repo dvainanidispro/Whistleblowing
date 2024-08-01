@@ -68,15 +68,15 @@ let Whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
             // Aν υπάρχει το date (ημερομηνία), τότε αυτό. Aλλιώς, το datetype (περιγραφή ημερομηνίας) στα ελληνικά, αλλιώς 'Άγνωστη'
-            date: proper(req.body.date) ? req.body.date : Mappings.date[req.body?.datetype]??Mappings.date['unknown'],
+            date: proper(req.body.date) ?? Mappings.date[req.body?.datetype] ?? Mappings.date['unknown'],
             people: req.body.people,
             status: "initial",
             description: req.body.description,
             submitter: {
-                firstname: proper(req.body.firstname),
-                lastname: proper(req.body.lastname),
-                email: proper(req.body.email),
-                phone: proper(req.body.phone),
+                firstname: proper(req.body.firstname)?.substring(0,50),
+                lastname: proper(req.body.lastname)?.substring(0,50),
+                email: proper(req.body.email)?.substring(0,50),
+                phone: proper(req.body.phone)?.substring(0,50),
                 notify: !!req.body.notify, // convert to boolean
             },
             companyID: res.company.id,

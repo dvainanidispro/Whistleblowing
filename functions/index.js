@@ -95,10 +95,10 @@ server.post('/pushmessage', fileParser(), Whistle.messageConstructor, async (req
     try{
         //# ACTIONS AFTER USER MESSAGE
         // if whistleID is invalid, then the following will throw an error
-        let whistle = await Firebase.pushMessageByUser(message);      // push the message to the database
-        SendEmail.aboutNewUserMessage(whistle);                 // send email, do not await the delivery     //TODO: enable this
-        Whistle.deleteAttachments(message);                     // delete attachments from disk, do not await
-        res.render('newmessageconfirm',{whistle});                                // render the confirmation page
+        let whistle = await Firebase.pushMessageByUser(message);    // push the message to the database
+        SendEmail.aboutNewUserMessage(whistle);                     // send email, do not await the delivery
+        Whistle.deleteAttachments(message);                         // delete attachments from disk, do not await
+        res.render('newmessageconfirm',{whistle});                  // render the confirmation page
     } catch (e) {
         console.error(e);
         res.status(404).send("Δεν βρέθηκε αναφορά με αυτό το ID. Το μήνυμα δεν στάλθηκε.");
@@ -116,7 +116,7 @@ server.post('/notifyuser', async (req, res) => {
         let whistle = await Firebase.getCase(body.caseId);      // whistle object or null
         if ( !whistle || user.companyID!=whistle.companyID ) { return res.status(404).json("Δεν βρέθηκε η υπόθεση") }
 
-        SendEmail.aboutCaseUpdate(whistle);     // do not await. Returns true (sent) or false (without sumbitter email) //TODO: enable this
+        SendEmail.aboutCaseUpdate(whistle);     // do not await. Returns true (sent) or false (without sumbitter email)
         res.json("ok");        //  because the request is no-cors, it will not be read by browser, so send anything
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
