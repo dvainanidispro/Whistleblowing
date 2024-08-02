@@ -27,7 +27,7 @@ let getCompany = async (companyID) => {
     company = company.data()??null;
     if (company) {company.id = companyID};
     DimCache.set(companyID,company);    // store in cache, even if null
-    //NOTE: if not a google cloud function, then setTimeout to delete from cache
+    //NOTE: if not a google cloud function, then set setTimeout to delete from cache
     return company;
 };
  
@@ -42,7 +42,8 @@ let company = async (req, res, next) => {
     // get from cache or from Firestore
     let company = await getCompany(companyID);   
     if (!company){
-        res.status(404).send("Δεν βρέθηκε ο Οργανισμός και η αναφορά δεν καταχωρίστικε. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο ή επικοινωνήστε με το διαχειριστή της ιστοσελίδας.");
+        // Γενικό μήνυμα γιατί χρησιμοποιείται σε πολλά routes
+        res.status(404).send("Σφάλμα! Δεν βρέθηκε ο Οργανισμός. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο για να πραγματοποιήσετε αυτή την ενέργεια.");
     } else {
         res.company = company;
         next();

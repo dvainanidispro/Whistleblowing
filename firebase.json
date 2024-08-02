@@ -38,7 +38,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [],
+    "rewrites": [
+        {
+            "source": "/whistle",
+            "destination": "/whistle.html"
+        }
+    ],
     "headers": [
       {
         "source": "/**",

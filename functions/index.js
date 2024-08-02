@@ -4,6 +4,9 @@ import { onSchedule } from "firebase-functions/v2/scheduler";
 import logger from "firebase-functions/logger";
 import { beforeUserCreated, beforeUserSignedIn, HttpsError } from "firebase-functions/v2/identity";
 
+let region = 'europe-west3';   // default region
+// let region = 'us-central1';   // for testing things
+
 ////////////////////    EXPRESS    ////////////////////
 import express from 'express';
 const server = express();
@@ -42,23 +45,20 @@ server.use(Security);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////     SERVER     ////////////////////////////////////////
 
-// Αρχική σελίδα
-server.get(['/','/home'], Firebase.company, (req, res) => {
-    if (!res.company){
-        res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
-    } else {
-        res.render('home', {company:res.company});
-    }
+// Αρχική σελίδα "/" (απλώς για να υπάρχει κάτι)
+server.get(['/'], (req, res) => {
+    res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
+});
+// Αρχική σελίδα "home" για χρήση
+server.get(['/home'], Firebase.company, (req, res) => {
+    // res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
+    res.render('home', {company:res.company});
 });
 
 
 // Φόρμα υποβολής νέας αναφοράς
 server.get(['/form','/new'], Firebase.company, (req, res) => {
-    if (!res.company){
-        res.send("Δεν βρέθηκε ο Οργανισμός. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο.");
-    } else {
-        res.render('whistleform', {company:res.company});
-    }
+    res.render('whistleform', {company:res.company});
 });
 
 
@@ -124,20 +124,18 @@ server.post('/notifyuser', async (req, res) => {
 
 
 //////////////////   TEST PAGES   //////////////////
-server.get("/test-new", (req, res) => {
-    let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
-    res.render('newcaseconfirm',{whistle});
-});
-
-server.get("/test-case", (req, res) => {
-    let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
-    res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
-});
-
-server.get('/test-pushmessage', async (req, res) => {
-    let message = {caseId: "1234567890123456", text: "Αυτό είναι ένα μήνυμα από τον καταγγέλoντα", filenames: []};
-    res.render('newmessageconfirm',{whistle: {id: message.caseId, companyID: "bkueHt76TQiUW7G8p1BK"}});
-});
+// server.get("/test-new", (req, res) => {
+//     let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
+//     res.render('newcaseconfirm',{whistle});
+// });
+// server.get("/test-case", (req, res) => {
+//     let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
+//     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
+// });
+// server.get('/test-pushmessage', async (req, res) => {
+//     let message = {caseId: "1234567890123456", text: "Αυτό είναι ένα μήνυμα από τον καταγγέλoντα", filenames: []};
+//     res.render('newmessageconfirm',{whistle: {id: message.caseId, companyID: "bkueHt76TQiUW7G8p1BK"}});
+// });
 
 
 
@@ -154,7 +152,7 @@ server.post("*", (req, res) => {
 
 
 //////////////////   GIVE SERVER A NAME TO EXPORT   //////////////////
-const whistle = onRequest({ region: 'europe-west3' , maxInstances: 2 , concurrency: 8 }, server);
+const whistle = onRequest({ region , maxInstances: 2 , concurrency: 8 }, server);
 
 
 
