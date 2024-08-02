@@ -17,6 +17,20 @@
             "order": "DESCENDING"
           }
         ]
+      },
+      {
+        "collectionGroup": "cases",
+        "queryScope": "COLLECTION",
+        "fields": [
+          {
+            "fieldPath": "status",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "toBeDeleted",
+            "order": "ASCENDING"
+          }
+        ]
       }
     ],
     "fieldOverrides": []

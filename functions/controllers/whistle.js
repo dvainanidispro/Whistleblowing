@@ -73,10 +73,10 @@ let Whistle = {
             status: "initial",
             description: req.body.description,
             submitter: {
-                firstname: proper(req.body.firstname)?.substring(0,50),
-                lastname: proper(req.body.lastname)?.substring(0,50),
-                email: proper(req.body.email)?.substring(0,50),
-                phone: proper(req.body.phone)?.substring(0,50),
+                firstname: proper(req.body.firstname),         // Αν μπεί substring, μόνο έτσι: ?.substring(0,50)??null (το undefined απαγορεύεται στο firestore)
+                lastname: proper(req.body.lastname),
+                email: proper(req.body.email),
+                phone: proper(req.body.phone),
                 notify: !!req.body.notify, // convert to boolean
             },
             companyID: res.company.id,
