@@ -38,8 +38,8 @@
                         </label>
                         <p hidden id="specificdateElaborate">Στο επόμενο πεδίο επιλέξτε ημερομηνία με το date picker</p>
                         <div id="specificdatepicker" class="d-none ms-5">
-                            <input type="text" class="form-control" id="dateFacade" placeholder="Ημερομηνία Παραβίασης" onclick="actualDate.showPicker()" onfocus="actualDate.showPicker()" autocomplete="off">
-                            <input hidden name="date" type="date" id="actualDate"  class="form-control" onchange="dateFacade.value=facade(this.value)">
+                            <input type="text" class="form-control" name="dateFacade" id="dateFacade" placeholder="Επιλέξτε ημερομηνία παραβίασης" onfocus="actualDate.showPicker()" onclick="try{actualDate.showPicker()}catch(e){}" autocomplete="off">
+                            <input name="date" type="date" id="actualDate" class="form-control input-hidden" onchange="dateFacade.value=facade(this.value)">
                         </div>
                     </div>
 
@@ -167,7 +167,7 @@
 
     <script>
         console.debug('Company ID: ' + document.getElementById('company').value);
-        let facade = (inputDate) => (new Date(inputDate)).toLocaleDateString('el-GR',{dateStyle: 'full'});
+        let facade = (inputDate) => isNaN(new Date(inputDate)) ? '' : (new Date(inputDate)).toLocaleDateString('el-GR', { dateStyle: 'full' });
         document.getElementById('contact').addEventListener('change',e=>{
                 if(e.target.checked){  // user wants to be contacted
                     document.getElementById('contactDiv').classList.remove('d-none');
@@ -184,11 +184,13 @@
                 }
         });
         document.getElementsByName('datetype').forEach(radio=>{
-            radio.addEventListener('change',e=>{
-                if(e.target.value === 'specificdate'){
+            radio.addEventListener('change',function(e){
+                if(e.target.value == 'specificdate'){
                     document.getElementById('specificdatepicker').classList.remove('d-none');
+                    document.getElementById('dateFacade').setAttribute('required',true);
                 }else{
                     document.getElementById('specificdatepicker').classList.add('d-none');
+                    document.getElementById('dateFacade').removeAttribute('required');
                 }
             });
         });
@@ -198,7 +200,7 @@
             }
         });
         document.querySelectorAll('input[data-input-size]').forEach(inputElement=>{
-            inputElement.addEventListener("change",function(el){
+            inputElement.addEventListener("change",function(e){
                 let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
                 let maxSizeInBytes = maxSizeInMB * 1024 * 1024;
                 let sumSize = 0;

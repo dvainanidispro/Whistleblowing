@@ -302,6 +302,15 @@ hr{
     margin-block: 1rem;
 }
 
+.input-hidden{
+    visibility: hidden;
+    line-height:0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
 .form-control{
     --bs-border-width: 2px;
     --bs-border-radius: 0.7rem;
