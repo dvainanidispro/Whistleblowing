@@ -52,13 +52,17 @@ server.get(['/'], (req, res) => {
 // Αρχική σελίδα "home" για χρήση
 server.get(['/home'], Firebase.company, (req, res) => {
     // res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
-    res.render('home', {company:res.company});
+    res.render('home');
+});
+// Σελίδα πολιτικής απορρήτου
+server.get('/privacy', Firebase.company, (req, res) => {
+   res.render('privacy');
 });
 
 
 // Φόρμα υποβολής νέας αναφοράς
 server.get(['/form','/new'], Firebase.company, (req, res) => {
-    res.render('whistleform', {company:res.company});
+    res.render('whistleform');
 });
 
 

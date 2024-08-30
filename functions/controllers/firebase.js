@@ -45,7 +45,8 @@ let company = async (req, res, next) => {
         // Γενικό μήνυμα γιατί χρησιμοποιείται σε πολλά routes
         res.status(404).send("Σφάλμα! Δεν βρέθηκε ο Οργανισμός. Παρακαλώ, χρησιμοποιήστε το σωστό σύνδεσμο για να πραγματοποιήσετε αυτή την ενέργεια.");
     } else {
-        res.company = company;
+        res.company = company;          // TODO: να αφαιρεθεί η χρήση του
+        res.locals.company = company;
         next();
     }
 };
