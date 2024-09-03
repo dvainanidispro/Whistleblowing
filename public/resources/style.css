@@ -487,3 +487,9 @@ input[readonly], .input[readonly]:focus, .input[readonly]:active, input[disabled
     border: 2px solid lightgray;
     box-shadow: 1px 1px 10px 6px rgba(102,102,102,1);
 }
+
+
+/* View transition between pages */
+@view-transition {
+    navigation: auto;
+}

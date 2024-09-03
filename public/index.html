@@ -46,6 +46,11 @@
     <main>
         <div id="message">
             <h1 data-variable="companyName"></h1>
+            <script>{
+                    let companyName = localStorage.getItem('companyName');
+                    let company = document.querySelector('[data-variable="companyName"]');
+                    if (companyName) {company.textContent=companyName} else {company.remove()};
+            }</script>
             <h2>Καλώς ήρθατε στην Υπηρεσία Αναφορών του Οργανισμού σας</h2>
         </div>
 
@@ -101,9 +106,6 @@
 
 
 
-    <script type="module">
-        Q('~companyName').set(localStorage.getItem('companyName'));
-    </script>
 
     </div>
   </body>

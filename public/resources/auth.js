@@ -118,6 +118,7 @@ const actionCodeSettings = {
 window.addEventListener('load', function() {
     Q(".signOutBtn").on('click',function(e){
         firebase.auth().signOut().then(() => {
+            localStorage.getItem('companyName') && localStorage.removeItem('companyName');
             window.location.href = "/";
         }).catch((error) => {
             console.error(error.message);

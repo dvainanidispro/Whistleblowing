@@ -28,15 +28,15 @@
 
 <section aria-label="Προβολή υπάρχουσας αναφοράς">
 
-    <p>Αν έχετε ήδη υποβάλει την αναφορά σας, εισαγάγετε εδώ τα στοιχεία της για να δείτε την εξέλιξή της:</p>
+    <p class="pb-1">Αν έχετε ήδη υποβάλει την αναφορά σας, εισαγάγετε εδώ τα στοιχεία της για να δείτε την εξέλιξή της:</p>
 
     <form method="POST" action="./case" enctype="application/x-www-form-urlencoded">
     <div class="">
-        <label for="case" class="form-label">Aριθμός αναφοράς</label>
+        <label for="case" class="form-label mt-3">Aριθμός αναφοράς</label>
         <input name="id" type="text" class="form-control" id="case" value="{{caseId}}" required>
     </div>
     <div class="">
-        <label for="pin" class="form-label">PIN αναφοράς</label>
+        <label for="pin" class="form-label mt-3">PIN αναφοράς</label>
         <input name="pin" type="password" class="form-control" id="pin">
     </div>
     <div class="center-contents">

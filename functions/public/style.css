@@ -120,7 +120,7 @@ header {    /*header, left logo, right navs*/
 header{
     background-color:var(--backgroundcolor);
     color: var(--headertextcolor);
-    padding: 1rem min(3rem,10%) 0 min(3rem,10%);
+    padding: 0 min(3rem,10%);
     /* border-bottom: 1px solid #e5e5e5; */
     /*height: min(30vw,8rem);   /* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 }
@@ -412,4 +412,10 @@ fieldset legend {
     @media screen and (max-width: 768px) {
         text-align: center;
     }
+}
+
+
+/* View transition between pages */
+@view-transition {
+    navigation: auto;
 }
