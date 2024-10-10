@@ -158,7 +158,7 @@
                               </div>
                             
                             <div class="text-center">
-                                <button type="button" class="btn btn-danger my-2" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
+                                <button type="button" class="btn btn-danger my-2" x-show="document.referrer.includes('closed')" x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};DB.deleteCase(caseDoc);">Διαγραφή</button>
                                 <button type="button" class="btn btn-success my-2" 
                                     x-on:click="if(notifyUser){DB.notifyUser(caseDoc)};Q('#SaveSpinner').show();await DB.updateCase(caseDoc);Q('#SaveSpinner').show(false);">
                                     <span>Αποθήκευση</span>
