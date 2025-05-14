@@ -408,6 +408,7 @@ fieldset legend {
 .bold {font-weight: bold}
 .italics {font-style: italic}
 .small {font-size: small}
+.red {color: crimson}
 .center-left {
     @media screen and (max-width: 768px) {
         text-align: center;

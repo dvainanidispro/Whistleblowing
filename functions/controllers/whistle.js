@@ -67,6 +67,7 @@ let Whistle = {
         let whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
+            // relationship: req.body.relationship,
             // Aν υπάρχει το date (ημερομηνία), τότε αυτό. Aλλιώς, το datetype (περιγραφή ημερομηνίας) στα ελληνικά, αλλιώς 'Άγνωστη'
             date: proper(req.body.date) ?? Mappings.date[req.body?.datetype] ?? Mappings.date['unknown'],
             people: req.body.people,

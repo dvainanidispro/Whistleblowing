@@ -25,6 +25,9 @@ const handlebarsConfig = { /* config */
     defaultLayout: 'main',
     helpers: 'views',
     partialsDir: 'views',
+    helpers: {
+        or: (a, b, c) => a ?? b ?? c,
+    }
 };
 server.engine('hbs', HandlebarsCreator(handlebarsConfig).engine);       // if view extension is hbs, then use handlebars
 server.set('view engine', "hbs");   // use handlebars as the default engine when extension is not specified in res.render

@@ -17,6 +17,23 @@
             <hr>
             
             <div>
+
+                <div class="">
+                    <label for="relationship" class="form-label">Αποκτήσατε πληροφορίες σχετικά με τα καταγγελλόμενα εντός του εργασιακού πλαισίου του Οργανισμού {{company.name}}; *</label>
+                    <small>Ως εργασιακό πλαίσιο νοούνται τρέχουσες, παλαιότερες ή προσδοκώμενες εργασιακές δραστηριότητες, ανεξαρτήτως της φύσης των εν λόγω δραστηριοτήτων, μέσω των οποίων αποκτήσατε πληροφορίες σχετικά με παραβιάσεις του ν. 4990/2022, ως ισχύει και στο πλαίσιο των οποίων υπάρχει πιθανότητα να υποστείτε αντίποινα αν τις αναφέρετε.</small>
+                    <select id="relationship" name="relationship" class="form-control" aria-label="Εργασιακή σχέση" required>
+                        <option value class="d-none">Παρακαλώ επιλέξτε... </option>
+                        <option value="Yes">Ναι</option>
+                        <option value="No">Όχι</option>
+                    </select>
+                    <div id="invalid-relationship-info" class="bold my-2 d-none"><small>
+                        <span class="red">
+                            Εφόσον δεν αποκτήσατε πληροφορίες σχετικά με τα καταγγελλόμενα εντός του εργασιακού πλαισίου του Οργανισμού σας, δεν μπορείτε να υποβάλετε αναφορά μέσω αυτής της πλατφόρμας. 
+                            Ωστόσο, έχετε τη δυνατότητα υποβολής καταγγελίας στη γενική πλατφόρμα καταγγελιών της ΕΑΔ
+                        (<a href="https://aead.gr/submit-complaint">https://aead.gr/submit-complaint</a>).</span>   
+                    </small></div>
+                </div>
+
                 <div class="mb-3"><fieldset>
                     <legend class="mt-2">Πότε συνέβη το περιστατικό; (προαιρετικά)</legend>
                     <div class="form-check">
@@ -150,7 +167,7 @@
                 <small>Βεβαιωθείτε ότι μετά την υποβολή της αναφοράς, θα εμφανιστεί μήνυμα επιτυχούς παράδοσης.</small>
             </div>
             <div class="d-flex">
-                <button type="submit" id="submit-btn" class="btn btn-primary my-3">ΥΠΟΒΟΛΗ</button>
+                <button type="submit" id="submit-btn" class="btn btn-primary my-3" disabled>ΥΠΟΒΟΛΗ</button>
                 <div id="post-spinner" class="m-3 spinner-border text-primary d-none" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -167,7 +184,11 @@
 
     <script>
         console.debug('Company ID: ' + document.getElementById('company').value);
+        
+        // Date facade
         let facade = (inputDate) => isNaN(new Date(inputDate)) ? '' : (new Date(inputDate)).toLocaleDateString('el-GR', { dateStyle: 'full' });
+        
+        // Στοιχεία επικοινωνίας χρήστη
         document.getElementById('contact').addEventListener('change',e=>{
                 if(e.target.checked){  // user wants to be contacted
                     document.getElementById('contactDiv').classList.remove('d-none');
@@ -183,6 +204,24 @@
                     });
                 }
         });
+
+        // Επιβεβαίωση εργασιακής σχέσης
+        document.getElementById('relationship').addEventListener('input',function(e){
+            let value = e.target.value;
+            console.log(value);
+            if (value=="Yes"){
+                document.getElementById('submit-btn').disabled = false;
+                document.getElementById('invalid-relationship-info').classList.add('d-none');
+            } else if (value=="No") {
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('invalid-relationship-info').classList.remove('d-none');
+            } else {
+                document.getElementById('submit-btn').disabled = true;
+                document.getElementById('invalid-relationship-info').classList.add('d-none');
+            }
+        });      
+
+        // Επιλογές ημερομηνίας
         document.getElementsByName('datetype').forEach(radio=>{
             radio.addEventListener('change',function(e){
                 if(e.target.value == 'specificdate'){
@@ -194,11 +233,15 @@
                 }
             });
         });
+
+        // Loading spinner
         document.getElementById('submit-btn').addEventListener('click',()=>{
             if ( document.getElementById('whistleblowing-form').reportValidity() ) {     // if form is valid
                 document.getElementById('post-spinner').classList.remove('d-none');     // show spinner
             }
         });
+
+        // Έλεγχος ορθότητας αρχείου που ανεβαίνει
         document.querySelectorAll('input[data-input-size]').forEach(inputElement=>{
             inputElement.addEventListener("change",function(e){
                 let maxSizeInMB = parseInt(this.getAttribute("data-input-size"));
