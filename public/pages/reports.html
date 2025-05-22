@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Υπηρεσία Αναφορών Whistleblowing">
+    <meta name="author" content="Computer Studio">
+    <meta name="theme-color" content="#2f2370">
+    <link href="/resources/favicon.ico" rel="shortcut icon">
+    <title>Υπηρεσία Αναφορών Whistleblowing</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="/resources/style.css" rel="stylesheet" media="screen">
+    <script defer src="/resources/dim.js"></script>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.21.0/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/9.21.0/firebase-app-check-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/9.21.0/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script defer src="/resources/auth.js"></script>
+    <script defer src="/resources/db.js"></script>
+    <script defer src="/resources/storage.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script defer src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" lang="javascript" ></script>
+    <script defer src="/resources/reports.js"></script>
+
+
+  </head>
+
+
+
+
+  <body>
+
+
+    <div class="body-container">
+
+    <header id="app-header"></header>
+    <script async src="/resources/header.js"></script>
+
+
+
+
+
+
+    <main class="is-user">
+
+        <h1 data-variable="companyName"></h1>
+        <h2 data-variable="casesDescription">Συγκεντρωτικές αναφορές</h2>
+
+
+        <div class="cases-frame" id="casesFrame">
+
+            <div x-data="{cases: [], loaded:false}" x-init="cases = await DB.fetchCases(true); loaded=true; window.reportCases = casesForReport(cases)">
+
+                <bootstrap-spinner data-message="Φόρτωση αναφορών..." x-show="!loaded"></bootstrap-spinner>
+
+                <button id="downloadExcel" class="btn btn-success my-3" x-show="loaded">Εξαγωγή όλων των υποθέσεων σε αρχείο Excel</button>
+
+            </div>
+
+
+        </div>
+
+
+
+    </main>
+
+
+
+    <footer>
+    </footer>
+
+
+
+
+
+
+
+
+  
+
+    </div>
+  </body>
+</html>

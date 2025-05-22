@@ -23,9 +23,6 @@
     "hosting": {
       "port": 80
     },
-    "firestore": {
-      "port": 4000
-    },
     "ui": {
       "enabled": true,
       "port": 5000

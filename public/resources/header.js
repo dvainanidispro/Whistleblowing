@@ -8,6 +8,7 @@ let navDiv = /*HTML*/`
             <ul class="dropdown-menu dropdown-menu-dark" >  
                     <li><a class="dropdown-item " href="/pages/home.html" rel="noindex">Ανοικτές υποθέσεις</a></li>
                     <li><a class="dropdown-item" href="/pages/home.html?closed=true" rel="noindex">Κλειστές υποθέσεις</a></li>
+                    <li><a class="dropdown-item" href="/pages/reports.html" rel="noindex">Αναφορές</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="/" rel="noindex">Προφίλ</a></li>
                     <li><button class="dropdown-item signOutBtn">Αποσύνδεση</button></li>

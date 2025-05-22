@@ -4,22 +4,26 @@ const db = firebase.firestore();
 window.DB = {};
 
 
-DB.fetchCases = async function(){
+DB.fetchCases = async function(all=false){
     let closed = (App.getParams.closed=='true');
     let companyID = localStorage.getItem('companyID') ?? await App.user.claims('companyID');    //sometimes it is not set yet
     let cases;
-    if (!closed){
+    if (all) {
+        cases = await db.collection("cases").where('companyID','==',companyID).get();
+    }
+    else if (!closed){
         cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['initial','pending','under investigation','under resolution']).orderBy("submittedAt","desc").get();
     } else if (closed){
         Q('~casesDescription').set("Κλειστές υποθέσεις");
         cases = await db.collection("cases").where('companyID','==',companyID).where('status','in',['completed','rejected','cancelled']).get();
     }
-    let openCases = [];
+    let requestedCases = [];
     cases.forEach((caseDoc) =>{
         let doc = caseDoc.data();
-        openCases.push(doc);
+        requestedCases.push(doc);
     });
-    return openCases;
+    console.debug(requestedCases);
+    return requestedCases;
 };
 
 
