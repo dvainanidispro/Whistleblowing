@@ -9,11 +9,13 @@ let region = 'europe-west3';   // default region
 
 ////////////////////    EXPRESS    ////////////////////
 import express from 'express';
+import cookieParser from 'cookie-parser'; 
 const server = express();
 import {fileParser} from 'express-multipart-file-parser';
 server.use(express.urlencoded({extended: true})); 
 server.use(express.json());
 server.use(express.static('public')); 
+server.use(cookieParser());
 
 
 //////////////////    HANDLEBARS    ///////////////////
@@ -38,7 +40,9 @@ import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
 import Security from "./controllers/security.js";
 import Cleanup from "./controllers/cleanup.js";
+import Language from "./controllers/language.js";
 server.use(Security);
+server.use(Language);
 
 
 
