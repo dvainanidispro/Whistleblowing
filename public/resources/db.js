@@ -26,6 +26,40 @@ DB.fetchCases = async function(all=false){
     return requestedCases;
 };
 
+DB.fetchAllCases = async function(){
+    // Fetch companies from db
+    let companies = await db.collection("companies").get();
+    let requestedCompanies = [];
+    companies.forEach((companyDoc) => {
+        let doc = companyDoc.data();
+        doc.id = companyDoc.id;
+        requestedCompanies.push(doc);
+    });
+    console.debug(requestedCompanies);
+
+    // Fetch cases form db
+    let cases = await db.collection("cases").get();
+    let requestedCases = [];
+    cases.forEach((caseDoc) =>{
+        let doc = caseDoc.data();
+        requestedCases.push(doc);
+    });
+    
+    // Group cases by companyID
+    let groupedCases = {};
+    requestedCases.forEach((caseDoc) => {
+        let companyElement = requestedCompanies.find(element => element.id === caseDoc.companyID);
+        let company = companyElement ? companyElement.name : caseDoc.companyID; // fallback to ID if company not found
+        if (!groupedCases[company]) {
+            groupedCases[company] = [];
+        }
+        groupedCases[company].push(caseDoc);
+    });
+    
+    console.debug(groupedCases);
+    return groupedCases;
+};
+
 
 DB.fetchCase = async function(caseID){
     let caseDoc = await db.collection("cases").doc(caseID).get();
