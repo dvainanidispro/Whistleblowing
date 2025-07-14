@@ -16,10 +16,10 @@ const auth = getAuth(app);
 
 //////////////////////      USER      ///////////////////////////
 
-const userEmail = 'k.ramia@computerstudio.gr';
-const userDisplayName = 'ΚΩΝΣΤΑΝΤΙΝΑ ΡΑΜΙΑ';
+const userEmail = 'vainanidis@computerstudio.gr';
+const userDisplayName = 'ΔΗΜΗΤΡΗΣ ΒΑΪΝΑΝΙΔΗΣ';
 const customClaims = {
-    companyID: 'fMbUiv3y0lLFMKcUlGa4',
+    companyID: 'bkueHt76TQiUW7G8p1BK',
     appAdmin: true,
 };
 

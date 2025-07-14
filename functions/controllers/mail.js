@@ -1,6 +1,6 @@
 ////////////////    MAIL CONFIG  //////////////// 
-import fs from 'fs';
-import path from 'path';
+// import fs from 'fs';
+// import path from 'path';
 import nodemailer from 'nodemailer';
 let transporter = nodemailer.createTransport({
     host: process.env.MAILHOST,
@@ -10,6 +10,7 @@ let transporter = nodemailer.createTransport({
       pass: process.env.MAILPASS
     }
 });
+
 
 /** The folder with the temporary attachments */
 import config from './config.js';
@@ -36,6 +37,7 @@ let aboutNewWhistle = async (whistle) => {
     let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
+        bcc: JSON.parse(process.env.MAILBCC || '[]'), // add adminRecipients as BCC
         subject: `Whistleblowing - Νέο περιστατικό - ${whistle.id}`, // Subject line
         //   text: whistle.description, // plain text body
         html: /*html*/`<h2>Νέο περιστατικό: ${whistle.id}</h2>
@@ -63,6 +65,7 @@ let aboutNewUserMessage = async (whistle) => {
     let mail = {
         from: process.env.MAILFROM, // sender address
         to: company.recipients, // list of recipients
+        bcc: JSON.parse(process.env.MAILBCC || '[]'), // add adminRecipients as BCC
         subject: `Whistleblowing - Περιστατικό ${whistle.id} - Νέο μήνυμα`, // Subject line
         html: /*html*/`<h2>Υπάρχει νέο μήνυμα για το περιστατικό ${whistle.id}.</h2>
                 <p>Παρακαλώ, συνδεθείτε στην κονσόλα διαχείρισης για να δείτε το νέο μήνυμα.</p>
@@ -89,7 +92,7 @@ let aboutCaseUpdate = async (whistle) => {
 
     let email = {
         from: process.env.MAILFROM, // sender address
-        to: whistle.submitter.email, // one recipient
+        to: whistle.submitter.email, // one recipient only!
         subject: `Whistleblowing - Περιστατικό ${whistle.id}`, // Subject line
         html: /*html*/`<h2>Περιστατικό ${whistle.id}</h2>
                 <p>Υπάρχει νέα ενημέρωση ή νέο μήνυμα σχετικά με το περιστατικό ${whistle.id}. </p>
