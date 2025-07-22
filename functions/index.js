@@ -40,7 +40,7 @@ import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
 import Security from "./controllers/security.js";
 import Cleanup from "./controllers/cleanup.js";
-import Language from "./controllers/language.js";
+import Language from "./locales/language.js";
 server.use(Security);
 server.use(Language);
 
