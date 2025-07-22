@@ -21,16 +21,7 @@ server.use(cookieParser());
 //////////////////    HANDLEBARS    ///////////////////
 server.set('views', "views");   // folder of views
 import { create as HandlebarsCreator } from 'express-handlebars';
-const handlebarsConfig = { /* config */
-    extname: '.hbs',    // extension for layouts (not views)
-    layoutsDir: 'views',
-    defaultLayout: 'main',
-    helpers: 'views',
-    partialsDir: 'views',
-    helpers: {
-        or: (a, b, c) => a ?? b ?? c,
-    }
-};
+import handlebarsConfig from './config/handlebars.js';
 server.engine('hbs', HandlebarsCreator(handlebarsConfig).engine);       // if view extension is hbs, then use handlebars
 server.set('view engine', "hbs");   // use handlebars as the default engine when extension is not specified in res.render
 
@@ -38,7 +29,7 @@ server.set('view engine', "hbs");   // use handlebars as the default engine when
 import SendEmail from './controllers/mail.js';
 import Whistle from './controllers/whistle.js';
 import Firebase from './controllers/firebase.js';
-import Security from "./controllers/security.js";
+import Security from "./config/security.js";
 import Cleanup from "./controllers/cleanup.js";
 import Language from "./locales/language.js";
 server.use(Security);
@@ -135,10 +126,10 @@ server.post('/notifyuser', async (req, res) => {
 
 
 //////////////////   TEST PAGES   //////////////////
-// server.get("/test-new", (req, res) => {
-//     let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
-//     res.render('newcaseconfirm',{whistle});
-// });
+server.get("/test-new", (req, res) => {
+    let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
+    res.render('newcaseconfirm',{whistle});
+});
 // server.get("/test-case", (req, res) => {
 //     let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
 //     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});

@@ -1,0 +1,13 @@
+{
+  "newcase": {
+    "title": "Successful Report Submission",
+    "description": "The report has been submitted with the following details:",
+    "reportNumber": "Report Number",
+    "pin": "PIN",
+    "warning": "ATTENTION! You may be asked for additional information or clarifications through the platform. Please save these details so you can track the progress of the case. If you lose them, you will not be able to retrieve them again.",
+    "confirmButton": "I confirm that I have saved them",
+    "thankYou": "Thank you! You can track the progress of the case at",
+    "trackPage": "this page",
+    "usingCredentials": "using the above details."
+  }
+}

@@ -28,8 +28,10 @@ const languageMiddleware = (req, res, next) => {
     }
     // Αν τυχόν ήρθε λάθος (είτε απο query, είτε από cookie), θα στείλει την προεπιλεγμένη γλώσσα χωρίς να αποθηκεύσει τίποτα στο cookie
 
-    // Αποθήκευση στο response object
-    res.lang = lang;
+    // Αποθήκευση στα locals για χρήση από τα Handlebars templates
+    // Το i18n helper θα διαβάζει την τιμή από το options.data.root.lang
+    // για να καταλάβει ποια γλώσσα να χρησιμοποιήσει στις μεταφράσεις
+    res.locals.lang = lang;
 
     // console.log(lang);
     

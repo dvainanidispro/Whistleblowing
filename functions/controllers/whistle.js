@@ -1,7 +1,7 @@
 //////////////           FILES         ///////////////
 /** The folder with the temporary attachments */
 import fs from 'fs';
-import config from './config.js';
+import config from '../config/config.js';
 let attachmentsFolder = config.attachmentsFolder;
 
 
