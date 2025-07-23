@@ -1,14 +1,14 @@
-<h1 class="center-left">{{t "newcase.title"}}</h1>
-<p>{{t "newcase.description"}}</p>
+<h1 class="center-left">{{t "newcaseconfirm.title"}}</h1>
+<p>{{t "newcaseconfirm.description"}}</p>
 
 
 <table class="table table-striped table-primary table-hover">
     <tr>
-        <td>{{t "newcase.reportNumber"}}</td>
+        <td>{{t "newcaseconfirm.reportNumber"}}</td>
         <td>{{whistle.id}}</td>
     </tr>
     <tr>
-        <td>{{t "newcase.pin"}}</td>
+        <td>{{t "newcaseconfirm.pin"}}</td>
         <td>{{whistle.pin}}</td>
     </tr>
 </table>
@@ -17,12 +17,12 @@
 
 
 <div class="alert alert-danger" role="alert" aria-live="polite">
-    <div><span class="bold">{{t "newcase.warning"}}</span></div>
-    <div class="center-contents"><button id="showInstuctions" class="btn btn-danger my-3">{{t "newcase.confirmButton"}}</button></div>
+    <div><span class="bold">{{t "newcaseconfirm.warning"}}</span></div>
+    <div class="center-contents"><button id="showInstuctions" class="btn btn-danger my-3">{{t "newcaseconfirm.confirmButton"}}</button></div>
 </div>
 
-<div id="instructions" class="d-none alert alert-success" role="alert" aria-live="polite">{{t "newcase.thankYou"}} <a href="https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/home?company={{whistle.companyID}}" target="_blank">{{t "newcase.trackPage"}}</a>
-{{t "newcase.usingCredentials"}}</div>
+<div id="instructions" class="d-none alert alert-success" role="alert" aria-live="polite">{{t "newcaseconfirm.thankYou"}} <a href="https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/home?company={{whistle.companyID}}" target="_blank">{{t "newcaseconfirm.trackPage"}}</a>
+{{t "newcaseconfirm.usingCredentials"}}</div>
 
 
 <script>

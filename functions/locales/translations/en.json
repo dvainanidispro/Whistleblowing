@@ -1,5 +1,5 @@
 {
-  "newcase": {
+  "newcaseconfirm": {
     "title": "Successful Report Submission",
     "description": "The report has been submitted with the following details:",
     "reportNumber": "Report Number",
@@ -9,5 +9,12 @@
     "thankYou": "Thank you! You can track the progress of the case at",
     "trackPage": "this page",
     "usingCredentials": "using the above details."
+  },
+  "newmessageconfirm": {
+    "title": "New message sent",
+    "description": "Thank you! Case {{whistle.id}} has been updated with the new message."
+  },
+  "welcome": {
+    "message": "Welcome to the anonymous reporting service for Code of Ethics violations of your organization. The service is provided by Computer Studio S.A."
   }
 }

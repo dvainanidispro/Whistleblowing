@@ -3,25 +3,12 @@ import i18next from 'i18next';
 import elTranslations from './translations/el.json' with { type: 'json' };
 import enTranslations from './translations/en.json' with { type: 'json' };
 
-// Φόρτωση των translations απευθείας
-const loadTranslations = () => {
-  try {
-    return {
-      el: { translation: elTranslations },
-      en: { translation: enTranslations }
-    };
-  } catch (error) {
-    console.error('Error loading translations:', error);
-    return {
-      el: { translation: {} },
-      en: { translation: {} }
-    };
-  }
+const resources = {
+    el: { translation: elTranslations },
+    en: { translation: enTranslations }
 };
 
-// Synchronous αρχικοποίηση του i18next
-const resources = loadTranslations();
-
+// Αρχικοποίηση του i18next
 i18next.init({
   lng: 'el', // default γλώσσα
   fallbackLng: 'el',

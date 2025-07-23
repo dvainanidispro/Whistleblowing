@@ -45,7 +45,7 @@ server.use(Language);
 
 // Αρχική σελίδα "/" (απλώς για να υπάρχει κάτι)
 server.get(['/'], (req, res) => {
-    res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
+    res.render('welcome');
 });
 // Αρχική σελίδα "home" για χρήση
 server.get(['/home'], Firebase.company, (req, res) => {
@@ -126,17 +126,18 @@ server.post('/notifyuser', async (req, res) => {
 
 
 //////////////////   TEST PAGES   //////////////////
-server.get("/test-new", (req, res) => {
-    let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
-    res.render('newcaseconfirm',{whistle});
-});
-// server.get("/test-case", (req, res) => {
-//     let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
-//     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
+// server.get("/test-new", (req, res) => {
+//     let whistle = {id: 1234567890123456, pin: 1234, companyID: "bkueHt76TQiUW7G8p1BK"}
+//     res.render('newcaseconfirm',{whistle});
 // });
 // server.get('/test-pushmessage', async (req, res) => {
 //     let message = {caseId: "1234567890123456", text: "Αυτό είναι ένα μήνυμα από τον καταγγέλoντα", filenames: []};
 //     res.render('newmessageconfirm',{whistle: {id: message.caseId, companyID: "bkueHt76TQiUW7G8p1BK"}});
+// });
+// server.get("/test-case", (req, res) => {
+//     // let whistle = JSON.parse('{"date":"2024-03-14","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"+306948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","pin":"0679","isTest":false,"origin":"http://127.0.0.1","messages":[],"description":"Κλέβει το ταμέιο","filenames":["movie.mp4","voter_list.csv"],"id":"5250467415406000","people":"Μήτσος","status":"initial","submittedAt":{"_seconds":1709405787,"_nanoseconds":149000000}}');
+//     let whistle = {"date":"Λιγότερο από 5 χρόνια πριν","submitter":{"firstname":"ΔΗΜΗΤΡΗΣ","phone":"6948060820","email":"dvainanidis@gmail.com","notify":true,"lastname":"ΒΑΪΝΑΝΙΔΗΣ"},"companyID":"bkueHt76TQiUW7G8p1BK","isTest":false,"origin":"http://127.0.0.1","description":"Άντε πάλι ο Μπάμπης","id":"5862227586012496","people":"Ο Μπάμπης ο Σουγιάς","submittedAt":{"_seconds":1709728584,"_nanoseconds":917000000},"title":"Με απ' όλα","type":"","pin":"0000","filenames":["ChordPage Data.xlsx","unsubs.txt","ENFIA-.pdf"],"status":"under resolution","messages":[{"role":"Υπεύθυνος","readByUser":true,"user":"vainanidis@computerstudio.gr","date":{"_seconds":1709843230,"_nanoseconds":371000000},"text":"Αυτό παίζει αλήθεια;"},{"readByCompany":true,"date":{"_seconds":1710260687,"_nanoseconds":154000000},"role":"Καταγγέλλων","text":"Ναι βρε σου λέω","filenames":[]},{"readByCompany":true,"text":"να, κι ένα αρχείο","role":"Καταγγέλλων","filenames":["unsubs.txt"],"date":{"_seconds":1710260715,"_nanoseconds":128000000}}]};
+//     res.render('viewcase', {whistle: Whistle.toHumanFormat(whistle)});
 // });
 
 

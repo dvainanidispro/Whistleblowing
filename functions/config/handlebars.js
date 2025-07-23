@@ -20,7 +20,9 @@ const handlebarsConfig = {
             const lang = options.data.root.lang || 'el';
             
             // Χρησιμοποιούμε per-request language χωρίς να αλλάζουμε το global state
-            // Αυτό αποφεύγει race conditions σε concurrent requests
+            // By default, η γλώσσα του i18n είναι global, και αναφέρεται σε όλα τα requests!!!
+            // Τώρα, σε κάθε request, θα χρησιμοποιούμε την γλώσσα που έχει οριστεί στα locals.
+            // Σημείωση, το .hash του handlebars μετατρέπει πχ το name="John" σε { name: "John" } !
             return i18n.t(key, { lng: lang, ...options?.hash });
         }
     }
