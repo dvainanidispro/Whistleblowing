@@ -30,7 +30,7 @@ const proper = (value) => {
 //////////////        MAPPINGS       ///////////////
 /** Αντιστοίχιση των πεδίων σε "ανθρώπινη" περιγραφή */
 let Mappings = {
-    status: {
+    status: {       // Πλέον δεν χρησιμοποιείται, γιατί γίνεται στο view με i18n
         "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
         "pending": "Υπό επεξεργασία - Η υπόθεση έχει γνωστοποιηθεί αλλά δεν έχουν ξεκινήσει ακόμα ενέργειες διερεύνησης",
         "under investigation": "Υπο διερεύνηση - Ερευνάται η εγκυρότητα της καταγγελίας",
@@ -120,10 +120,10 @@ let Whistle = {
     toHumanFormat: function (whistle) {
         // deep clone whistle object. Warning! If we change the status (messages), then it will change the original object!
         let clientWhistle = structuredClone(whistle);
-        clientWhistle.status = Mappings.status[whistle.status];
+        // clientWhistle.status = Mappings.status[whistle.status];  // Παλιά, η μετατροπή γινόταν εδώ, αλλά τώρα γίνεται στο view (i18n)
         clientWhistle.messages.forEach(message=>{
             message.date = timestampToDate(message.date).toLocaleDateString();
-            message.readByCompany = (message.role=="Υπεύθυνος") ? "" :
+            message.readByCompany = (message.role=="Υπεύθυνος") ? "blank" :
                 (message.role=="Καταγγέλλων" && message.readByCompany) ? "Διαβάστηκε" : "Δεν διαβάστηκε";
         });
         return clientWhistle;

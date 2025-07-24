@@ -42,6 +42,32 @@
       "totalSizeExceeded": "Total file size exceeds the maximum limit of ${maxSizeInMB} MB"
     }
   },
+  "labels": {
+    "status": {
+      "initial": "Initial - The responsible person has not been notified of the report",
+      "pending": "Pending - The case has been notified but investigation actions have not started yet",
+      "under investigation": "Under Investigation - The validity of the report is being investigated",
+      "under resolution": "Under Resolution - The case has been investigated and remedial actions are being taken",
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled"
+    },
+    "date": {
+      "specificdate": "Specific Date",
+      "before5years": "More than 5 years ago",
+      "recent5years": "Less than 5 years ago",
+      "unknown": "Unknown"
+    },
+    "messages": {
+      "Υπεύθυνος": "Responsible Person",
+      "Καταγγέλλων": "Whistleblower",
+      "Διαβάστηκε": "Read",
+      "Δεν διαβάστηκε": "Not Read",
+      "Read": "Read",
+      "Not Read": "Not Read",
+      "blank": ""
+    }
+  },
   "welcome": {
     "message": "Welcome to the anonymous reporting service for Code of Ethics violations of your organization. The service is provided by Computer Studio S.A."
   }

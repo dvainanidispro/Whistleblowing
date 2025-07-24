@@ -16,7 +16,7 @@
     <p>{{whistle.description}}</p>
 
     <label>{{t 'viewcase.caseDetails.caseStatus'}}</label>
-    <p>{{whistle.status}}</p>
+    <p>{{tl "status" whistle.status}}</p>
 
     {{#if whistle.filenames}}
     <label>{{t 'viewcase.caseDetails.supportingFiles'}}</label>
@@ -40,9 +40,9 @@
     {{#each whistle.messages}}
         <div class="row">
             <div class="col-md-2 pt-3">
-                <div class="text-muted">{{role}}</div>
+                <div class="text-muted">{{tl "messages" role}}</div>
                 <div class="text-muted">{{date}}</div>
-                <div class="text-muted italics small">{{readByCompany}}</div>
+                <div class="text-muted italics small">{{tl "messages" readByCompany}}</div>
             </div>
             <div class="col-md-10 my-2">
                 <textarea class="form-control" readonly disabled>{{text}}</textarea>

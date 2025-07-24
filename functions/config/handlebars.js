@@ -13,6 +13,13 @@ const handlebarsConfig = {
         // Λογικός τελεστής OR - επιστρέφει την πρώτη truthy τιμή
         or: (a, b, c) => a ?? b ?? c,
         
+        // String concatenation helper
+        concat: (...args) => {
+            // Remove the last argument which is the options object
+            args.pop();
+            return args.join('');
+        },
+        
         // i18n helper - επιτρέπει τη χρήση {{t "key"}} στα templates
         // Παράδειγμα: {{t "newcase.title"}} ή {{t "user.greeting" name="John"}}
         t: function(key, options) {
@@ -23,6 +30,15 @@ const handlebarsConfig = {
             // By default, η γλώσσα του i18n είναι global, και αναφέρεται σε όλα τα requests!!!
             // Τώρα, σε κάθε request, θα χρησιμοποιούμε την γλώσσα που έχει οριστεί στα locals.
             // Σημείωση, το .hash του handlebars μετατρέπει πχ το name="John" σε { name: "John" } !
+            return i18n.t(key, { lng: lang, ...options?.hash });
+        },
+        
+        // Translate Label
+        // Label translation helper - για επιλογή από labels (στο language.json)
+        // Παράδειγμα: {{tl "status" whistle.status}} θα γίνει labels.status[whistle.status], πχ labels.status.initial
+        tl: function(labelType, value, options) {
+            const lang = options.data.root.lang || 'el';
+            const key = `labels.${labelType}.${value}`;
             return i18n.t(key, { lng: lang, ...options?.hash });
         }
     }
