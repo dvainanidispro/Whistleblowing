@@ -1,75 +1,82 @@
 
-<h1 class="center-left">Αναφορά {{whistle.id}}</h1>
+<h1 class="center-left">{{t 'viewcase.title'}} {{whistle.id}}</h1>
 
-<h2>Στοιχεία υπόθεσης</h2>
 
-<label>Ημερομηνία παραβίασης</label>
-<p>{{whistle.date}}</p>
+<section aria-label="{{t 'viewcase.caseDetails.ariaLabel'}}">
 
-<label>Φυσικά πρόσωπα</label>
-<p>{{whistle.people}}</p>
+    <h2>{{t 'viewcase.caseDetails.heading'}}</h2>
 
-<label>Αναλυτική περιγραφή περιστατικού</label>
-<p>{{whistle.description}}</p>
+    <label>{{t 'viewcase.caseDetails.violationDate'}}</label>
+    <p>{{whistle.date}}</p>
 
-<label>Κατάσταση υπόθεσης</label>
-<p>{{whistle.status}}</p>
+    <label>{{t 'viewcase.caseDetails.individuals'}}</label>
+    <p>{{whistle.people}}</p>
 
-{{#if whistle.filenames}}
-<label>Υποστηρικτικά αρχεία</label>
-<ul>
-    {{#each whistle.filenames}}
-        <li>{{this}}</li>
+    <label>{{t 'viewcase.caseDetails.detailedDescription'}}</label>
+    <p>{{whistle.description}}</p>
+
+    <label>{{t 'viewcase.caseDetails.caseStatus'}}</label>
+    <p>{{whistle.status}}</p>
+
+    {{#if whistle.filenames}}
+    <label>{{t 'viewcase.caseDetails.supportingFiles'}}</label>
+    <ul>
+        {{#each whistle.filenames}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+</section>
+
+
+<hr>
+
+
+<section aria-label="{{t 'viewcase.messages.ariaLabel'}}">
+
+    <h2>{{t 'viewcase.messages.heading'}}</h2>
+
+    {{#each whistle.messages}}
+        <div class="row">
+            <div class="col-md-2 pt-3">
+                <div class="text-muted">{{role}}</div>
+                <div class="text-muted">{{date}}</div>
+                <div class="text-muted italics small">{{readByCompany}}</div>
+            </div>
+            <div class="col-md-10 my-2">
+                <textarea class="form-control" readonly disabled>{{text}}</textarea>
+            </div>
+            <hr class="my-1 d-md-none"->
+        </div>
     {{/each}}
-</ul>
-{{/if}}
 
 
-<hr>
-<h2>Μηνύματα υπόθεσης</h2>
-
-
-{{#each whistle.messages}}
-    <div class="row">
-        <div class="col-md-2 pt-3">
-            <div class="text-muted">{{role}}</div>
-            <div class="text-muted">{{date}}</div>
-            <div class="text-muted italics small">{{readByCompany}}</div>
+    <form method="POST" action="./pushmessage" enctype="multipart/form-data">
+        <div class="my-3">
+            <label for="newmessage">{{t 'viewcase.messages.newMessageLabel'}}</label>
+            <textarea class="form-control" id="newmessage" name="newmessage" placeholder="{{t 'viewcase.messages.newMessagePlaceholder'}}" rows="4" required></textarea>
+            <div class="form-text">
+                {{t 'viewcase.messages.warningText'}}
+            </div>
         </div>
-        <div class="col-md-10 my-2">
-            <textarea class="form-control" readonly disabled>{{text}}</textarea>
+        <input type="hidden" name="caseId" value="{{whistle.id}}">
+
+        <div class="mb-3 mt-3">
+            <label for="evidence" class="form-label">{{t 'viewcase.messages.newEvidenceLabel'}}</label>
+            <input type="file" class="form-control" id="evidence" name="evidence" multiple data-input-size="10">
         </div>
-        <hr class="my-1 d-md-none"->
-    </div>
-{{/each}}
 
+        <button type="submit" class="btn btn-success my-2" id="submitBtn">{{t 'viewcase.messages.sendButton'}}</button>
+    </form>
 
-
-{{!-- TODO: change action --}}
-<form method="POST" action="./pushmessage" enctype="multipart/form-data">
-    <div class="my-3">
-        <label for="newmessage">Νέο μήνυμα προς τον υπεύθυνο</label>
-        <textarea class="form-control" id="newmessage" name="newmessage" placeholder="Νέο μήνυμα" rows="4" required></textarea>
-        <div class="form-text">
-            Μετά την αποστολή του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.
-        </div>
-    </div>
-    <input type="hidden" name="caseId" value="{{whistle.id}}">
-
-    <div class="mb-3 mt-3">
-        <label for="evidence" class="form-label">Νέα αποδεικτικά στοιχεία (προαιρετικά):</label>
-        <input type="file" class="form-control" id="evidence" name="evidence" multiple data-input-size="10">
-    </div>
-
-    <button type="submit" class="btn btn-success my-2" id="submitBtn">Αποστολή μηνύματος</button>
-</form>
+</section>
 
 
 
 
 <hr>
 
-{{!-- {{{whistleTable}}} --}}
 
 
 <script>
@@ -81,10 +88,10 @@
             [...this.files].forEach(file=>{
                 sumSize += file.size;
                 if(file.size > maxSizeInBytes){
-                    alert("Το αρχείο " + file.name + " υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                    alert(`{{t 'viewcase.alerts.fileSizeExceeded'}}`);
                     this.value = "";
                 } else if (sumSize > maxSizeInBytes) {
-                    alert("Το συνολικό μέγεθος των αρχείων υπερβαίνει το μέγιστο όριο των " + maxSizeInMB + " MB");
+                    alert(`{{t 'viewcase.alerts.totalSizeExceeded'}}`);
                     this.value = "";
                 }
             });

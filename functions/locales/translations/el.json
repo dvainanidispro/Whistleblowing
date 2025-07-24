@@ -1,4 +1,7 @@
 {
+  "header": {
+    "homePageAriaLabel": "Αρχική σελίδα"
+  },
   "newcaseconfirm": {
     "title": "Επιτυχής καταχώριση αναφοράς",
     "description": "Η αναφορά καταχωρίστηκε με τα παρακάτω στοιχεία:",
@@ -13,6 +16,31 @@
   "newmessageconfirm": {
     "title": "Το νέο μήνυμα στάλθηκε",
     "description": "Ευχαριστούμε! Η υπόθεση {{whistle.id}} ενημερώθηκε με το νέο μήνυμα."
+  },
+  "viewcase": {
+    "title": "Αναφορά",
+    "caseDetails": {
+      "ariaLabel": "Στοιχεία υπόθεσης",
+      "heading": "Στοιχεία υπόθεσης",
+      "violationDate": "Ημερομηνία παραβίασης",
+      "individuals": "Φυσικά πρόσωπα",
+      "detailedDescription": "Αναλυτική περιγραφή περιστατικού",
+      "caseStatus": "Κατάσταση υπόθεσης",
+      "supportingFiles": "Υποστηρικτικά αρχεία"
+    },
+    "messages": {
+      "ariaLabel": "Μηνύματα και επικοινωνία",
+      "heading": "Μηνύματα υπόθεσης",
+      "newMessageLabel": "Νέο μήνυμα προς τον υπεύθυνο",
+      "newMessagePlaceholder": "Νέο μήνυμα",
+      "warningText": "Μετά την αποστολή του μηνύματος, δεν είναι δυνατή η τροποποίηση ή διαγραφή του.",
+      "newEvidenceLabel": "Νέα αποδεικτικά στοιχεία (προαιρετικά):",
+      "sendButton": "Αποστολή μηνύματος"
+    },
+    "alerts": {
+      "fileSizeExceeded": "Το αρχείο ${file.name} υπερβαίνει το μέγιστο όριο των ${maxSizeInMB} MB",
+      "totalSizeExceeded": "Το συνολικό μέγεθος των αρχείων υπερβαίνει το μέγιστο όριο των ${maxSizeInMB} MB"
+    }
   },
   "welcome": {
     "message": "Καλωσήρθατε στην υπηρεσία ανώνυμης αναφοράς παραβάσεων του Κώδικα Δεοντολογίας του οργανισμού σας. H υπηρεσία διατίθεται από την Computer Studio Α.Ε."
