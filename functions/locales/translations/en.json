@@ -68,6 +68,15 @@
       "blank": ""
     }
   },
+  "home": {
+    "viewExistingReport": {
+      "ariaLabel": "View existing report",
+      "description": "If you have already submitted your report, enter its details here to see its progress:",
+      "reportNumberLabel": "Report number",
+      "pinLabel": "Report PIN",
+      "viewReportButton": "VIEW REPORT"
+    }
+  },
   "welcome": {
     "message": "Welcome to the anonymous reporting service for Code of Ethics violations of your organization. The service is provided by Computer Studio S.A."
   }

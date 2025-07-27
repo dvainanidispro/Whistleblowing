@@ -24,6 +24,7 @@ const handlebarsConfig = {
         // Παράδειγμα: {{t "newcase.title"}} ή {{t "user.greeting" name="John"}}
         t: function(key, options) {
             // Παίρνουμε τη γλώσσα από τα locals (που έχει οριστεί στο Language middleware)
+            // To options.data.root είναι το αντικείμενο που περνιέται στο render. 
             const lang = options.data.root.lang || 'el';
             
             // Χρησιμοποιούμε per-request language χωρίς να αλλάζουμε το global state
@@ -39,7 +40,10 @@ const handlebarsConfig = {
         tl: function(labelType, value, options) {
             const lang = options.data.root.lang || 'el';
             const key = `labels.${labelType}.${value}`;
-            return i18n.t(key, { lng: lang, ...options?.hash });
+            const translation = i18n.t(key, { lng: lang, ...options?.hash });
+            
+            // Αν δεν βρέθηκε μετάφραση (το i18n επιστρέφει το key), επίστρεψε το σκέτο value
+            return (translation==key) ? value : translation;
         }
     }
 };
