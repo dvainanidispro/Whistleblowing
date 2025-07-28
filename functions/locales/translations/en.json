@@ -70,6 +70,7 @@
   },
   "home": {
     "intro": {
+      "ariaLabel": "Submit new report",
       "introText1": "This platform is a confidential channel for electronic submission of reports for the Organization",
       "introText2": ", which you can use if you wish to submit a report on breaches of Law 4990/2022 that you have become aware of in your work-related context.",
       "complianceText": "The electronic reporting platform complies with European Directive 2019/1937, as transposed into national law by Law 4990/2022, which concerns the protection of persons reporting breaches of Union law (whistleblowers) and aims to encourage the submission of confidential reports by persons who, in the context of their work activities, have acquired information on breaches of Law 4990/2022, without fear of retaliation.",
@@ -77,6 +78,8 @@
       "submitButton": "SUBMIT REPORT"
     },
     "modal": {
+      "ariaLabel": "Information window",
+      "title": "Important Notice",
       "managementText1": "The reports submitted to this internal channel are handled and followed-up by the",
       "managementText2": ". Any resulting disciplinary offences shall be investigated on the basis of the Code of Civil Servants. Any criminal offences shall be investigated in accordance with the applicable legislation. The personal data of persons involved shall be protected in accordance with the applicable Union and national legislation on the protection of personal data (GDPR, Law 4624/2019) and the provisions of Chapter F of Law 4990/2022.",
       "channelsIntro": "Internal reports can be submitted, in addition to this electronic platform, through the following channels:",
