@@ -2,6 +2,38 @@
   "header": {
     "homePageAriaLabel": "Home page"
   },
+  "home": {
+    "intro": {
+      "ariaLabel": "Submit new report",
+      "introText1": "This platform is a confidential channel for electronic submission of reports for the Organization",
+      "introText2": ", which you can use if you wish to submit a report on breaches of Law 4990/2022 that you have become aware of in your work-related context.",
+      "complianceText": "The electronic reporting platform complies with European Directive 2019/1937, as transposed into national law by Law 4990/2022, which concerns the protection of persons reporting breaches of Union law (whistleblowers) and aims to encourage the submission of confidential reports by persons who, in the context of their work activities, have acquired information on breaches of Law 4990/2022, without fear of retaliation.",
+      "eligibilityText": "If you have any work-based relationship with the Organization, in accordance with the personal scope of the above law, namely if you are employee/worker, member of the Management, freelance worker, self-employed person, consultant, home worker, volunteer, paid or unpaid trainee, person working under the supervision and direction of contractors, subcontractors and suppliers and you have acquired information in the context of your work-based relationship or even if your work-based relationship has ended for any reason or has not yet begun, you can submit your report here.",
+      "submitButton": "SUBMIT REPORT"
+    },
+    "modal": {
+      "ariaLabel": "Information window",
+      "title": "Important Notice",
+      "managementText1": "The reports submitted to this internal channel are handled and followed-up by the",
+      "managementText2": ". Any resulting disciplinary offences shall be investigated on the basis of the Code of Civil Servants. Any criminal offences shall be investigated in accordance with the applicable legislation. The personal data of persons involved shall be protected in accordance with the applicable Union and national legislation on the protection of personal data (GDPR, Law 4624/2019) and the provisions of Chapter F of Law 4990/2022.",
+      "channelsIntro": "Internal reports can be submitted, in addition to this electronic platform, through the following channels:",
+      "channel1": "submission in person or by post at the headquarters of the Organization",
+      "channel2": "by e-mail at the following e-mail address:",
+      "channel3part1": "by means of a physical meeting with the RRFR of the Organization, upon request submitted at",
+      "channel3part2": "or by phone call on the telephone line",
+      "channel4": "by telephone call to",
+      "torInfo": "If you wish to remain anonymous, you will need to use Tor software to submit a report to this website. <a href=\"https://www.torproject.org/download/\">You can download the Tor browser here</a>. It works like Safari, Chrome or other browsers, except that Τor hides your digital footprints. Once you download and install Tor, you can enter <a id=\"onionlink\"></a> using Τοr, so your web address will remain hidden.",
+      "closeButton": "CLOSE",
+      "proceedButton": "PROCEED"
+    },
+    "viewExistingReport": {
+      "ariaLabel": "View existing report",
+      "description": "If you have already submitted your report, enter its details here to see its progress:",
+      "reportNumberLabel": "Report number",
+      "pinLabel": "Report PIN",
+      "viewReportButton": "VIEW REPORT"
+    }
+  },  
   "newcaseconfirm": {
     "title": "Successful Report Submission",
     "description": "The report has been submitted with the following details:",
@@ -16,6 +48,65 @@
   "newmessageconfirm": {
     "title": "New message sent",
     "description": "Thank you! Case {{whistle.id}} has been updated with the new message."
+  },
+  "privacy": {
+    "title": "Data Protection Policy for the Internal Reporting Channel of {{company.name}}",
+    "introduction": {
+      "heading": "Introduction",
+      "paragraph1": "This Data Protection Policy (hereinafter \"The Policy\") provides you with information regarding the manner in which the Data Controller ({{company.name}}, hereinafter \"Company\") processes personal data provided through the Internal Reporting Channel.",
+      "paragraph2": "The Company provides you with the opportunity to submit reports, in accordance with the provisions of Law 4990/2022, through the electronic Whistleblowing platform. Alternatively, you may submit a report through the following methods:"
+    },
+    "contactDetails": {
+      "heading": "Contact Details of the Data Controller",
+      "paragraph": "For the processing of your personal data, which is carried out through the use of this electronic platform, the Data Controller is {{company.name}}, {{company.address}}, tel.: {{company.phone}}, email:"
+    },
+    "dpoDetails": {
+      "heading": "Contact Details of the Data Protection Officer",
+      "paragraph": "For any matter concerning the processing of your data by the Company through this electronic platform, you may contact the Data Protection Officer at the email address {{company.dpo}} or at the postal address {{company.address}}."
+    },
+    "dataCollection": {
+      "heading": "Personal Data Collected and Processed by the Data Controller",
+      "paragraph1": "The Data Controller collects and processes (including the exchange and transmission of personal data from competent authorities) the personal data (ordinary and/or special categories under Articles 9 and 10 of the GDPR) that you voluntarily submit through the platform or other channels of the Company's Internal Reporting Channel, specifically:",
+      "list1": "data concerning the reported incident which may lead to the identification of a natural person (the reporter, the reported person, or a third party named in the report),",
+      "list2": "other data that may lead to the identification of natural persons, as well as your contact details.",
+      "paragraph2": "Data regarding the reported incident and/or contact details may also be collected from other sources during the investigation and/or follow-up of the report. It is noted that all channels of the Company's Internal Reporting Channel allow you to submit your report either with your name or anonymously. However, the Data Controller encourages you to submit your report with your name, as this adds greater credibility to the content of the report and your intentions, while facilitating communication between the reporter and the Company's Report Reception and Follow-up Officer (for reports not submitted through the platform) both for further clarifications and for informing you about the progress of the report. If you provide any personal data of third parties, you must comply with the lawful conditions for transmitting such data to the Data Controller for the purposes specified in this Policy. The data must be absolutely necessary and appropriate for achieving the purposes of Law 4990/2022 (protection of persons reporting breaches of Union law from retaliation). Personal data that obviously do not relate to the report or are excessive should not be submitted, as otherwise they will not be further processed and will be deleted immediately."
+    },
+    "purposes": {
+      "heading": "For What Purposes Does the Data Controller Collect Your Personal Data?",
+      "paragraph": "The Data Controller processes (collects, uses, stores, etc.) your report data to achieve the purposes of the Company's Internal Reporting Channel, namely the investigation and follow-up of reports concerning breaches of Union law and the protection provided by Law 4990/2022. The legal basis for such processing is Article 6(1)(f) of the GDPR, which allows the Data Controller to process personal data when this is necessary for the purposes of legitimate interests pursued by the Data Controller or a third party. Regarding special categories of data that you may submit with your report or that may arise during its investigation and/or follow-up, their processing is carried out on the basis provided by Articles 9(2)(g) and 10 of the GDPR. In case the Data Controller uses your personal data for other purposes not mentioned above, it will inform you about the specific purposes and, when required, on what basis it does so, at the time it collects personal data from you and to the extent required by applicable legislation."
+    },
+    "disclosure": {
+      "heading": "To Whom May the Data Controller Disclose Your Personal Data?",
+      "paragraph": "The Data Controller may share your data with other third parties (public authorities, courts, prosecutor's offices, etc.) when required by its obligation to comply with the applicable legal framework. More specifically, the Data Controller is entitled to disclose your personal data to third party entities, authorities or persons only in cases required by Union or national law, in the context of investigations by competent authorities or in the context of judicial procedures and provided that this is necessary for serving the purposes of Law 4990/2022 or for safeguarding the superior rights of the reported person. The aforementioned transmission of your data can only take place after prior written notification to you regarding the reasons for disclosing your identity and other confidential information, unless your notification undermines investigations or judicial procedures. After notification, you have the right to submit written observations to the Data Controller, which are not disclosed to anyone. The Data Controller evaluates them and in case it considers that the raised reasons are not sufficient, it may proceed to disclose your identity and other confidential elements. Any access to personal data is made to the extent necessary for achieving the pursued purpose. Personal data may also be disclosed to third parties upon request and with your consent, subject to the provisions of Chapter F of Law 4990/2022."
+    },
+    "retention": {
+      "heading": "For How Long Does the Data Controller Retain Your Personal Data?",
+      "paragraph": "Data submitted for processing for the management of reports will be stored for a reasonable and necessary period of time, in order to be retrievable and to meet the requirements imposed by Law 4990/2022, Union or national law, and in any case until the completion of any investigation or judicial procedure that has commenced as a consequence of the report against the reported person, the reporter or third parties. Thus, the time period during which the Data Controller retains the data depends on the consequences arising from the information provided and the type of actions that have been initiated, if applicable to the case, taking into account such information."
+    },
+    "protection": {
+      "heading": "How Do We Protect Your Personal Data?",
+      "paragraph": "The Data Controller implements appropriate technical and organizational measures to ensure the protection of your personal data from loss, misuse and alteration, while ensuring the required level of security proportionate to the risks existing due to processing and the nature of the personal data under processing, in accordance with applicable policies and procedures. The Data Controller additionally has appropriate security standards for protecting the personal data it maintains."
+    },
+    "rights": {
+      "heading": "Your Rights",
+      "intro": "Personal data protection legislation provides for specific rights regarding the processing of your data. Through this Policy, we inform you about these rights as well as how to exercise them.",
+      "intro2": "The rights you may exercise towards the Data Controller are the following:",
+      "access": "Right of access<br>You have the right to request from us, at any time, information about the processing of your data or copies of your personal data that we maintain (Article 15 GDPR).",
+      "rectification": "Right of rectification<br>You have the right to request, at any time, that we correct information you consider to be inaccurate. You also have the right to request the completion of information you consider incomplete (Article 16 GDPR).",
+      "erasure": "Right of erasure (\"right to be forgotten\")<br>You have the right to request that we delete your personal data for certain reasons and under the conditions provided by applicable provisions (Article 17 GDPR). We point out that we may not satisfy any request for data deletion in certain cases referred to in applicable provisions, including cases where processing is necessary for compliance with a legal obligation of the Data Controller under Union or national law and/or the performance of a task in the public interest.",
+      "restriction": "Right to restriction of processing<br>You have the right to request that we restrict the processing of your data in certain cases under the conditions provided by applicable provisions (Articles 18, 19 GDPR).",
+      "objection": "Right to object<br>You have the right to object to the processing of your personal data. If, however, there are compelling and legitimate reasons that require processing and override your rights and interests, we may refuse your objection, which depends on the reason for which the processing takes place (Article 21 GDPR).",
+      "contact": "To request the exercise of these rights or to request information about them, contact the Data Protection Officer at {{company.dpo}} as indicated at the beginning of the Policy.",
+      "complaint": "In case you consider that we have not adequately satisfied your request and the protection of your personal data is affected in any way, you may file a complaint with the Hellenic Data Protection Authority (Athens, Kifisias Avenue 1-3, Athens, P.C. 115 23 | tel: +30 210 6475600). Detailed complaint submission instructions are provided on the Authority's website (<a href=\"http://www.dpa.gr/\">www.dpa.gr</a>)."
+    },
+    "specialProvisions": {
+      "intro": "It is particularly noted that the Company, as Data Controller, in derogation from the relevant provisions of the GDPR, in accordance with Article 15 of Law 4990/2022:",
+      "provision1": "does not provide information about the processing of personal data to the reported person and to any third party in their capacity as data subject (point A of paragraph 1 of Article 5, Articles 12 and 13, paragraphs 1 to 4 of Article 14 and Article 34 of the GDPR) who is named in the report or whose personal data arose from monitoring measures and especially about the source of origin of their data under point f of paragraph 2 of Article 14 of the GDPR, by application of paragraph 5 of Article 14 of the GDPR, in combination with Article 23 of the GDPR, for as long as required and deemed necessary for the purpose of preventing and addressing attempts to obstruct the report, hinder, frustrate or delay monitoring measures, especially regarding investigations, or attempts to identify reporters, as well as for their protection against retaliation.",
+      "provision2": "may not satisfy the rights provided by Articles 15 to 22 of the GDPR (namely as the case may be and under the conditions of the GDPR: right of access, rectification, erasure, restriction of processing, objection, automated decision-making including profiling), when exercised by the reported persons and third parties named in the report, or arising from monitoring measures for as long as required and deemed necessary for the purpose of preventing and addressing attempts to obstruct the report, hinder, frustrate or delay monitoring measures, especially regarding investigations, or attempts to identify reporters, as well as for their protection against retaliation.",
+      "safeguards": "In the above cases of restriction of data subjects' rights, the Company as data controller takes all necessary technical and organizational measures for the protection of persons' rights and freedoms.",
+      "finalNote": "When the Company refuses to satisfy rights, following a request from data subjects, without informing about the reason for the restriction, the data subject is entitled to file a complaint with the Hellenic Data Protection Authority (H.D.P.A.). The aforementioned Authority may investigate whether the conditions for restricting rights are met and inform the subject accordingly, provided that such information is not detrimental to the fulfillment of these purposes."
+    },
+    "backButton": "BACK TO REPORT SUBMISSION"
   },
   "viewcase": {
     "title": "Report",
@@ -68,44 +159,12 @@
       "blank": ""
     }
   },
-  "home": {
-    "intro": {
-      "ariaLabel": "Submit new report",
-      "introText1": "This platform is a confidential channel for electronic submission of reports for the Organization",
-      "introText2": ", which you can use if you wish to submit a report on breaches of Law 4990/2022 that you have become aware of in your work-related context.",
-      "complianceText": "The electronic reporting platform complies with European Directive 2019/1937, as transposed into national law by Law 4990/2022, which concerns the protection of persons reporting breaches of Union law (whistleblowers) and aims to encourage the submission of confidential reports by persons who, in the context of their work activities, have acquired information on breaches of Law 4990/2022, without fear of retaliation.",
-      "eligibilityText": "If you have any work-based relationship with the Organization, in accordance with the personal scope of the above law, namely if you are employee/worker, member of the Management, freelance worker, self-employed person, consultant, home worker, volunteer, paid or unpaid trainee, person working under the supervision and direction of contractors, subcontractors and suppliers and you have acquired information in the context of your work-based relationship or even if your work-based relationship has ended for any reason or has not yet begun, you can submit your report here.",
-      "submitButton": "SUBMIT REPORT"
-    },
-    "modal": {
-      "ariaLabel": "Information window",
-      "title": "Important Notice",
-      "managementText1": "The reports submitted to this internal channel are handled and followed-up by the",
-      "managementText2": ". Any resulting disciplinary offences shall be investigated on the basis of the Code of Civil Servants. Any criminal offences shall be investigated in accordance with the applicable legislation. The personal data of persons involved shall be protected in accordance with the applicable Union and national legislation on the protection of personal data (GDPR, Law 4624/2019) and the provisions of Chapter F of Law 4990/2022.",
-      "channelsIntro": "Internal reports can be submitted, in addition to this electronic platform, through the following channels:",
-      "channel1": "submission in person or by post at the headquarters of the Organization",
-      "channel2": "by e-mail at the following e-mail address:",
-      "channel3part1": "by means of a physical meeting with the RRFR of the Organization, upon request submitted at",
-      "channel3part2": "or by phone call on the telephone line",
-      "channel4": "by telephone call to",
-      "torInfo": "If you wish to remain anonymous, you will need to use Tor software to submit a report to this website. <a href=\"https://www.torproject.org/download/\">You can download the Tor browser here</a>. It works like Safari, Chrome or other browsers, except that Τor hides your digital footprints. Once you download and install Tor, you can enter <a id=\"onionlink\"></a> using Τοr, so your web address will remain hidden.",
-      "closeButton": "CLOSE",
-      "proceedButton": "PROCEED"
-    },
-    "viewExistingReport": {
-      "ariaLabel": "View existing report",
-      "description": "If you have already submitted your report, enter its details here to see its progress:",
-      "reportNumberLabel": "Report number",
-      "pinLabel": "Report PIN",
-      "viewReportButton": "VIEW REPORT"
-    }
-  },
   "welcome": {
     "message": "Welcome to the anonymous reporting service for Code of Ethics violations of your organization. The service is provided by Computer Studio S.A."
   },
   "whistleform": {
     "form": {
-      "title": "Submit New Report",
+      "title": "Submit new report",
       "organizationLabel": "Organization",
       "securityWarning": "Before proceeding, make sure that you reached this page from the official website of your organization and not from another source (such as through a link in an email you received), because the report may be sent to an untrusted destination and not to the responsible person of your organization."
     },
