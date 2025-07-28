@@ -102,5 +102,64 @@
   },
   "welcome": {
     "message": "Welcome to the anonymous reporting service for Code of Ethics violations of your organization. The service is provided by Computer Studio S.A."
+  },
+  "whistleform": {
+    "form": {
+      "title": "Submit New Report",
+      "organizationLabel": "Organization",
+      "securityWarning": "Before proceeding, make sure that you reached this page from the official website of your organization and not from another source (such as through a link in an email you received), because the report may be sent to an untrusted destination and not to the responsible person of your organization."
+    },
+    "relationship": {
+      "question1": "Have you acquired information on the reported facts in a work-related context of the Organization",
+      "question2": "; *",
+      "explanation": "'Work-related context' means current, past or prospective work activities in the private or public sector through which, irrespective of the nature of those activities, you have acquired information on breaches of law 4990/2022 and within which you could suffer retaliation if you report such information.",
+      "ariaLabel": "Work relationship",
+      "selectPlaceholder": "Please select...",
+      "optionYes": "Yes",
+      "optionNo": "No",
+      "invalidMessage": "Since you have not acquired information about the reported facts within the work-related context of your Organization, you cannot submit a report through this platform. However, you have the option to submit a complaint to the general complaints platform of the Hellenic Data Protection Authority"
+    },
+    "legal": {
+      "title": "Important information *",
+      "description1": "If your report does not fall under any of the options which are the scope of Law 4990/2022 (Government Gazette, Series I, No 210) but there is evidence of a criminal offence being prosecuted ex officio, then your report shall be transmitted to the competent prosecuting authorities, informing you thereof.",
+      "description2": "Please note that in the above cases the conditions for protection under Law 4990/2022 (Government Gazette, Series I, No 210) are not met.",
+      "confirmation": "I have read the above information notice"
+    },
+    "incident": {
+      "dateQuestion": "When did the incident happen? (optional)",
+      "moreThan5Years": "More than 5 years ago",
+      "lessThan5Years": "Less than 5 years ago",
+      "specificDate": "Specific date",
+      "datePickerInstructions": "In the next field select a date with the date picker",
+      "datePlaceholder": "Select violation date",
+      "peopleLabel": "List the natural persons involved in the case (optional)",
+      "peoplePlaceholder": "Persons",
+      "descriptionLabel": "Please describe the incident in detail *",
+      "descriptionHelp": "The documented description of the incident greatly facilitates the investigation of your report.",
+      "descriptionPlaceholder": "Description",
+      "evidenceLabel": "Evidence (optional)",
+      "evidenceHelp": "In addition, you can attach a relevant file describing the incident or other evidence supporting the validity of your report (files in PDF, JPEG, etc. format, maximum 10MB)."
+    },
+    "privacy": {
+      "title": "Personal Data Protection Policy *",
+      "description": "Click \"Read more\" and learn about the Personal Data Protection Policy.",
+      "readMoreLink": "Read more",
+      "confirmation": "I have read and understood the Personal Data Protection Policy"
+    },
+    "contact": {
+      "question": "Do you wish to provide your contact details?",
+      "explanation": "The submission of your data is not mandatory. You can submit your report anonymously. The information provided in either the named or the anonymous report will remain confidential.",
+      "namedReportLabel": "I wish to make a named report.",
+      "firstNameLabel": "First Name",
+      "lastNameLabel": "Last Name",
+      "emailLabel": "E-mail",
+      "phoneLabel": "Phone",
+      "notificationLabel": "I wish to be notified via e-mail and/or SMS about the progress of the case, possible questions, etc.",
+      "notificationNote": "If you do not wish to receive notifications, you will need to visit the platform to track the progress."
+    },
+    "submission": {
+      "finalNote": "Make sure that after submitting the report, a successful delivery message will appear.",
+      "submitButton": "SUBMIT"
+    }
   }
 }
