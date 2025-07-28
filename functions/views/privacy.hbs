@@ -22,11 +22,10 @@
         εξής τρόπους:
     </p>
     <ul>
-        <li>υποβολή αυτοπροσώπως ή ταχυδρομικά στην έδρα του Οργανισμού</li>
-        <li>email στην ηλεκτρονική διεύθυνση <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
-        <li>προσωπική συνάντηση με τον Υ.Π.Π.Α. του ΦΟΡΕΑ κατόπιν αιτήματός στο <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> 
-        ή στην τηλεφωνική γραμμή {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
-        <li>τηλεφωνική κλήση στην τηλεφωνική γραμμή <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+        <li>{{t 'home.modal.channel1'}}</li>
+        <li>{{t 'home.modal.channel2'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
+        <li>{{t 'home.modal.channel3part1'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> {{t 'home.modal.channel3part2'}} {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+        <li>{{t 'home.modal.channel4'}} <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
     </ul>
 
     <h2>

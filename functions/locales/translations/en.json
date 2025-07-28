@@ -69,6 +69,26 @@
     }
   },
   "home": {
+    "intro": {
+      "introText1": "This platform is a confidential channel for electronic submission of reports for the Organization",
+      "introText2": ", which you can use if you wish to submit a report on breaches of Law 4990/2022 that you have become aware of in your work-related context.",
+      "complianceText": "The electronic reporting platform complies with European Directive 2019/1937, as transposed into national law by Law 4990/2022, which concerns the protection of persons reporting breaches of Union law (whistleblowers) and aims to encourage the submission of confidential reports by persons who, in the context of their work activities, have acquired information on breaches of Law 4990/2022, without fear of retaliation.",
+      "eligibilityText": "If you have any work-based relationship with the Organization, in accordance with the personal scope of the above law, namely if you are employee/worker, member of the Management, freelance worker, self-employed person, consultant, home worker, volunteer, paid or unpaid trainee, person working under the supervision and direction of contractors, subcontractors and suppliers and you have acquired information in the context of your work-based relationship or even if your work-based relationship has ended for any reason or has not yet begun, you can submit your report here.",
+      "submitButton": "SUBMIT REPORT"
+    },
+    "modal": {
+      "managementText1": "The reports submitted to this internal channel are handled and followed-up by the",
+      "managementText2": ". Any resulting disciplinary offences shall be investigated on the basis of the Code of Civil Servants. Any criminal offences shall be investigated in accordance with the applicable legislation. The personal data of persons involved shall be protected in accordance with the applicable Union and national legislation on the protection of personal data (GDPR, Law 4624/2019) and the provisions of Chapter F of Law 4990/2022.",
+      "channelsIntro": "Internal reports can be submitted, in addition to this electronic platform, through the following channels:",
+      "channel1": "submission in person or by post at the headquarters of the Organization",
+      "channel2": "by e-mail at the following e-mail address:",
+      "channel3part1": "by means of a physical meeting with the RRFR of the Organization, upon request submitted at",
+      "channel3part2": "or by phone call on the telephone line",
+      "channel4": "by telephone call to",
+      "torInfo": "If you wish to remain anonymous, you will need to use Tor software to submit a report to this website. <a href=\"https://www.torproject.org/download/\">You can download the Tor browser here</a>. It works like Safari, Chrome or other browsers, except that Τor hides your digital footprints. Once you download and install Tor, you can enter <a id=\"onionlink\"></a> using Τοr, so your web address will remain hidden.",
+      "closeButton": "CLOSE",
+      "proceedButton": "PROCEED"
+    },
     "viewExistingReport": {
       "ariaLabel": "View existing report",
       "description": "If you have already submitted your report, enter its details here to see its progress:",

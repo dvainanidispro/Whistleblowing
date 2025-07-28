@@ -2,27 +2,28 @@
 <section aria-label="Υποβολή νέας αναφοράς">
 
     <p>
-        Η παρούσα πλατφόρμα αποτελεί ένα εμπιστευτικό κανάλι ηλεκτρονικής υποβολής αναφορών για τον Oργανισμό <span class="bold">{{company.name}}</span>, το οποίο μπορείτε να αξιοποιήσετε για να υποβάλετε αναφορά για παραβιάσεις του ενωσιακού δικαίου τις οποίες αντιληφθήκατε εντός του εργασιακού σας πλαισίου. 
+        {{t 'home.intro.introText1'}} <span class="bold">{{company.name}}</span>{{t 'home.intro.introText2'}} 
     </p>
 
     <p>
-    Η πλατφόρμα ηλεκτρονικής υποβολής αναφορών αφορά την προστασία των προσώπων που αναφέρουν παραβιάσεις ενωσιακού δικαίου (whistleblowers) και έχει ως στόχο την διευκόλυνση και την ενθάρρυνση της υποβολής των εμπιστευτικών αναφορών και των πληροφοριών από άτομα, δίχως το φόβο αντιποίνων. 
+        {{t 'home.intro.complianceText'}}
     </p>
 
     <p>
-    Συγκεκριμένα αποτελεί υποχρέωση βάσει της Ευρωπαϊκής Οδηγίας 2019/1937, όπως αυτή ενσωματώθηκε στο Εθνικό Δίκαιο βάσει του ν. 4990/2022. Περισσότερες πληροφορίες για το Νόμο 4990/2022 μπορείτε να δείτε <a target="_blank" href="http://elib.aade.gr/elib/view?d=/gr/act/2022/4990/">εδώ</a>. 
-    </p>
-
-    <p>
-    Εάν σας συνδέει οποιαδήποτε εργασιακή σχέση με τον Οργανισμό, σύμφωνα με το προσωπικό πεδίο εφαρμογής του ως άνω νόμου, ήτοι: εργαζόμενος, μέλος του Συμβουλίου Διοίκησης, μη μισθωτός, αυτοαπασχολούμενος, σύμβουλος, εργαζόμενος κατ’ οίκον, εθελοντής, αμειβόμενος ή μη αμειβόμενος ασκούμενος, εργαζόμενος υπό την εποπτεία και οδηγίες αναδόχων, υπεργολάβων, προμηθευτών, και αποκτήσατε πληροφορίες στο πλαίσιο της εργασιακής σας σχέσης ή ακόμη κι αν η εργασιακή σας σχέση έχει λήξει για οποιονδήποτε λόγο ή δεν έχει ξεκινήσει ακόμη, μπορείτε να υποβάλετε την αναφορά σας εδώ.
+        {{t 'home.intro.eligibilityText'}}
     </p>
 
     <!-- Κουμπί υποβολής -->
     <div class="center-contents">
-        <button type="button" class="btn btn-primary my-3 text-center" data-bs-toggle="modal" data-bs-target="#infoModal" >ΥΠΟΒΟΛΗ ΑΝΑΦΟΡΑΣ</button>
+        <button type="button" class="btn btn-primary my-3 text-center" data-bs-toggle="modal" data-bs-target="#infoModal" >{{t 'home.intro.submitButton'}}</button>
     </div>
 
+</section>
 
+
+
+<!-- Ενημερωτικό παράθυρο -->
+<section aria-label="Ενημερωτικό παράθυρο">
     <!-- Modal -->
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -35,32 +36,30 @@
         <!-- Κείμενο pop-up -->
           <div class="modal-body">
             <p>
-                Η διαχείριση και παρακολούθηση των αναφορών που υποβάλλονται στον παρόντα εσωτερικό δίαυλο γίνεται από τον Οργανισμό <span class="bold">{{company.name}}</span>. Τυχόν προκύπτουσες πειθαρχικές παραβάσεις διερευνώνται με βάση τον δημοσιοϋπαλληλικό κώδικα. Οι τυχόν ποινικές παραβάσεις διερευνώνται σύμφωνα με την ισχύουσα νομοθεσία. Τα προσωπικά δεδομένα των προσώπων που ονοματίζονται στην αναφορά θα προστατεύονται σύμφωνα με την κείμενη ενωσιακή και εθνική νομοθεσία περί προστασίας των προσωπικών δεδομένων (GDPR, ν. 4624/2019) και τις διατάξεις του Κεφαλαίου ΣΤ΄ του ν. 4990/2022.
+                {{t 'home.modal.managementText1'}} <span class="bold">{{company.name}}</span>{{t 'home.modal.managementText2'}}
             </p>
             <p>
-                Οι εσωτερικές αναφορές δύνανται να υποβληθούν, πέρα από την παρούσα ηλεκτρονική πλατφόρμα, και μέσω των ακόλουθων καναλιών: 
+                {{t 'home.modal.channelsIntro'}} 
             </p>
             <ul>
-                <li>υποβολή αυτοπροσώπως ή ταχυδρομικά στην έδρα του Οργανισμού</li>
-                <li>email στην ηλεκτρονική διεύθυνση <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
-                <li>προσωπική συνάντηση με τον Υ.Π.Π.Α. του Οργανισμού κατόπιν αιτήματός στο <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> ή στην τηλεφωνική γραμμή {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
-                <li>τηλεφωνική κλήση στην τηλεφωνική γραμμή <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+                <li>{{t 'home.modal.channel1'}}</li>
+                <li>{{t 'home.modal.channel2'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
+                <li>{{t 'home.modal.channel3part1'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> {{t 'home.modal.channel3part2'}} {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+                <li>{{t 'home.modal.channel4'}} <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
             </ul>
             <p id="torinfo">
-                Εάν θέλετε να διατηρήσετε την ανωνυμία σας, θα πρέπει να χρησιμοποιήσετε το λογισμικό Tor για να υποβάλετε μια αναφορά. <a href="https://www.torproject.org/download/">Μπορείτε να κατεβάσετε τον browser από εδώ: https://www.torproject.org/download/</a>. Λειτουργεί όπως ο Safari, o Chrome ή άλλοι browsers, με τη διαφορά ότι ο Τor αποκρύπτει τα διαδικτυακά ίχνη σας. 
-                Αφού κατεβάσετε και εγκαταστήσετε τον Tor, μπορείτε να εισέλθετε στην διεύθυνση <a id="onionlink"></a> χρησιμοποιώντας τον Τοr, οπότε η διαδικτυακή σας διεύθυνση θα παραμένει μυστική.
+                {{{t 'home.modal.torInfo'}}}
             </p>
 
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ΚΛΕΙΣΙΜΟ</button>
-            <a id="formlink" href="./new" class="btn btn-primary">ΣΥΝΕΧΕΙΑ</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{t 'home.modal.closeButton'}}</button>
+            <a id="formlink" href="./new" class="btn btn-primary">{{t 'home.modal.proceedButton'}}</a>
           </div>
         </div>
       </div>
     </div>
-
 </section>
 
 
