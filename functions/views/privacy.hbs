@@ -15,25 +15,23 @@
     </p>
     <ul>
         <li>{{t 'home.modal.channel1'}}</li>
-        <li>{{t 'home.modal.channel2'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
-        <li>{{t 'home.modal.channel3part1'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> {{t 'home.modal.channel3part2'}} {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
-        <li>{{t 'home.modal.channel4'}} <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+        <li>{{{t 'home.modal.channel2' company=company}}}</li>
+        <li>{{{t 'home.modal.channel3' company=company}}}</li>
+        <li>{{{t 'home.modal.channel4' company=company}}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
     </ul>
 
     <h2>
         {{t 'privacy.contactDetails.heading'}}
     </h2>
     <p>
-        {{t 'privacy.contactDetails.paragraph' company=company}}
-        <a href="mailto:{{company.inbox}}">{{company.inbox}}</a>.
+        {{{t 'privacy.contactDetails.paragraph' company=company}}}
     </p>
 
     <h2>
         {{t 'privacy.dpoDetails.heading'}}
     </h2>
     <p>
-        {{t 'privacy.dpoDetails.paragraph' company=company}}
-        {{!-- <a href="mailto:{{company.dpo}}">{{company.dpo}}</a> --}}
+        {{{t 'privacy.dpoDetails.paragraph' company=company}}}
     </p>
 
     <h2>
@@ -104,8 +102,7 @@
         </li>
     </ol>
     <p>
-        {{t 'privacy.rights.contact' company=company}}
-        {{!-- <a href="mailto:{{company.dpo}}">{{company.dpo}}</a> --}}
+        {{{t 'privacy.rights.contact' company=company}}}
     </p>
     <p>
         {{{t 'privacy.rights.complaint'}}}

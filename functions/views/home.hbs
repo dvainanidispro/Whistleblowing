@@ -43,9 +43,9 @@
             </p>
             <ul>
                 <li>{{t 'home.modal.channel1'}}</li>
-                <li>{{t 'home.modal.channel2'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a></li>
-                <li>{{t 'home.modal.channel3part1'}} <a href="mailto:{{company.inbox}}">{{company.inbox}}</a> {{t 'home.modal.channel3part2'}} {{company.phone}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
-                <li>{{t 'home.modal.channel4'}} <a href="tel:{{company.phone}}">{{company.phone}}</a> ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+                <li>{{{t 'home.modal.channel2' company=company}}}</li>
+                <li>{{{t 'home.modal.channel3' company=company}}}</li>
+                <li>{{{t 'home.modal.channel4' company=company}}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
             </ul>
             <p id="torinfo">
                 {{{t 'home.modal.torInfo'}}}

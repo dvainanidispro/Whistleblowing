@@ -14,14 +14,13 @@
     "modal": {
       "ariaLabel": "Information window",
       "title": "Important Notice",
-      "managementText1": "The reports submitted to this internal channel are handled and followed-up by the",
+      "managementText1": "The reports submitted to this internal channel are handled and followed-up by",
       "managementText2": ". Any resulting disciplinary offences shall be investigated on the basis of the Code of Civil Servants. Any criminal offences shall be investigated in accordance with the applicable legislation. The personal data of persons involved shall be protected in accordance with the applicable Union and national legislation on the protection of personal data (GDPR, Law 4624/2019) and the provisions of Chapter F of Law 4990/2022.",
       "channelsIntro": "Internal reports can be submitted, in addition to this electronic platform, through the following channels:",
       "channel1": "submission in person or by post at the headquarters of the Organization",
-      "channel2": "by e-mail at the following e-mail address:",
-      "channel3part1": "by means of a physical meeting with the RRFR of the Organization, upon request submitted at",
-      "channel3part2": "or by phone call on the telephone line",
-      "channel4": "by telephone call to",
+      "channel2": "email to the following address <a href=\"mailto:{{company.inbox}}\">{{company.inbox}}</a>",
+      "channel3": "personal meeting with the RRFR of the Organization upon request at <a href=\"mailto:{{company.inbox}}\">{{company.inbox}}</a> or on the telephone line {{company.phone}}",
+      "channel4": "telephone call on the telephone line <a href=\"tel:{{company.phone}}\">{{company.phone}}</a>",
       "torInfo": "If you wish to remain anonymous, you will need to use Tor software to submit a report to this website. <a href=\"https://www.torproject.org/download/\">You can download the Tor browser here</a>. It works like Safari, Chrome or other browsers, except that Τor hides your digital footprints. Once you download and install Tor, you can enter <a id=\"onionlink\"></a> using Τοr, so your web address will remain hidden.",
       "closeButton": "CLOSE",
       "proceedButton": "PROCEED"
@@ -58,11 +57,11 @@
     },
     "contactDetails": {
       "heading": "Contact Details of the Data Controller",
-      "paragraph": "For the processing of your personal data, which is carried out through the use of this electronic platform, the Data Controller is {{company.name}}, {{company.address}}, tel.: {{company.phone}}, email:"
+      "paragraph": "For the processing of your personal data, which is carried out through the use of this electronic platform, the Data Controller is {{company.name}}, {{company.address}}, tel.: {{company.phone}}, email: <a href=\"mailto:{{company.inbox}}\">{{company.inbox}}</a>."
     },
     "dpoDetails": {
       "heading": "Contact Details of the Data Protection Officer",
-      "paragraph": "For any matter concerning the processing of your data by the Company through this electronic platform, you may contact the Data Protection Officer at the email address {{company.dpo}} or at the postal address {{company.address}}."
+      "paragraph": "For any matter concerning the processing of your data by the Company through this electronic platform, you may contact the Data Protection Officer at the email address <a href=\"mailto:{{company.dpo}}\">{{company.dpo}}</a> or at the postal address {{company.address}}."
     },
     "dataCollection": {
       "heading": "Personal Data Collected and Processed by the Data Controller",
@@ -96,7 +95,7 @@
       "erasure": "Right of erasure (\"right to be forgotten\")<br>You have the right to request that we delete your personal data for certain reasons and under the conditions provided by applicable provisions (Article 17 GDPR). We point out that we may not satisfy any request for data deletion in certain cases referred to in applicable provisions, including cases where processing is necessary for compliance with a legal obligation of the Data Controller under Union or national law and/or the performance of a task in the public interest.",
       "restriction": "Right to restriction of processing<br>You have the right to request that we restrict the processing of your data in certain cases under the conditions provided by applicable provisions (Articles 18, 19 GDPR).",
       "objection": "Right to object<br>You have the right to object to the processing of your personal data. If, however, there are compelling and legitimate reasons that require processing and override your rights and interests, we may refuse your objection, which depends on the reason for which the processing takes place (Article 21 GDPR).",
-      "contact": "To request the exercise of these rights or to request information about them, contact the Data Protection Officer at {{company.dpo}} as indicated at the beginning of the Policy.",
+      "contact": "To request the exercise of these rights or to request information about them, contact the Data Protection Officer at <a href=\"mailto:{{company.dpo}}\">{{company.dpo}}</a> as indicated at the beginning of the Policy.",
       "complaint": "In case you consider that we have not adequately satisfied your request and the protection of your personal data is affected in any way, you may file a complaint with the Hellenic Data Protection Authority (Athens, Kifisias Avenue 1-3, Athens, P.C. 115 23 | tel: +30 210 6475600). Detailed complaint submission instructions are provided on the Authority's website (<a href=\"http://www.dpa.gr/\">www.dpa.gr</a>)."
     },
     "specialProvisions": {
