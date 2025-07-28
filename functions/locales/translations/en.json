@@ -133,6 +133,9 @@
     }
   },
   "labels": {
+    "defaults":  {
+        "hours": "Monday - Friday, 09:00 - 17:00"
+    },
     "status": {
       "initial": "Initial - The responsible person has not been notified of the report",
       "pending": "Pending - The case has been notified but investigation actions have not started yet",

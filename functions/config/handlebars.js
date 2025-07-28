@@ -25,7 +25,7 @@ const handlebarsConfig = {
         t: function(key, options) {
             // Παίρνουμε τη γλώσσα από τα locals (που έχει οριστεί στο Language middleware)
             // To options.data.root είναι το αντικείμενο που περνιέται στο render. 
-            const lang = options.data.root.lang || 'el';
+            const lang = options.data.root.lang;
             
             // Χρησιμοποιούμε per-request language χωρίς να αλλάζουμε το global state
             // By default, η γλώσσα του i18n είναι global, και αναφέρεται σε όλα τα requests!!!
@@ -36,15 +36,30 @@ const handlebarsConfig = {
         
         // Translate Label
         // Label translation helper - για επιλογή από labels (στο language.json)
-        // Παράδειγμα: {{tl "status" whistle.status}} θα γίνει labels.status[whistle.status], πχ labels.status.initial
+        // Παράδειγμα: {{tl "status" whistle.status}} - θα γίνει labels.status[whistle.status], πχ labels.status.initial
         tl: function(labelType, value, options) {
-            const lang = options.data.root.lang || 'el';
+            const lang = options.data.root.lang;
             const key = `labels.${labelType}.${value}`;
             const translation = i18n.t(key, { lng: lang, ...options?.hash });
             
             // Αν δεν βρέθηκε μετάφραση (το i18n επιστρέφει το key), επίστρεψε το σκέτο value
             return (translation==key) ? value : translation;
-        }
+        },
+
+        // Translated field
+        // Παράδειγμα: {{tf company "hours"}} - θα επιστρέψει company.hours_en ή company.hours αν δεν υπάρχει το πρώτο
+        // Αν δεν βρεθεί κανένα από τα παραπάνω (πχ από βάση), θα πάρει από labels.defaults.hours (αλλιώς, θα επιστρέψει κενό)
+        tf: function(object, key, options) {
+            const lang = options.data.root.lang;
+            let dbValue = object[`${key}_${lang}`] ?? object[key] ?? null;
+            if (dbValue != null) {      // Αν βρέθηκε τιμή στη βάση (πχ company.hours_en ή company.hours)
+                return dbValue;
+            } else {
+                const defaultKey = `labels.defaults.${key}`;
+                const translation = i18n.t(defaultKey, { lng: lang });
+                return (translation === defaultKey) ? '' : translation;
+            }
+        },
     }
 };
 
