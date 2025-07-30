@@ -57,7 +57,7 @@
     },
     "contactDetails": {
       "heading": "Contact Details of the Data Controller",
-      "paragraph": "For the processing of your personal data, which is carried out through the use of this electronic platform, the Data Controller is {{company.name}}, {{company.address}}, tel.: {{company.phone}}, email: <a href=\"mailto:{{company.email}}\">{{company.email}}</a>."
+      "paragraph": "For the processing of your personal data, which is carried out through the use of this electronic platform, the Data Controller is: "
     },
     "dpoDetails": {
       "heading": "Contact Details of the Data Protection Officer",

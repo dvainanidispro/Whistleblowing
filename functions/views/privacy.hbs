@@ -24,7 +24,8 @@
         {{t 'privacy.contactDetails.heading'}}
     </h2>
     <p>
-        {{{t 'privacy.contactDetails.paragraph' company=company}}}
+        {{t 'privacy.contactDetails.paragraph'}} {{company.name}}, 
+        {{company.address}}, email: <a href="mailto:{{company.email}}">{{company.email}}</a>.
     </p>
 
     <h2>
