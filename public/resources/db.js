@@ -35,7 +35,7 @@ DB.fetchAllCases = async function(){
         doc.id = companyDoc.id;
         requestedCompanies.push(doc);
     });
-    console.debug(requestedCompanies);
+    console.table(requestedCompanies);
 
     // Fetch cases form db
     let cases = await db.collection("cases").get();
@@ -44,6 +44,7 @@ DB.fetchAllCases = async function(){
         let doc = caseDoc.data();
         requestedCases.push(doc);
     });
+    console.table(requestedCases);
     
     // Group cases by companyID
     let groupedCases = {};
@@ -54,6 +55,16 @@ DB.fetchAllCases = async function(){
             groupedCases[company] = [];
         }
         groupedCases[company].push(caseDoc);
+    });
+    
+    // Sort cases in each company group by submittedAt in descending order
+    Object.keys(groupedCases).forEach(company => {
+        groupedCases[company].sort((a, b) => {
+            // Handle Firestore timestamps - convert to Date for comparison
+            let dateA = a.submittedAt?.toDate ? a.submittedAt.toDate() : new Date(a.submittedAt);
+            let dateB = b.submittedAt?.toDate ? b.submittedAt.toDate() : new Date(b.submittedAt);
+            return dateB - dateA; // Descending order (newest first)
+        });
     });
     
     console.debug(groupedCases);
