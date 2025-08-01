@@ -48,7 +48,7 @@ let aboutNewWhistle = async (whistle) => {
 
     // send email
     await transporter.sendMail(mail);
-    console.debug("Στάλθηκε email σε εταιρία");
+    console.debug("Στάλθηκε email σε Οργανισμό");
     
 }
 
@@ -74,7 +74,7 @@ let aboutNewUserMessage = async (whistle) => {
 
     // send email
     await transporter.sendMail(mail);
-    console.debug("Στάλθηκε email σε εταιρία");
+    console.debug("Στάλθηκε email σε Οργανισμό");
 
 };
 
