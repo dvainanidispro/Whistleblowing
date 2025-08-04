@@ -20,6 +20,7 @@ const handlebarsConfig = {
             return args.join('');
         },
         
+        // Translation helper
         // i18n helper - επιτρέπει τη χρήση {{t "key"}} στα templates
         // Παράδειγμα: {{t "newcase.title"}} ή {{t "user.greeting" name="John"}}
         t: function(key, options) {
@@ -34,7 +35,7 @@ const handlebarsConfig = {
             return i18n.t(key, { lng: lang, ...options?.hash });
         },
         
-        // Translate Label
+        // Translated label
         // Label translation helper - για επιλογή από labels (στο language.json)
         // Παράδειγμα: {{tl "status" whistle.status}} - θα γίνει labels.status[whistle.status], πχ labels.status.initial
         tl: function(labelType, value, options) {
@@ -47,12 +48,12 @@ const handlebarsConfig = {
         },
 
         // Translated field
-        // Παράδειγμα: {{tf company "hours"}} - θα επιστρέψει company.hours_en ή company.hours αν δεν υπάρχει το πρώτο
-        // Αν δεν βρεθεί κανένα από τα παραπάνω (πχ από βάση), θα πάρει από labels.defaults.hours (αλλιώς, θα επιστρέψει κενό)
+        // Παράδειγμα: {{tf company "name"}} - θα επιστρέψει company.name_en ή company.name αν δεν υπάρχει το πρώτο
+        // Αν δεν βρεθεί κανένα από τα παραπάνω (πχ από βάση), θα πάρει από labels.defaults.name (αλλιώς, θα επιστρέψει κενό)
         tf: function(object, key, options) {
             const lang = options.data.root.lang;
             let dbValue = object[`${key}_${lang}`] ?? object[key] ?? null;
-            if (dbValue != null) {      // Αν βρέθηκε τιμή στη βάση (πχ company.hours_en ή company.hours)
+            if (dbValue != null) {      // Αν βρέθηκε τιμή στη βάση (πχ company.name_en ή company.name)
                 return dbValue;
             } else {
                 const defaultKey = `labels.defaults.${key}`;

@@ -2,7 +2,7 @@
 <section aria-label="{{t 'home.intro.ariaLabel'}}">
 
     <p>
-        {{t 'home.intro.introText1'}} <span class="bold">{{company.name}}</span>{{t 'home.intro.introText2'}} 
+        {{t 'home.intro.introText1'}} <span class="bold">{{tf company "name"}}</span>{{t 'home.intro.introText2'}} 
     </p>
 
     <p>
@@ -36,7 +36,7 @@
         <!-- Κείμενο pop-up -->
           <div class="modal-body">
             <p>
-                {{t 'home.modal.managementText1'}} <span class="bold">{{company.name}}</span>{{t 'home.modal.managementText2'}}
+                {{t 'home.modal.managementText1'}} <span class="bold">{{tf company "name"}}</span>{{t 'home.modal.managementText2'}}
             </p>
             <p>
                 {{t 'home.modal.channelsIntro'}} 
@@ -45,7 +45,7 @@
                 <li>{{t 'home.modal.channel1'}}</li>
                 <li>{{{t 'home.modal.channel2' company=company}}}</li>
                 <li>{{{t 'home.modal.channel3' company=company}}}</li>
-                <li>{{{t 'home.modal.channel4' company=company}}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+                <li>{{{t 'home.modal.channel4' company=company}}} ({{tf company "hours"}})</li>
             </ul>
             <p id="torinfo">
                 {{{t 'home.modal.torInfo'}}}

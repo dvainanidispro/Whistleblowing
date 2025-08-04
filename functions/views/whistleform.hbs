@@ -9,7 +9,7 @@
 
             <div class="">
                 <label for="companyName">{{t 'whistleform.form.organizationLabel'}}</label>
-                <input type="text" class="form-control" id="companyName" name="companyName" value="{{company.name}}" disabled>
+                <input type="text" class="form-control" id="companyName" name="companyName" value="{{tf company "name"}}" disabled>
             </div>
             <small>{{t 'whistleform.form.securityWarning'}}</small>
             <hr>
@@ -17,7 +17,7 @@
             <div>
 
                 <div class="">
-                    <label for="relationship" class="form-label">{{t 'whistleform.relationship.question1'}} <span class="bold">{{company.name}}</span>{{t 'whistleform.relationship.question2'}}</label>
+                    <label for="relationship" class="form-label">{{t 'whistleform.relationship.question1'}} <span class="bold">{{tf company "name"}}</span>{{t 'whistleform.relationship.question2'}}</label>
                     <small>{{t 'whistleform.relationship.explanation'}}</small>
                     <select id="relationship" name="relationship" class="form-control" aria-label="{{t 'whistleform.relationship.ariaLabel'}}" required>
                         <option value class="d-none">{{t 'whistleform.relationship.selectPlaceholder'}}</option>

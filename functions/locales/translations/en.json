@@ -49,10 +49,11 @@
     "description": "Thank you! Case {{whistle.id}} has been updated with the new message."
   },
   "privacy": {
-    "title": "Data Protection Policy for the Internal Reporting Channel of {{company.name}}",
+    "title": "Data Protection Policy for the Internal Reporting Channel of",
     "introduction": {
       "heading": "Introduction",
-      "paragraph1": "This Data Protection Policy (hereinafter \"The Policy\") provides you with information regarding the manner in which the Data Controller ({{company.name}}, hereinafter \"Organization\") processes personal data provided through the Internal Reporting Channel.",
+      "paragraph1a": "This Data Protection Policy (hereinafter \"The Policy\") provides you with information regarding the manner in which the Data Controller (",
+      "paragraph1b": ", hereinafter \"Organization\") processes personal data provided through the Internal Reporting Channel.",
       "paragraph2": "The Organization provides you with the opportunity to submit reports, in accordance with the provisions of Law 4990/2022, through the electronic Whistleblowing platform. Alternatively, you may submit a report through the following methods:"
     },
     "contactDetails": {

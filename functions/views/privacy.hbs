@@ -1,14 +1,14 @@
 <div>
 
     <h1>
-        {{t 'privacy.title' company=company}}
+        {{t 'privacy.title'}} {{tf company "name"}}
     </h1>
 
     <h2>
         {{t 'privacy.introduction.heading'}}
     </h2>
     <p>
-        {{t 'privacy.introduction.paragraph1' company=company}}
+        {{t 'privacy.introduction.paragraph1a'}}{{tf company "name"}}{{t 'privacy.introduction.paragraph1b'}}
     </p>
     <p>
         {{t 'privacy.introduction.paragraph2'}}
@@ -17,15 +17,15 @@
         <li>{{t 'home.modal.channel1'}}</li>
         <li>{{{t 'home.modal.channel2' company=company}}}</li>
         <li>{{{t 'home.modal.channel3' company=company}}}</li>
-        <li>{{{t 'home.modal.channel4' company=company}}} ({{or company.hours 'Δευτέρα - Παρασκευή, 09:00 - 17:00' ''}})</li>
+        <li>{{{t 'home.modal.channel4' company=company}}} ({{tf company "hours"}})</li>
     </ul>
 
     <h2>
         {{t 'privacy.contactDetails.heading'}}
     </h2>
     <p>
-        {{t 'privacy.contactDetails.paragraph'}} {{company.name}}, 
-        {{company.address}}, email: <a href="mailto:{{company.email}}">{{company.email}}</a>.
+        {{t 'privacy.contactDetails.paragraph'}} {{tf company "name"}}, 
+        {{tf company "address"}}, email: <a href="mailto:{{company.email}}">{{company.email}}</a>.
     </p>
 
     <h2>
