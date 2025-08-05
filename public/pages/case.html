@@ -129,7 +129,7 @@
                 
                             <div class="my-3">
                                 <label for="date">Ημερομηνία παραβίασης <span x-show="caseDoc.date.at(0)>0">(έτος-μήνας-ημέρα)</span></label>
-                                <div x-text="caseDoc.date"></div>
+                                <div x-text="DB.date(caseDoc.date)"></div>
                             </div>
 
                             <div class="my-3">

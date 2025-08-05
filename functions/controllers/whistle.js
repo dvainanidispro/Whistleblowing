@@ -22,13 +22,13 @@ import {Timestamp} from "firebase-admin/firestore";
 const timestampToDate = (timestamp) => {
     return (new Timestamp(timestamp._seconds, timestamp._nanoseconds)).toDate();
 };
-/** If the incoming field does not have meaningful value, then make it null */
+/** If the incoming field does not have meaningful value, then make it null (instead of empty string) */
 const proper = (value) => {
     return (value==null || value==undefined || value=="") ? null : value;
 };
 
 //////////////        MAPPINGS       ///////////////
-/** Αντιστοίχιση των πεδίων σε "ανθρώπινη" περιγραφή κατά την υποβολη (όχι κατά το view) */
+/** Αντιστοίχιση των πεδίων σε "ανθρώπινη" περιγραφή κατά την υποβολη (όχι κατά το view). TODO: Να αφαιρεθεί */
 let Mappings = {
     status: {       // Πλέον δεν χρησιμοποιείται, γιατί γίνεται στο view με i18n
         "initial": "Αρχική - Ο υπεύθυνος δεν έχει λάβει γνώση της καταγγελίας",
@@ -68,8 +68,8 @@ let Whistle = {
             id: uid.rnd(),
             pin: pin.rnd(),
             // relationship: req.body.relationship,
-            // Aν υπάρχει το date (ημερομηνία), τότε αυτό. Aλλιώς, το datetype (περιγραφή ημερομηνίας) στα ελληνικά, αλλιώς 'Άγνωστη'
-            date: proper(req.body.date) ?? Mappings.date[req.body?.datetype] ?? Mappings.date['unknown'],
+            // Aν υπάρχει το date (ημερομηνία), τότε αυτό. Aλλιώς, το datetype (περιγραφή ημερομηνίας), αλλιώς 'unknown'
+            date: proper(req.body?.date) ?? proper(req.body?.datetype) ?? 'unknown',
             people: req.body.people,
             status: "initial",
             description: req.body.description,

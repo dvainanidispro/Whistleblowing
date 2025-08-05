@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html lang="el">
+
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="8;url=https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/">
     <title>Ανακατεύθυνση...</title>
-    <script>
-        window.onload = function() {
-            const params = window.location.search;
-            const redirectUrl = "https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/home" + params;
-            window.location.href = redirectUrl;
-        }
-    </script>
 </head>
+
+
 <body>
-    <p>Ανακατεύθυνση στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας...</p>
+    <p id="message">Ανακατεύθυνση στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας...</p>
 </body>
+
+
+<script>
+    // 1. Έλεγχος για παράμετρο γλώσσας (lang=en) και ενημέρωση κειμένων
+    {
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang');
+        if (lang === 'en') {
+            document.documentElement.lang = 'en';   // για το <html lang="γλώσσα"> 
+            document.title = 'Redirecting...';
+            document.getElementById('message').textContent = 'Redirecting to your Organization\'s Code of Ethics application...';
+        }
+    }
+    // 2. Ανακατεύθυνση στη σελίδα whistle με τα ίδια get parameters (company, lang, κλπ)
+    window.onload = function() {
+        const params = window.location.search;
+        const redirectUrl = "https://europe-west3-whistleblowing-app.cloudfunctions.net/whistle/home" + params;
+        window.location.href = redirectUrl;
+    }
+</script>
+
+
 </html>

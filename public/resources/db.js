@@ -234,4 +234,14 @@ DB.status = {
     "completed": {value: "completed", text: "Ολοκληρώθηκε", description: "Η υπόθεση ολοκληρώθηκε με επιτυχία", type:"closed"},
 };
 
+DB.date = (date) => {
+    const dateMap = {
+        "specificdate": "Συγκεκριμένη Ημερομηνία",
+        "before5years": "Περισσότερο από 5 χρόνια πριν",
+        "recent5years": "Λιγότερο από 5 χρόνια πριν",
+        "unknown": "Άγνωστη",
+    };
+    return dateMap[date] ?? date;
+};
+
 
