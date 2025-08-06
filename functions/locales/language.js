@@ -5,13 +5,8 @@ const defaultLanguage = supportedLanguages[0];
 
 const languageMiddleware = (req, res, next) => {
     
-    // Πρώτα έλεγξε στα GET parameters (query)
-    let lang = req.query.lang;
-
-    // Αν δεν υπάρχει στο query, έλεγξε το cookie
-    if (!lang) {
-        lang = req.cookies.language;
-    }
+    // Έλεγξε πρώτα στα GET parameters (query) και μετά στο αποθηκευμένο cookie, αλλιώς undefined
+    let lang = req.query.lang ?? req.cookies.language;
 
     // Έλεγχος εγκυρότητας
     if (!supportedLanguages.includes(lang)) {
@@ -28,12 +23,12 @@ const languageMiddleware = (req, res, next) => {
     }
     // Αν τυχόν ήρθε λάθος (είτε απο query, είτε από cookie), θα στείλει την προεπιλεγμένη γλώσσα χωρίς να αποθηκεύσει τίποτα στο cookie
 
-    // Αποθήκευση στα locals για χρήση από τα Handlebars templates
-    // Το i18n helper θα διαβάζει την τιμή από το options.data.root.lang
-    // για να καταλάβει ποια γλώσσα να χρησιμοποιήσει στις μεταφράσεις
+    //* Αποθήκευση στα locals για χρήση από τα Handlebars templates
+    // Το i18n helper θα διαβάζει το options.data.root.lang ως τη γλώσσα που θα χρησιμοποιήσει
     res.locals.lang = lang;
 
-    // console.log(lang);
+    // Για το εικονίδιο (σημαία)
+    res.locals.flag = (lang=="el") ? "en" : "el";
     
     next();
 };

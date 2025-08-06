@@ -45,7 +45,7 @@ server.use(Language);
 
 // Αρχική σελίδα "/" (απλώς για να υπάρχει κάτι)
 server.get(['/'], (req, res) => {
-    res.render('welcome');
+    res.render('welcome', {showFlag:true});
 });
 // Αρχική σελίδα "home" για χρήση
 server.get(['/home'], Firebase.company, (req, res) => {

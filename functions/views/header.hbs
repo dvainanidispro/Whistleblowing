@@ -1,4 +1,24 @@
+
+<div></div>
 <a id="homelink" href="./home?company={{or company.id whistle.companyID ''}}" class="index-link logo-container" aria-label="{{t 'header.homePageAriaLabel'}}">
     <img src="logo.png" class="logo small-shadow" alt="Logo Whistleblowing"/>
     <span class="h1 app-title"></span>
 </a>
+<div>
+    {{#if showFlag}}
+        <a id="languageLink" href="#" class="text-end">
+            <img src="{{flag}}.png" class="flag" alt="Change Language">
+        </a>
+        <script>
+        {   // Το link του #languageLink να είναι το τρέχον url με lang=τάδε
+            const newLang = "{{flag}}";
+            const langUrl = new URL(location.href);
+            langUrl.searchParams.set('lang', newLang);
+            document.getElementById('languageLink').href = langUrl;
+        }
+        </script>
+    {{/if}}
+</div>
+
+
+
