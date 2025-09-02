@@ -50,7 +50,7 @@ server.get(['/'], (req, res) => {
 // Αρχική σελίδα "home" για χρήση
 server.get(['/home'], Firebase.company, (req, res) => {
     // res.send("Καλωσήρθατε στην εφαρμογή του Κώδικα Δεοντολογίας του Οργανισμού σας.");
-    res.render('home');
+    res.render('home', {showFlag:true});
 });
 // Σελίδα πολιτικής απορρήτου
 server.get('/privacy', Firebase.company, (req, res) => {
