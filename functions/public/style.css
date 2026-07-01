@@ -46,6 +46,7 @@ dl,
 dd {
   margin: 0;
   padding: 0.5rem 0;
+  text-wrap: pretty;
 }
 ol, ul, li{
     margin-block: 0;
@@ -330,6 +331,9 @@ hr{
     --bs-border-width: 2px;
     --bs-border-radius: 0.7rem;
     --bs-border-color: rgb(143,153,175);
+    &::placeholder {
+        color: rgb(150, 150, 150);
+    }
 }
 
 .bootstrap-input-style{

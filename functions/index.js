@@ -63,8 +63,6 @@ server.get(['/form','/new'], Firebase.company, (req, res) => {
     res.render('whistleform');
 });
 
-
-
 // Υποβολή νέας αναφοράς από το χρήστη
 server.post(['/','/form','/new'], fileParser(), Firebase.company, Whistle.toDbObject, async (req, res) => {
     let whistle = res.whistle;
@@ -123,6 +121,34 @@ server.post('/notifyuser', async (req, res) => {
     } catch (e) { res.status(404).json("Σφάλμα");}
 });
 
+
+
+// Αφαίρεση εταιρίας από την προσωρινή cache
+server.get('/uncache', Firebase.company, (req, res) => {
+    Firebase.unCache(res.company.id);
+    res.send(`ΟΚ. Η εταιρία ${res.company.name} αφαιρέθηκε από την cache.`);
+});
+
+
+// Φόρμα καταχώρισης στοιχείων για νέο οργανισμό 
+server.get(['/register'], Firebase.company, (req, res) => {
+    if (res.company?.edit==true) {      // αν έχει πεδίο (flag) edit στο firestore
+        res.render('register', {company: res.company});
+    } else {
+        res.status(403).send("Δεν επιτρέπεται αυτή η ενέργεια");
+    }
+});
+
+// Υποβολή στοιχείων νέου οργανισμού
+server.post(['/register'], Firebase.company, async (req, res) => {
+    if (res.company?.edit==true) {      // αν έχει πεδίο (flag) edit στο firestore
+        const companyDetails = req.body;
+        let company = await Firebase.registerCompany(res.company.id, companyDetails);
+        res.json(company);
+    } else {
+        res.status(403).send("Δεν επιτρέπεται αυτή η ενέργεια");
+    }
+});
 
 
 //////////////////   TEST PAGES   //////////////////

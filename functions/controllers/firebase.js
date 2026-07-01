@@ -30,6 +30,31 @@ let getCompany = async (companyID) => {
     //NOTE: if not a google cloud function, then set setTimeout to delete from cache
     return company;
 };
+
+
+/**
+ * Update or create fields for an existing company document without overwriting unrelated fields.
+ * @param {string} companyID
+ * @param {Object} companyDetails
+ * @returns {Promise<Object>} the updated company object
+ */
+let registerCompany = async (companyID, companyDetails={}) => {
+    if (!companyID) { throw new Error('Missing company ID') }
+
+    await db.collection('companies').doc(companyID).set(companyDetails, { merge: true });
+    DimCache.delete(companyID);
+    return getCompany(companyID);
+};
+
+/**
+ * Remove a company from the in-memory cache without repopulating it.
+ * @param {string} companyID
+ * @returns {boolean} true if a cached entry existed and was removed
+ */
+let unCache = (companyID) => {
+    if (!companyID) { return false }
+    return DimCache.delete(companyID);
+};
  
 
 /** 
@@ -206,4 +231,4 @@ const afterCaseDeleted = onDocumentDeleted({ region: 'europe-west3' , maxInstanc
 
 
 
-export default { getCompany, company, getCase, getUser, storeCase, pushMessageByUser, verifyToken , markMessagesAsRead, afterCaseDeleted };
+export default { getCompany, registerCompany, unCache, company, getCase, getUser, storeCase, pushMessageByUser, verifyToken , markMessagesAsRead, afterCaseDeleted };

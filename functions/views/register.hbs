@@ -1,0 +1,252 @@
+<form id="register-form" novalidate>
+    <h1 class="center-left">Στοιχεία Οργανισμού για ένταξη στην Πλατφόρμα Whistleblowing</h1>
+
+    <hr>
+
+    <!-- ===== ΕΝΟΤΗΤΑ 1: Στοιχεία Οργανισμού ===== -->
+    <h2>Ενότητα 1: Στοιχεία Οργανισμού</h2>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Όνομα Οργανισμού <span class="red">*</span></label>
+        <input type="text" class="form-control" id="name" maxlength="100" required value="{{company.name}}">
+        <div class="form-text">Το όνομα του οργανισμού όπως θα εμφανίζεται στην πλατφόρμα.</div>
+    </div>
+
+        <div class="mb-3">
+        <label for="name_en" class="form-label">Όνομα Οργανισμού στα Αγγλικά</label>
+        <input type="text" class="form-control" id="name_en" maxlength="100" value="{{company.name_en}}">
+        <div class="form-text">Προαιρετικό. Το όνομα του οργανισμού όπως θα εμφανίζεται στις αγγλικές σελίδες.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="origin" class="form-label">Κύριο domain Οργανισμού</label>
+        <input type="text" class="form-control" id="origin" placeholder="organization.gr" maxlength="200"
+            pattern="[a-zA-Z0-9][a-zA-Z0-9.\-]*\.[a-zA-Z]{2,}"
+            title="Εισάγετε μόνο domain χωρίς http/https (πχ organization.gr)"
+            >
+        <div class="form-text">Προαιρετικό. Website στο οποίο πρόκειται να τοποθετηθεί το link για τους χρήστες (καταγγέλλοντες).</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">E-mail Οργανισμού <span class="red">*</span></label>
+        <input type="email" class="form-control" id="email" maxlength="100" required>
+        <div class="form-text">Κύριο email επικοινωνίας Οργανισμού (π.χ. info@organization.gr).</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="inbox" class="form-label">E-mail αναφορών Οργανισμού <span class="red">*</span></label>
+        <input type="email" class="form-control" id="inbox" maxlength="100" required>
+        <div class="form-text">Το e-mail στο οποίο οι χρήστες μπορούν, εκτός πλατφόρμας, να στέλνουν τα αιτήματά τους.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="phone" class="form-label">Τηλέφωνο αναφορών <span class="red">*</span></label>
+        <input type="text" class="form-control" id="phone" maxlength="30" required>
+        <div class="form-text">Το τηλέφωνο στο οποίο οι χρήστες μπορούν, εκτός πλατφόρμας, να καλούν σχετικά με αναφορές.</div>
+    </div>
+
+    <hr>
+
+    <!-- ===== ΕΝΟΤΗΤΑ 2: GDPR ===== -->
+    <h2>Ενότητα 2: GDPR</h2>
+    <p class="form-text mb-3">Οι παρακάτω πληροφορίες θα μπουν στη σελίδα με την Πολιτική Απορρήτου.</p>
+
+    <div class="mb-3">
+        <label class="form-label">Διεύθυνση, πόλη, ΤΚ και τηλεφωνικός αριθμός Οργανισμού <span class="red">*</span></label>
+        <input type="text" class="form-control mb-2" id="addr_street" placeholder="Διεύθυνση" maxlength="100" required>
+        <div class="row g-2">
+            <div class="col-md-5">
+                <input type="text" class="form-control" id="addr_city" placeholder="Πόλη" maxlength="100" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="addr_zip" placeholder="ΤΚ" maxlength="10" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="addr_phone" placeholder="Τηλέφωνο" maxlength="30" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="dpo_inbox" class="form-label">Email DPO <span class="red">*</span></label>
+        <input type="email" class="form-control" id="dpo_inbox" maxlength="100" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Φυσική διεύθυνση, πόλη, ΤΚ και τηλέφωνο DPO <span class="red">*</span></label>
+        <div class="row g-2 mb-2">
+            <div class="col-md-7">
+                <input type="text" class="form-control" id="dpo_addr_street" placeholder="Διεύθυνση" maxlength="100" required>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" id="dpo_company" placeholder="Εταιρία DPO (προαιρετικό)" maxlength="100">
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-5">
+                <input type="text" class="form-control" id="dpo_addr_city" placeholder="Πόλη" maxlength="100" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="dpo_addr_zip" placeholder="ΤΚ" maxlength="10" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="dpo_phone" placeholder="Τηλέφωνο" maxlength="30" required>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- ===== ΕΝΟΤΗΤΑ 3: Παραλήπτες και Υπεύθυνοι Αναφορών ===== -->
+    <h2>Ενότητα 3: Παραλήπτες και Υπεύθυνοι Αναφορών</h2>
+
+    <div class="mb-4">
+        <label class="form-label">E-mail παραληπτών <span class="red">*</span></label>
+        <div class="form-text mb-2">Λίστα με e-mail τα οποία θα λαμβάνουν ειδοποιήσεις για νέες υποθέσεις ή υποθέσεις που ενημερώνονται. Μπορεί να περιέχει ή να μην περιέχει το παραπάνω e-mail αναφορών.</div>
+        <div id="recipients-list"></div>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addRecipient()">+ Προσθήκη e-mail</button>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label">Υπεύθυνοι Αναφορών – Χρήστες Dashboard</label>
+        <div class="form-text mb-2">Ονοματεπώνυμο, όπως θα εμφανίζεται στο Dashboard (πχ Όνομα Επώνυμο), και email το οποίο θα χρησιμοποιείται για log-in. Οι χρήστες μπορεί να είναι ίδιοι ή διαφορετικοί από τους παραλήπτες ενημερώσεων παραπάνω.</div>
+        <div id="users-list"></div>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addUser()">+ Προσθήκη χρήστη</button>
+    </div>
+
+    <hr>
+
+    <div class="d-flex align-items-center">
+        <button type="submit" class="btn btn-primary my-3">Υποβολή</button>
+    </div>
+</form>
+
+
+
+<script>
+
+    let domain = 'organization.gr';
+
+    function field(fieldName) {
+            const value = document.getElementById(fieldName).value.trim();
+            return value || undefined;
+        }
+
+        function joinFields(fieldNames) {
+            const value = fieldNames
+                .map(field)
+                .filter(v => v)
+                .join(', ');
+
+            return value || undefined;
+    }
+
+    function updateDomain(value) {
+        domain = value || 'organization.gr';
+        document.querySelectorAll('#recipients-list input[type=email]').forEach(el => {
+            el.placeholder = `email@${domain}`;
+        });
+        document.querySelectorAll('#users-list input[type=email]').forEach(el => {
+            el.placeholder = `email@${domain}`;
+        });
+    }
+
+    document.getElementById('origin').addEventListener('change', function () {
+        updateDomain(this.value.trim());
+    });
+
+    function addRecipient() {
+        const row = document.createElement('div');
+        row.className = 'input-group mb-2 recipient-row';
+        row.innerHTML = `
+            <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100">
+            <button type="button" class="btn btn-outline-danger" onclick="removeRow(this.closest('.recipient-row'))">✕</button>
+        `;
+        document.getElementById('recipients-list').appendChild(row);
+    }
+    addRecipient();
+
+    function addUser() {
+        const row = document.createElement('div');
+        row.className = 'user-row mb-2';
+        row.innerHTML = `
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <input type="text" class="form-control my-0" placeholder="Ονοματεπώνυμο" maxlength="100">
+                </div>
+                <div class="col">
+                    <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-outline-danger" onclick="removeRow(this.closest('.user-row'))">✕</button>
+                </div>
+            </div>
+        `;
+        document.getElementById('users-list').appendChild(row);
+    }
+    addUser();
+
+    function removeRow(row) {
+        row.remove();
+    }
+
+    document.getElementById('register-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!this.checkValidity()) {
+            this.classList.add('was-validated');
+            this.reportValidity();
+            return;
+        }
+
+        const recipients = [...document.querySelectorAll('#recipients-list .recipient-row input')]
+            .map(el => el.value.trim())
+            .filter(v => v);
+
+        const users = [...document.querySelectorAll('#users-list .user-row')]
+            .map(row => {
+                const inputs = row.querySelectorAll('input');
+                return { displayName: inputs[0].value.trim(), email: inputs[1].value.trim() };
+            })
+            .filter(u => u.email);
+
+        const company = Object.fromEntries(Object.entries({
+            id:             new URLSearchParams(window.location.search).get('company'),
+            name:           field('name'),
+            name_en:        field('name_en'),
+            origin:         field('origin'),
+            email:          field('email'),
+            inbox:          field('inbox'),
+            phone:          field('phone'),
+            address:        joinFields([
+                    'addr_street',
+                    'addr_city',
+                    'addr_zip',
+                    'addr_phone',
+                ]),
+            dpo_inbox:      field('dpo_inbox'),
+            dpo_company:    field('dpo_company'),
+            dpo_address:    joinFields([
+                    'dpo_addr_street',
+                    'dpo_addr_city',
+                    'dpo_addr_zip',
+                ]),
+            dpo_phone:      field('dpo_phone'),
+            recipients,
+            users,
+        }).filter(([, value]) => value !== undefined));
+
+        console.debug('company:', company);
+
+        const response = await fetch(window.location.href, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(company),
+        });
+
+        if (response.ok) {
+            window.alert('Τα στοιχεία του Οργανισμού σας υποβλήθηκαν με επιτυχία. Αν διαπιστώσετε κάποιο λάθος, μπορείτε να τα υποβάλετε ξανά τώρα. Μπορείτε να κλείσετε αυτό το παράθυρο.');
+        }
+    });
+</script>
+
