@@ -23,6 +23,7 @@
         <input type="text" class="form-control" id="origin" placeholder="organization.gr" maxlength="200"
             pattern="[a-zA-Z0-9][a-zA-Z0-9.\-]*\.[a-zA-Z]{2,}"
             title="Εισάγετε μόνο domain χωρίς http/https (πχ organization.gr)"
+            value="{{company.origin}}"
             >
         <div class="form-text">Προαιρετικό. Website στο οποίο πρόκειται να τοποθετηθεί το link για τους χρήστες (καταγγέλλοντες).</div>
     </div>
@@ -34,7 +35,7 @@
     </div>
 
     <div class="mb-3">
-        <label for="inbox" class="form-label">E-mail αναφορών Οργανισμού <span class="red">*</span></label>
+        <label for="inbox" class="form-label">E-mail αναφορών <span class="red">*</span></label>
         <input type="email" class="form-control" id="inbox" maxlength="100" required>
         <div class="form-text">Το e-mail στο οποίο οι χρήστες μπορούν, εκτός πλατφόρμας, να στέλνουν τα αιτήματά τους.</div>
     </div>
@@ -52,7 +53,7 @@
     <p class="form-text mb-3">Οι παρακάτω πληροφορίες θα μπουν στη σελίδα με την Πολιτική Απορρήτου.</p>
 
     <div class="mb-3">
-        <label class="form-label">Διεύθυνση, πόλη, ΤΚ και τηλεφωνικός αριθμός Οργανισμού <span class="red">*</span></label>
+        <label class="form-label">Διεύθυνση, πόλη, ΤΚ και τηλέφωνο Οργανισμού <span class="red">*</span></label>
         <input type="text" class="form-control mb-2" id="addr_street" placeholder="Διεύθυνση" maxlength="100" required>
         <div class="row g-2">
             <div class="col-md-5">
@@ -69,6 +70,11 @@
 
     <div class="mb-3">
         <label for="dpo_inbox" class="form-label">Email DPO <span class="red">*</span></label>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="dpo_company_computer_studio">
+            <label class="form-check-label" for="dpo_company_computer_studio">DPO του Οργανισμού είναι η εταιρία Computer Studio Α.Ε.</label>
+        </div>
+
         <input type="email" class="form-control" id="dpo_inbox" maxlength="100" required>
     </div>
 
@@ -101,23 +107,26 @@
     <h2>Ενότητα 3: Παραλήπτες και Υπεύθυνοι Αναφορών</h2>
 
     <div class="mb-4">
-        <label class="form-label">E-mail παραληπτών <span class="red">*</span></label>
+        <label class="form-label">Παραλήπτες ενημερώσεων <span class="red">*</span></label>
         <div class="form-text mb-2">Λίστα με e-mail τα οποία θα λαμβάνουν ειδοποιήσεις για νέες υποθέσεις ή υποθέσεις που ενημερώνονται. Μπορεί να περιέχει ή να μην περιέχει το παραπάνω e-mail αναφορών.</div>
         <div id="recipients-list"></div>
-        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addRecipient()">+ Προσθήκη e-mail</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addRecipient()">+ Προσθήκη e-mail παραλήπτη</button>
     </div>
 
     <div class="mb-4">
         <label class="form-label">Υπεύθυνοι Αναφορών – Χρήστες Dashboard</label>
-        <div class="form-text mb-2">Ονοματεπώνυμο, όπως θα εμφανίζεται στο Dashboard (πχ Όνομα Επώνυμο), και email το οποίο θα χρησιμοποιείται για log-in. Οι χρήστες μπορεί να είναι ίδιοι ή διαφορετικοί από τους παραλήπτες ενημερώσεων παραπάνω.</div>
+        <div class="form-text mb-2">Ονοματεπώνυμο, όπως θα εμφανίζεται στο Dashboard (πχ Όνομα Επώνυμο ή Επώνυμο Όνομα) και email το οποίο θα χρησιμοποιείται για log-in. Οι χρήστες μπορεί να είναι ίδιοι ή διαφορετικοί από τους παραλήπτες ενημερώσεων παραπάνω.</div>
         <div id="users-list"></div>
-        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addUser()">+ Προσθήκη χρήστη</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm mt-1" onclick="addUser()">+ Προσθήκη υπεύθυνου αναφορών</button>
     </div>
 
     <hr>
 
     <div class="d-flex align-items-center">
         <button type="submit" class="btn btn-primary my-3">Υποβολή</button>
+        <div id="post-spinner" class="m-3 spinner-border text-primary d-none" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 </form>
 
@@ -125,7 +134,16 @@
 
 <script>
 
-    let domain = 'organization.gr';
+    let domain = '{{or company.origin 'organization.gr' ''}}';
+
+    let computerStudio = {
+        dpo_inbox: 'dpo@computerstudio.gr',
+        dpo_addr_street: 'Λεωφόρος Βουλιαγμένης 223',
+        dpo_addr_city: 'Δάφνη, Αθήνα',
+        dpo_addr_zip: '17237',
+        dpo_company: 'Computer Studio Α.Ε.',
+        dpo_phone: '2109761865',
+    };
 
     function field(fieldName) {
             const value = document.getElementById(fieldName).value.trim();
@@ -155,11 +173,19 @@
         updateDomain(this.value.trim());
     });
 
+    document.getElementById('dpo_company_computer_studio').addEventListener('change', function () {
+        if (!this.checked) { return }
+
+        Object.entries(computerStudio).forEach(([fieldName, value]) => {
+            document.getElementById(fieldName).value = value;
+        });
+    });
+
     function addRecipient() {
         const row = document.createElement('div');
         row.className = 'input-group mb-2 recipient-row';
         row.innerHTML = `
-            <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100">
+            <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100" required>
             <button type="button" class="btn btn-outline-danger" onclick="removeRow(this.closest('.recipient-row'))">✕</button>
         `;
         document.getElementById('recipients-list').appendChild(row);
@@ -172,10 +198,10 @@
         row.innerHTML = `
             <div class="row g-2 align-items-center">
                 <div class="col">
-                    <input type="text" class="form-control my-0" placeholder="Ονοματεπώνυμο" maxlength="100">
+                    <input type="text" class="form-control my-0" placeholder="Ονοματεπώνυμο" maxlength="100" required>
                 </div>
                 <div class="col">
-                    <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100">
+                    <input type="email" class="form-control my-0" placeholder="email@${domain}" maxlength="100" required>
                 </div>
                 <div class="col-auto">
                     <button type="button" class="btn btn-outline-danger" onclick="removeRow(this.closest('.user-row'))">✕</button>
@@ -193,9 +219,12 @@
     document.getElementById('register-form').addEventListener('submit', async function (e) {
         e.preventDefault();
 
+        document.getElementById('post-spinner').classList.remove('d-none');
+
         if (!this.checkValidity()) {
             this.classList.add('was-validated');
             this.reportValidity();
+            document.getElementById('post-spinner').classList.add('d-none');
             return;
         }
 
@@ -243,6 +272,8 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(company),
         });
+
+        document.getElementById('post-spinner').classList.add('d-none');
 
         if (response.ok) {
             window.alert('Τα στοιχεία του Οργανισμού σας υποβλήθηκαν με επιτυχία. Αν διαπιστώσετε κάποιο λάθος, μπορείτε να τα υποβάλετε ξανά τώρα. Μπορείτε να κλείσετε αυτό το παράθυρο.');
