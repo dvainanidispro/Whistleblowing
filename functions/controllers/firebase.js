@@ -41,6 +41,9 @@ let getCompany = async (companyID) => {
 let registerCompany = async (companyID, companyDetails={}) => {
     if (!companyID) { throw new Error('Missing company ID') }
 
+    // NOTE: Edge case. Αν τα προαιρετικά πεδία σβηστούν στην επαναποστολή της φόρμας, τότε δεν σβήνονται στο Firestore.
+    // const optionalFields = ['name_en', 'origin'];
+
     await db.collection('companies').doc(companyID).set(companyDetails, { merge: true });
     DimCache.delete(companyID);
     return getCompany(companyID);

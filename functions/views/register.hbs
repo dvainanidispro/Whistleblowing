@@ -240,7 +240,6 @@
             .filter(u => u.email);
 
         const company = Object.fromEntries(Object.entries({
-            id:             new URLSearchParams(window.location.search).get('company'),
             name:           field('name'),
             name_en:        field('name_en'),
             origin:         field('origin'),
